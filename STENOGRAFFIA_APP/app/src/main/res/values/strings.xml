@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">STENOGRAFFIA APP</string>
+
+<!--  NavigationMenu  -->
+    <string name="stock_menu">STOCK</string>
+    <string name="orders_menu">ORDERS</string>
+    <string name="objects_menu">OBJECTS</string>
+    <string name="settings_menu">SETTINGS</string>
+</resources>
