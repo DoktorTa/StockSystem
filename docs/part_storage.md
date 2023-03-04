@@ -34,6 +34,7 @@
 		quantityInStorage: Int - колличество краски на складе 
 		placesOfPossibleAvailability: List<Object.id> - места где может находится краска кроме склада
 		similarColors: List<Paint.id> - похожие цвета из других линеек или производителей
+		possibleToBuy: Boolean - можно ли попробовать достать краску
 	Пример:
 		id = 1342
 		type = "Банка"
@@ -46,6 +47,7 @@
 		quantityInStorage: Int = 12 
 		placesOfPossibleAvailability: List<Object.id> = [001, 342]
 		similarColors: List<Paint.id> = [2312, 2133]
+		possibleToBuy = True
 	Типы краски: 
 		Банка, НитроЭмаль, Фасадная, ПФ 
 
@@ -168,4 +170,28 @@ HEX HSL CYMK цвета                                  | [surely]             
 
 Действия добавить краску в заказ и изменить колличество красски должно быть в отдельном диалоговом окне.
 
+### Version 
+В какой версии должна бать введена краска:
 
+Версия | Название производителя | Название линейки       | Обьем | Добавленно | Выявлен цвет | Похожие цвета | Доступно в городе | 
+------ | ---------------------- | ---------------------- | ----- | ---------- | ------------ | ------------- | ----------------- |
+1.0    | Montana Cans           | BLACK                  | 400   | -          | +            | -             | -                 |
+2.0    | Montana Cans           | GOLD                   | 400   | -          | +            | -             | -                 |
+3.0    | Montana Cans           | WHITE                  | 400   | -          | +            | -             | -                 |
+2.0    | Montana Colors         | MTN94                  | 400   | -          | +            | -             | -                 |
+3.0    | Montana Colors         | Hardcore               | 400   | -          | +            | -             | -                 |
+3.0    | MOLOTOW                | FLAME ORANGE           | 400   | -          | -            | -             | -                 |
+3.0    | MOLOTOW                | FLAME ORANGE           | 600   | -          | -            | -             | -                 |
+3.0    | MOLOTOW                | FLAME BLUE             | 400   | -          | -            | -             | -                 |
+3.0    | MOLOTOW                | ONE4ALL ACRYLIC        | 400   | -          | -            | -             | -                 |
+2.0    | MOLOTOW                | PREMIUM                | 400   | -          | -            | -             | -                 |
+3.0    | MOLOTOW                | COVERSALL™ WATER-BASED | 400   | -          | -            | -             | -                 |
+3.0    | MOLOTOW                | COVERSALL™ COLOR       | 400   | -          | -            | -             | -                 |
+2.0    | Loop                   | LOOP                   | 400   | -          | -            | -             | -                 |
+1.0    | ARTON                  | PAINT                  | 400   | -          | -            | -             | -                 |
+1.0    | ARTON                  | PAINT                  | 600   | -          | -            | -             | -                 |
+3.0    | Trane                  | TRANE                  | 400   | -          | -            | -             | -                 |
+3.0    | Easy                   | EASY                   | 400   | -          | -            | -             | -                 |
+3.0    | OneTake                | ONETAKE                | 400   | -          | -            | -             | -                 |
+3.0    | RUSH                   | ART                    | 400   | -          | -            | -             | -                 |           
+3.0    | RUSH                   | CHEAP                  | 400   | -          | -            | -             | -                 |
