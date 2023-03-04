@@ -32,10 +32,14 @@ fun StenograffiaApp(){
     ) {
             innerPadding ->
         NavHost(navController, startDestination = Screen.Stock.route, Modifier.padding(innerPadding)) {
-            composable(Screen.Stock.route) { ListPaint() }
+            composable(Screen.Stock.route) { ListPaint(navController) }
             composable(Screen.Orders.route) { InFutureVersion(navController) }
             composable(Screen.Objects.route) { InFutureVersion(navController) }
             composable(Screen.Settings.route) { InFutureVersion(navController) }
+
+            composable("PAINT/{paintId}") { backStackEntry ->
+            Paint(backStackEntry.arguments?.getString("paintId")!!.toInt())
+        }
         }
     }
 }

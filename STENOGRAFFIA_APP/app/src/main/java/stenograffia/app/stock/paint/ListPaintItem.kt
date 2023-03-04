@@ -3,7 +3,9 @@ package stenograffia.app.stock.paint
 import android.util.Log
 import androidx.annotation.ColorInt
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -14,6 +16,8 @@ import androidx.compose.ui.graphics.colorspace.ColorSpaces
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.ColorUtils
+import androidx.navigation.compose.rememberNavController
+import stenograffia.app.Paint
 import stenograffia.app.data.model.PaintModel
 import stenograffia.app.ui.theme.black
 
@@ -81,25 +85,24 @@ data class PaintItem(
 }
 
 @Composable
-fun ListPaintItem(paintItem: PaintItem, width: Int = 90) {
-    val modifier = Modifier.padding(start = 2.dp)
+fun ListPaintItem(paintItem: PaintItem, modifier: Modifier=Modifier, width: Int = 90) {
+    val modifier1 = Modifier.padding(start = 2.dp)
     Log.d("COLOR COLOR SQUARE", "${paintItem.color}")
 
-    Column (
-        modifier = Modifier
-            .wrapContentHeight()
-            .background(color = MaterialTheme.colors.primary)) {
         Column (
-            modifier = Modifier
-                .height(60.dp)
-                .background(color = paintItem.color)
-                .fillMaxWidth()) {
-            Text(text = paintItem.nameColor, color = paintItem.colorText, modifier = modifier, maxLines = 1)
-            Text(text = paintItem.namePaint, color = paintItem.colorText, modifier = modifier, maxLines = 1)
+            modifier = modifier
+                .wrapContentHeight()
+                .background(color = MaterialTheme.colors.primary)) {
+            Column (
+                modifier = Modifier
+                    .height(60.dp)
+                    .background(color = paintItem.color)
+                    .fillMaxWidth()) {
+                Text(text = paintItem.nameColor, color = paintItem.colorText, modifier = modifier1, maxLines = 1)
+                Text(text = paintItem.namePaint, color = paintItem.colorText, modifier = modifier1, maxLines = 1)
+            }
+            TextStatus(text = paintItem.statusPaint, color = paintItem.colorTextStatus, modifier = modifier1)
         }
-        TextStatus(text = paintItem.statusPaint, color = paintItem.colorTextStatus, modifier = modifier)
-    }
-
 }
 
 @Composable

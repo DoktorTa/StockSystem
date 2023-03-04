@@ -1,5 +1,6 @@
 package stenograffia.app
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -18,11 +19,16 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavController
+import stenograffia.app.data.model.PaintModel
+import stenograffia.app.stock.paint.ListPaintViewModel
 import stenograffia.app.ui.theme.STENOGRAFFIAAPPTheme
 
 @Composable
-fun Paint(navController: NavController){
-    ConstraintLayoutContent()
+fun Paint(paintId: Int){
+    val vm = ListPaintViewModel()
+    Log.d("111111111", paintId.toString())
+    val paintModel = vm.paintList.filter { it.id == paintId }[0] as PaintModel
+    ConstraintLayoutContent(paintModel)
 }
 
 
@@ -130,7 +136,7 @@ fun HandlerName(modifier: Modifier = Modifier){
 }
 
 @Composable
-fun ConstraintLayoutContent() {
+fun ConstraintLayoutContent(paintModel: PaintModel) {
     ConstraintLayout(
         modifier = Modifier.fillMaxSize().background(MaterialTheme.colors.secondary)
     ) {
@@ -142,12 +148,12 @@ fun ConstraintLayoutContent() {
             colorSquare,
         ) = createRefs()
 
-        HandlerTextString("IVORY",
+        HandlerTextString(paintModel.nameColor,
             Modifier.constrainAs(nameColor) {
                 top.linkTo(parent.top)
             })
 
-        TextString("BLK-8000-400",
+        TextString(paintModel.namePaint,
             Modifier.constrainAs(namePaint) {
                 top.linkTo(nameColor.bottom)
             })
@@ -157,15 +163,15 @@ fun ConstraintLayoutContent() {
             })
 
 
-        TextString("HEX: #F2E8C4",
+        TextString("HEX: ${paintModel.color}",
             Modifier.constrainAs(hexColor) {
                 top.linkTo(separationLine1.bottom)
             })
-        TextString("HSL: hsl(47, 64, 86)",
+        TextString("HSL: ${paintModel.color}",
             Modifier.constrainAs(hslColor) {
                 top.linkTo(hexColor.bottom)
             })
-        TextString("CMYK: cmyk(0, 4, 19, 5)",
+        TextString("CMYK: ${paintModel.color}",
             Modifier.constrainAs(cmykColor) {
                 top.linkTo(hslColor.bottom)
             })
@@ -174,7 +180,7 @@ fun ConstraintLayoutContent() {
                 top.linkTo(cmykColor.bottom)
             })
 
-        TextString("ALIKE: [MTN94 RV-188]",
+        TextString("ALIKE: ${paintModel.similarColors}",
             Modifier.constrainAs(alikeText) {
                 top.linkTo(separationLine2.bottom)
             })
@@ -183,7 +189,7 @@ fun ConstraintLayoutContent() {
                 top.linkTo(alikeText.bottom)
             })
 
-        TextString("ON STOCK: 12 PIECES",
+        TextString("ON STOCK: ${paintModel.quantityInStorage} PIECES",
             Modifier.constrainAs(onStockText) {
                 top.linkTo(separationLine3.bottom)
             })
@@ -205,7 +211,7 @@ fun ConstraintLayoutContent() {
                 top.linkTo(separationLine4.bottom)
             })
 
-        ColorSquare(color = Color(0xFFF2E8C4),
+        ColorSquare(color = Color(0xFF000000 + paintModel.color),
             Modifier.constrainAs(colorSquare){
                 bottom.linkTo(parent.bottom)
             }
