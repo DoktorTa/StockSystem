@@ -216,7 +216,7 @@ fun ConstraintLayoutContent() {
 @Composable
 fun customTopBar(){
     ConstraintLayout(
-        modifier = Modifier.fillMaxWidth().height(48.dp)) {
+        modifier = Modifier.fillMaxWidth().height(48.dp).background(Color.Black)) {
         val (handlerName, buttonToOrder) = createRefs()
 
         ButtonToOrder(

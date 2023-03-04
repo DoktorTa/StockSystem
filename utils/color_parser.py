@@ -1,37 +1,62 @@
-from typing import List
+from paint_model import PaintModelPaintId
+from parsers_html import ParserHTML, MontanaCansParserHTML
+from similar_color import SimilarColor
 
 
-class PaintModel:
-    def __init__(self,
-                 paint_id: int,
-                 paint_type: str,
-                 name_creater: str,
-                 name_line: str,
-                 name_paint: str,
-                 name_color: str,
-                 description_color: str,
-                 color: int,
-                 quantity_in_storage: int,
-                 similar_colors: List[int],
-                 possible_to_buy: bool
-                 ):
-        self.paint_id: int = paint_id
-        self.paint_type: str = paint_type
-        self.name_creater: str = name_creater
-        self.name_line: str = name_line
-        self.name_paint: str = name_paint
-        self.name_color: str = name_color
-        self.description_color: str = description_color
-        self.color: int = color
-        self.quantity_in_storage: int = quantity_in_storage
-        self.places_of_possible_availability: List[str] = []
-        self.similar_colors: List[int] = similar_colors
-        self.possible_to_buy: bool = possible_to_buy
+class ColorParser:
+    calculate_similar_color = False
+    name_creater = ""
+    name_line = ""
+    volume = 0
+    url = ""
 
-class PaintModelKotlinCode(PaintModel):
-    def __str__(self):
-        return f"{}"
+    def get_parser(self):
+        pass
 
-    """
-            val p5 = PaintModel(5, TypePaint.CANS, "MONTANA", "BLACK", "BLC-1045-400", "MELON YELLOW", " ", 0xF59E01, 0, listOf(), listOf(), false)
-    """
+
+class MontanaBlackColorParser(ColorParser):
+    calculate_similar_color = True
+    name_creater = "MONTANA"
+    name_line = "BLACK"
+    volume = 400
+    url = r"https://" \
+          r"www.montana-cans.com/en/spray-cans/montana-spray-paint/black-50ml-600ml-graffiti-paint/montana-black-400ml"
+
+    def get_parser(self):
+        array_id = PaintModelPaintId.generate_array_paint_id(PaintModelPaintId.Prefix.MONTANA_BLACK)
+        return MontanaCansParserHTML(array_id, self.name_creater, self.name_line, self.volume)
+
+
+def main():
+    color_parser = MontanaBlackColorParser()
+
+    parser = color_parser.get_parser()
+    html = ParserHTML.get_html_page(color_parser.url)
+    list_html_cans = ParserHTML.get_list_html_cans(html.text)
+
+    similar_color = SimilarColor()
+    if color_parser.calculate_similar_color:
+        similar_color.load_all_color()
+
+    all_id = []
+    with open('Cans/montana.txt', 'w', encoding="utf-8") as file:
+        for html_cans in list_html_cans:
+            paint_model = parser.html_cans2paint_model(html_cans)
+
+            if color_parser.calculate_similar_color:
+                paint_model.similar_colors = similar_color.get_similar_color(paint_model.paint_id, paint_model.color)
+
+            file.write(paint_model.get_kotlin_code() + '\n')
+            file.flush()
+            print(paint_model.get_kotlin_code())
+
+        # Закомментируйте 3 строки ниже если не нужна какая либо агрегация в конце файла
+            all_id.append(f"p{paint_model.paint_id}")
+        l = f'listOf({str(all_id).replace("[", "").replace("]", "")})'
+        file.write(l.replace("'", ""))
+
+    similar_color.write_in_all_color()
+
+
+if __name__ == '__main__':
+    main()

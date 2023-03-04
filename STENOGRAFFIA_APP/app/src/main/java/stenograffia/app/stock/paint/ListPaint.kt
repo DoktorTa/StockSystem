@@ -17,7 +17,7 @@ import stenograffia.app.ui.theme.STENOGRAFFIAAPPTheme
 fun ListPaint(modifier: Modifier = Modifier) {
     val vm = ListPaintViewModel()
     LazyVerticalGrid(
-        modifier = Modifier.padding(start = 15.dp, end = 15.dp, top = 10.dp),
+        modifier = Modifier.padding(start = 15.dp, end = 15.dp),
         cells = GridCells.Fixed(3),
         verticalArrangement = Arrangement.spacedBy(3.dp),
         horizontalArrangement = Arrangement.spacedBy(3.dp),

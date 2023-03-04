@@ -91,7 +91,7 @@ fun ListPaintItem(paintItem: PaintItem, width: Int = 90) {
             .background(color = MaterialTheme.colors.primary)) {
         Column (
             modifier = Modifier
-                .height(50.dp)
+                .height(60.dp)
                 .background(color = paintItem.color)
                 .fillMaxWidth()) {
             Text(text = paintItem.nameColor, color = paintItem.colorText, modifier = modifier, maxLines = 1)
