@@ -1,5 +1,8 @@
 package stenograffia.app
 
+import android.app.Activity
+import android.app.Application
+import android.util.Log
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
@@ -12,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hierarchy
@@ -20,14 +24,19 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import stenograffia.app.di.PaintComponent
 import stenograffia.app.stock.paint.ListPaint
+import stenograffia.app.stock.paint.Paint
+import stenograffia.app.stock.paint.customTopBar
 
 
 @Composable
 fun StenograffiaApp(){
     val navController = rememberNavController()
+    val app = ((LocalContext.current as Activity).application as App)
+
     Scaffold(
-        topBar = { customTopBar()},
+        topBar = { customTopBar() },
         bottomBar = { NavigationMenu(navController = navController) }
     ) {
             innerPadding ->
@@ -38,8 +47,11 @@ fun StenograffiaApp(){
             composable(Screen.Settings.route) { InFutureVersion(navController) }
 
             composable("PAINT/{paintId}") { backStackEntry ->
-            Paint(backStackEntry.arguments?.getString("paintId")!!.toInt())
-        }
+                val paintId: Int = backStackEntry.arguments?.getString("paintId")!!.toInt()
+                val viewModel: PaintViewModel = app.paintComponent.getPaintViewModel()
+                viewModel.loadPaintModelById(paintId)
+                Paint(viewModel)
+            }
         }
     }
 }

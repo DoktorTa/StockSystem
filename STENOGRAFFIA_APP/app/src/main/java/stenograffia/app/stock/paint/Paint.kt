@@ -1,6 +1,5 @@
-package stenograffia.app
+package stenograffia.app.stock.paint
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -13,22 +12,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
-import androidx.navigation.NavController
-import stenograffia.app.data.model.PaintModel
-import stenograffia.app.stock.paint.ListPaintViewModel
-import stenograffia.app.ui.theme.STENOGRAFFIAAPPTheme
+import androidx.core.graphics.ColorUtils
+import stenograffia.app.PaintViewModel
+import stenograffia.app.domain.model.PaintModel
+import java.lang.Float.max
+import kotlin.math.roundToInt
+
 
 @Composable
-fun Paint(paintId: Int){
-    val vm = ListPaintViewModel()
-    Log.d("111111111", paintId.toString())
-    val paintModel = vm.paintList.filter { it.id == paintId }[0] as PaintModel
-    ConstraintLayoutContent(paintModel)
+fun Paint(viewModel: PaintViewModel){
+    ConstraintLayoutContent(viewModel.paintModel)
 }
 
 
@@ -153,7 +149,7 @@ fun ConstraintLayoutContent(paintModel: PaintModel) {
                 top.linkTo(parent.top)
             })
 
-        TextString(paintModel.namePaint,
+        TextString(paintModel.codePaint,
             Modifier.constrainAs(namePaint) {
                 top.linkTo(nameColor.bottom)
             })
@@ -163,15 +159,15 @@ fun ConstraintLayoutContent(paintModel: PaintModel) {
             })
 
 
-        TextString("HEX: ${paintModel.color}",
+        TextString("HEX: ${colorToHex(paintModel.color)}",
             Modifier.constrainAs(hexColor) {
                 top.linkTo(separationLine1.bottom)
             })
-        TextString("HSL: ${paintModel.color}",
+        TextString("HSL: ${colorToHsl(paintModel.color)}",
             Modifier.constrainAs(hslColor) {
                 top.linkTo(hexColor.bottom)
             })
-        TextString("CMYK: ${paintModel.color}",
+        TextString("CMYK: ${colorToCmyk(paintModel.color)}",
             Modifier.constrainAs(cmykColor) {
                 top.linkTo(hslColor.bottom)
             })
@@ -180,7 +176,7 @@ fun ConstraintLayoutContent(paintModel: PaintModel) {
                 top.linkTo(cmykColor.bottom)
             })
 
-        TextString("ALIKE: ${paintModel.similarColors}",
+        TextString("ALIKE: ['getSimilarColor(paintModel.similarColors, vm)']",
             Modifier.constrainAs(alikeText) {
                 top.linkTo(separationLine2.bottom)
             })
@@ -217,6 +213,58 @@ fun ConstraintLayoutContent(paintModel: PaintModel) {
             }
         )
     }
+}
+
+private fun getSimilarColor(sim: List<Int>, vm: ListPaintViewModel): String{
+    var similarColor = ""
+    sim.forEach {
+        similarColor += " " + vm.getPaintById(it)!!.codePaint
+    }
+
+    return similarColor
+}
+
+private fun colorToHsl(color: Int): String{
+    val hsl = FloatArray(3)
+    ColorUtils.colorToHSL(color, hsl)
+
+    val hue = hsl[0].roundToInt()
+    val saturation = (hsl[1] * 100).roundToInt()
+    val lightness = (hsl[2] * 100).roundToInt()
+
+    return "hsl($hue, $saturation, $lightness)"
+}
+
+private fun colorToCmyk(colorInt: Int): String {
+    val color = Color(colorInt)
+    val r = color.red
+    val g = color.green
+    val b = color.blue
+
+    val r1 = r / 255f
+    val g1 = g / 255f
+    val b1 = b / 255f
+
+    val m = listOf<Float>(r, g, b).maxOrNull()!!
+
+    val k = 1.0f - max(r1, max(g1, b1))
+
+    val cyan = if (k == 1f) 0f else (1.0f - r1 - k) / (1.0f - k)
+    val magenta = if (k == 1f) 0f else (1.0f - g1 - k) / (1.0f - k)
+    val yellow = if (k == 1f) 0f else (1.0f - b1 - k) / (1.0f - k)
+
+    val kInt = ((1.0f - m) * 100).roundToInt()
+    val cyanInt = (cyan * 100).roundToInt()
+    val magentaInt = (magenta * 100).roundToInt()
+    val yellowInt = (yellow * 100).roundToInt()
+
+    return "cmyk($cyanInt, $magentaInt, $yellowInt, $kInt)"
+}
+
+private fun colorToHex(colorInt: Int): String{
+    val hex = Integer.toHexString(colorInt)
+    val hexString = hex.padStart(6, '0')
+    return "#$hexString"
 }
 
 @Composable

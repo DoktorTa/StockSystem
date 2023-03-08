@@ -1,9 +1,11 @@
 from typing import List
+import csv
 
 
 class PaintModelPaintId:
     class Prefix:
         MONTANA_BLACK = "11"
+        MONTANA_GOLD = "12"
 
     @staticmethod
     def generate_array_paint_id(prefix: str) -> List[str]:

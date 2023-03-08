@@ -11,7 +11,7 @@ class SimilarColor:
                 line = color_line.split("|")
                 rgb = line[1].split()
                 rgb_tuple = (float(rgb[0]), float(rgb[1]), float(rgb[2]))
-                self.all_color.update({line[0]: rgb_tuple})
+                self.all_color.update({int(line[0]): rgb_tuple})
         print(self.all_color)
 
     def write_in_all_color(self):
@@ -29,8 +29,9 @@ class SimilarColor:
 
         for key, value in self.all_color.items():
             diff = SimilarColor.ciede2000([L, a, b], value)
-            if diff < 5 and diff != 0:
-                answer.append(key)
+            if diff < 5 and int(key) != int(paint_id):
+                percent = int(100 - diff)
+                answer.append(f"listOf({key}, {percent})")
 
         self.all_color.update({paint_id: (L, a, b)})
 
@@ -178,7 +179,7 @@ class SimilarColor:
 
 
 if __name__ == '__main__':
-    cans1045 = (72.1404, 23.4113, 76.4263)
-    cans2060 = (72.3331, 22.9479, 70.1121)
+    cans1045 = (0, 0, 0)
+    cans2060 = (100, 0, 0)
     diff = SimilarColor.ciede2000(cans1045, cans2060)
     print(diff)

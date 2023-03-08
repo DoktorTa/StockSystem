@@ -27,7 +27,7 @@
 		type: String - тип краски
 		nameCreater: String - название производителя
 		nameLine: String - название линейки краски
-		namePaint: String - название краски (индентификатор) (номер в линейке)
+		codePaint: String - название краски (индентификатор) (номер в линейке)
 		nameColor: String - название цвета (типо голубой)
 		descriptionColor: String - описание цвета
 		color: Int - цвет (dec)
@@ -40,7 +40,7 @@
 		type = "Банка"
 		nameCreater = "ArtonPaint"
 		nameLine = "Arton 400ml"
-		namePaint = "R234"
+		codePaint = "R234"
 		nameColor = "Голубой"
 		descriptionColor = "Небесно голубой цвет"
 		color: Int = 49151
@@ -69,15 +69,15 @@ delete         | DELETE FROM UniqueElementTable WHERE id = id          |
 insert         | INSERT INTO UniqueElementTable VALUES *               | 
 	
 PaintTable:
-Method                             | SQL                                                                    |
----------------------------------- | ---------------------------------------------------------------------- |
-getAll                             | SELECT * FROM PrintTable                                               |
-getById                            | SELECT * FROM PrintTable WHERE id = id                                 |
-updateQuantityInStorage            | UPDATE PrintTable SET quantityInStorage WHERE id = id                  |
-insert                             | INSERT INTO PrintTable VALUES *                                        |
-delete                             | DELETE FROM PrintTable WHERE id = id                                   |
-update                             | UPDATE PrintTable SET * WHERE id = id                                  |
-updatePlacesOfPossibleAvailability | UPDATE PrintTable SET updatePlacesOfPossibleAvailability WHERE id = id |
+Method                             | SQL                                                                                 |
+---------------------------------- | ----------------------------------------------------------------------------------- |
+getListPaintsByLineAndCreator      | SELECT * FROM PrintTable WHERE nameCreator = :nameCreator AND nameLine = :nameLine  |
+getById                            | SELECT * FROM PrintTable WHERE id = id                                              |
+updateQuantityInStorage            | UPDATE PrintTable SET quantityInStorage WHERE id = id                               |
+insert                             | INSERT INTO PrintTable VALUES *                                                     |
+delete                             | DELETE FROM PrintTable WHERE id = id                                                |
+update                             | UPDATE PrintTable SET * WHERE id = id                                               |
+updatePlacesOfPossibleAvailability | UPDATE PrintTable SET updatePlacesOfPossibleAvailability WHERE id = id              |
 
 PaintPhotoTable:
 Method                             | SQL                                         |
