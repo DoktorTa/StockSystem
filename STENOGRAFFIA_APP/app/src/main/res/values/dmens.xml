@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<!--  DialogQuantityChange  -->
+    <dimen name="width_dialog">250dp</dimen>
+    <dimen name="height_separation_box_dialog">20dp</dimen>
+    <dimen name="width_button_nav">125dp</dimen>
+    <dimen name="side_length_element">50dp</dimen>
+    <dimen name="padding_central_button">50dp</dimen>
+
+</resources>

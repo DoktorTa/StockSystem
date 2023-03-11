@@ -3,6 +3,7 @@ package stenograffia.app.data.repository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import stenograffia.app.data.database.PaintDao
+import stenograffia.app.data.database.PaintEntity
 import stenograffia.app.data.database.fromPaintEntity
 import stenograffia.app.data.database.toPaintModel
 import stenograffia.app.domain.model.PaintModel
@@ -23,12 +24,12 @@ class PaintRepositoryImpl(
         return paintDao.getListPaintsByLineAndCreator(nameCreator, nameLine).map {
             it.toPaintModel()!!
         }
-
-//        return paintDao.getListPaintsByLineAndCreator(nameCreator, nameLine).map {
-//            it.map {
-//                it.toPaintModel()!!
-//            } }
     }
+
+    override fun updatePaint(paintModel: PaintModel) {
+        paintDao.updatePaint(paintModel.fromPaintEntity()!!)
+    }
+
 
     init {
         val data = dataGenerate()

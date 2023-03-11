@@ -10,9 +10,9 @@ data class PaintModel(
     val nameColor: String,
     val descriptionColor: String,
     val color: Int,
-    val quantityInStorage: Int,
-    val placesOfPossibleAvailability: List<Int>,
-    val similarColors: List<List<Int>>,
+    var quantityInStorage: Int,
+    var placesOfPossibleAvailability: List<Int>,
+    var similarColors: List<List<Int>>,
     val possibleToBuy: Boolean
 )
 

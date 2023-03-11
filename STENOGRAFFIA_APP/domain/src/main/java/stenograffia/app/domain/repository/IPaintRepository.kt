@@ -8,4 +8,6 @@ interface IPaintRepository {
     fun getPaintById(paintId: Int): PaintModel?
 
     fun getPaintsListByCreatorAndLine(nameCreator: String, nameLine: String): List<PaintModel>
+
+    fun updatePaint(paintModel: PaintModel)
 }

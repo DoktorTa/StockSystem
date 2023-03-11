@@ -6,4 +6,11 @@
     <string name="orders_menu">ORDERS</string>
     <string name="objects_menu">OBJECTS</string>
     <string name="settings_menu">SETTINGS</string>
+    
+<!--  DialogsCancelOk  -->
+    <string name="cancel">CANSEL</string>
+    <string name="ok">OK</string>
+
+<!--  DialogChangeQuantity  -->
+    <string name="change_quantity_description">THERE WILL BE %1$d IN STOCK</string>
 </resources>

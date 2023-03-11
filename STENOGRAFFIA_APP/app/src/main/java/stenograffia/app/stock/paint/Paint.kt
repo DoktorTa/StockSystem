@@ -7,6 +7,9 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -16,6 +19,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.core.graphics.ColorUtils
+import androidx.navigation.NavController
 import stenograffia.app.PaintViewModel
 import stenograffia.app.domain.model.PaintModel
 import java.lang.Float.max
@@ -23,8 +27,8 @@ import kotlin.math.roundToInt
 
 
 @Composable
-fun Paint(viewModel: PaintViewModel){
-    ConstraintLayoutContent(viewModel.paintModel)
+fun Paint(viewModel: PaintViewModel, navController: NavController){
+    ConstraintLayoutContent(viewModel, navController)
 }
 
 
@@ -32,6 +36,8 @@ val INDENT_START: Dp = 15.dp
 val INDENT_END: Dp = 15.dp
 val INDENT_TOP: Dp = 5.dp
 val INDENT_BOTTOM: Dp = 5.dp
+
+const val DEFAULT_TEXT: String = "Default text"
 
 @Composable
 fun ColorSquare(color: Color, modifier: Modifier = Modifier){
@@ -54,7 +60,7 @@ fun SeparationLine(modifier: Modifier = Modifier){
 }
 
 @Composable
-fun TextString(text: String, modifier: Modifier = Modifier){
+fun TextString(text: String = DEFAULT_TEXT, modifier: Modifier = Modifier){
     Text(
         text,
         style = MaterialTheme.typography.body1,
@@ -63,7 +69,7 @@ fun TextString(text: String, modifier: Modifier = Modifier){
 }
 
 @Composable
-fun HandlerTextString(text: String, modifier: Modifier = Modifier){
+fun HandlerTextString(text: String = DEFAULT_TEXT, modifier: Modifier = Modifier){
     Text(
         text,
         style = MaterialTheme.typography.h1,
@@ -86,9 +92,9 @@ fun ButtonAddToOrder(modifier: Modifier = Modifier){
 }
 
 @Composable
-fun ButtonChangeQuantity(modifier: Modifier = Modifier){
+fun ButtonChangeQuantity(showDialogChangeQuantity: MutableState<Boolean>, modifier: Modifier = Modifier){
     Button(
-        onClick = {},
+        onClick = {showDialogChangeQuantity.value = true},
         shape = RectangleShape,
         colors = ButtonDefaults.buttonColors(
             backgroundColor = MaterialTheme.colors.primary,
@@ -97,6 +103,23 @@ fun ButtonChangeQuantity(modifier: Modifier = Modifier){
         Text("CHANGE QUANTITY", modifier = Modifier.padding(top = INDENT_TOP, bottom = INDENT_BOTTOM))
     }
 }
+
+
+@Composable
+fun ButtonShowLikenessPaint(showDialog: MutableState<Boolean>, enabled: Boolean, modifier: Modifier = Modifier){
+    Button(
+        onClick = {showDialog.value = true},
+        shape = RectangleShape,
+        colors = ButtonDefaults.buttonColors(
+            backgroundColor = MaterialTheme.colors.primary,
+            contentColor = MaterialTheme.colors.secondary),
+        modifier = modifier.padding(start = INDENT_START),
+        enabled = enabled
+        ){
+        Text("LIKENESS PAINT", modifier = Modifier.padding(top = INDENT_TOP, bottom = INDENT_BOTTOM))
+    }
+}
+
 
 @Composable
 fun ButtonToOrder(modifier: Modifier = Modifier){
@@ -127,22 +150,37 @@ fun HandlerName(modifier: Modifier = Modifier){
         Text(
             text = "MONTANA BLACK",
             color = MaterialTheme.colors.secondary,
-            modifier = Modifier.padding(start = INDENT_START, end = INDENT_END).align(Alignment.Center))
+            modifier = Modifier
+                .padding(start = INDENT_START, end = INDENT_END)
+                .align(Alignment.Center))
     }
 }
 
 @Composable
-fun ConstraintLayoutContent(paintModel: PaintModel) {
+fun ConstraintLayoutContent(viewModel: PaintViewModel, navController: NavController) {
     ConstraintLayout(
-        modifier = Modifier.fillMaxSize().background(MaterialTheme.colors.secondary)
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colors.secondary)
     ) {
         val (nameColor, namePaint, separationLine1,
             hexColor, hslColor, cmykColor, separationLine2,
-            alikeText, separationLine3,
             onStockText, separationLine4,
             buttonAddToOrder, buttonChangeQuantity,
-            colorSquare,
+            colorSquare, buttonShowLikenessPaint,
         ) = createRefs()
+
+
+        val showDialogLikenessPaint =  remember { mutableStateOf(false) }
+        val showDialogChangeQuantity =  remember { mutableStateOf(false) }
+        val paintModel = viewModel.paintModel
+
+        if(showDialogLikenessPaint.value) {
+            DialogLikenessPaint(showDialogLikenessPaint, navController, paintModel.similarColors)
+        } else if (showDialogChangeQuantity.value) {
+            DialogChangeQuantity(showDialogChangeQuantity, viewModel)
+        }
+
 
         HandlerTextString(paintModel.nameColor,
             Modifier.constrainAs(nameColor) {
@@ -176,36 +214,36 @@ fun ConstraintLayoutContent(paintModel: PaintModel) {
                 top.linkTo(cmykColor.bottom)
             })
 
-        TextString("ALIKE: ['getSimilarColor(paintModel.similarColors, vm)']",
-            Modifier.constrainAs(alikeText) {
-                top.linkTo(separationLine2.bottom)
-            })
-        SeparationLine(
-            Modifier.constrainAs(separationLine3){
-                top.linkTo(alikeText.bottom)
-            })
-
         TextString("ON STOCK: ${paintModel.quantityInStorage} PIECES",
             Modifier.constrainAs(onStockText) {
-                top.linkTo(separationLine3.bottom)
+                top.linkTo(separationLine2.bottom)
             })
         SeparationLine(
             Modifier.constrainAs(separationLine4){
                 top.linkTo(onStockText.bottom)
             })
 
-        ButtonAddToOrder(
+        ButtonShowLikenessPaint(showDialogLikenessPaint,
+            paintModel.similarColors.isNotEmpty(),
             Modifier
-            .constrainAs(buttonAddToOrder) {
-                top.linkTo(separationLine4.bottom)
-            })
+                .constrainAs(buttonShowLikenessPaint) {
+                    top.linkTo(separationLine4.bottom)
+                }
+        )
 
-        ButtonChangeQuantity(
+//        ButtonAddToOrder(
+//            Modifier
+//            .constrainAs(buttonAddToOrder) {
+//                top.linkTo(buttonShowLikenessPaint.bottom)
+//            })
+//
+        ButtonChangeQuantity(showDialogChangeQuantity,
             Modifier
             .constrainAs(buttonChangeQuantity) {
-                start.linkTo(buttonAddToOrder.end)
-                top.linkTo(separationLine4.bottom)
+                top.linkTo(buttonShowLikenessPaint.bottom)
             })
+
+
 
         ColorSquare(color = Color(0xFF000000 + paintModel.color),
             Modifier.constrainAs(colorSquare){
@@ -215,11 +253,22 @@ fun ConstraintLayoutContent(paintModel: PaintModel) {
     }
 }
 
-private fun getSimilarColor(sim: List<Int>, vm: ListPaintViewModel): String{
-    var similarColor = ""
-    sim.forEach {
-        similarColor += " " + vm.getPaintById(it)!!.codePaint
+
+@Composable
+private fun PaintTextButton(modifier: Modifier = Modifier){
+    TextButton(onClick = { /*TODO*/ }) {
+        
     }
+
+}
+
+private fun getSimilarColor(viewModel: PaintViewModel): String{
+    var similarColor = ""
+
+
+//    sim.forEach {
+//        similarColor += " " + viewModel.(it)!!.codePaint
+//    }
 
     return similarColor
 }
@@ -270,7 +319,10 @@ private fun colorToHex(colorInt: Int): String{
 @Composable
 fun customTopBar(){
     ConstraintLayout(
-        modifier = Modifier.fillMaxWidth().height(48.dp).background(Color.Black)) {
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(48.dp)
+            .background(Color.Black)) {
         val (handlerName, buttonToOrder) = createRefs()
 
         ButtonToOrder(

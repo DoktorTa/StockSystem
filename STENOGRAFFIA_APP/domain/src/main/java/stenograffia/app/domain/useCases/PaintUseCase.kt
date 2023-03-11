@@ -1,5 +1,6 @@
 package stenograffia.app.domain.useCases
 
+import android.util.Log
 import kotlinx.coroutines.flow.single
 import stenograffia.app.domain.model.PaintModel
 import stenograffia.app.domain.repository.IPaintRepository
@@ -18,4 +19,8 @@ class PaintUseCase @Inject constructor(
         return paintRepository.getPaintsListByCreatorAndLine(nameCreator, nameLine)
     }
 
+    fun changeQuantityPaintInStock(paintModel: PaintModel, difference: Int){
+        paintModel.quantityInStorage += difference
+        paintRepository.updatePaint(paintModel)
+    }
 }

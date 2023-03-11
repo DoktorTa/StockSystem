@@ -16,4 +16,8 @@ class PaintViewModel @Inject constructor(
         paintModel = useCase.getPaintModelById(paintId)!!
     }
 
+    fun changeQuantityPaintInStock(difference: Int){
+        useCase.changeQuantityPaintInStock(paintModel, difference)
+    }
+
 }

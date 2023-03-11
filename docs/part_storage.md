@@ -72,7 +72,7 @@ PaintTable:
 Method                             | SQL                                                                                 |
 ---------------------------------- | ----------------------------------------------------------------------------------- |
 getListPaintsByLineAndCreator      | SELECT * FROM PrintTable WHERE nameCreator = :nameCreator AND nameLine = :nameLine  |
-getById                            | SELECT * FROM PrintTable WHERE id = id                                              |
+getPaintById                       | SELECT * FROM PrintTable WHERE id = id                                              |
 updateQuantityInStorage            | UPDATE PrintTable SET quantityInStorage WHERE id = id                               |
 insert                             | INSERT INTO PrintTable VALUES *                                                     |
 delete                             | DELETE FROM PrintTable WHERE id = id                                                |

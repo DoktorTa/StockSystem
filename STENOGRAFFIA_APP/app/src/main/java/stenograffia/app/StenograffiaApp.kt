@@ -1,8 +1,6 @@
 package stenograffia.app
 
 import android.app.Activity
-import android.app.Application
-import android.util.Log
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
@@ -24,7 +22,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import stenograffia.app.di.PaintComponent
 import stenograffia.app.stock.paint.ListPaint
 import stenograffia.app.stock.paint.Paint
 import stenograffia.app.stock.paint.customTopBar
@@ -50,7 +47,7 @@ fun StenograffiaApp(){
                 val paintId: Int = backStackEntry.arguments?.getString("paintId")!!.toInt()
                 val viewModel: PaintViewModel = app.paintComponent.getPaintViewModel()
                 viewModel.loadPaintModelById(paintId)
-                Paint(viewModel)
+                Paint(viewModel, navController)
             }
         }
     }

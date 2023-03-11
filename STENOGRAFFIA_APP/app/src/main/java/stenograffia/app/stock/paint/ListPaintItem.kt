@@ -20,6 +20,8 @@ data class PaintItem(
     val color: Color,
     val statusPaint: String,
 
+    val additionalInformation: String,
+
     val colorText: Color,
     val colorTextStatus: Color
 ) {
@@ -37,7 +39,7 @@ data class PaintItem(
             ON_STOCK to Color.Green
         )
 
-        fun fromPaintModel(paintModel: PaintModel): PaintItem{
+        fun fromPaintModel(paintModel: PaintModel, additionalInformation: String = ""): PaintItem{
             val statusPaint = getStatusPaint(paintModel)
 
             val color = Color(0xFF000000 + paintModel.color)
@@ -47,6 +49,7 @@ data class PaintItem(
                 codePaint = paintModel.codePaint,
                 color = color,
                 statusPaint = statusPaint,
+                additionalInformation = additionalInformation,
                 colorText = getColorText(color.toArgb()),
                 colorTextStatus = colorTextStatuses[statusPaint]!!
             )
