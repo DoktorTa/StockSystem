@@ -74,6 +74,7 @@ Method                             | SQL                                        
 getListPaintsByLineAndCreator      | SELECT * FROM PrintTable WHERE nameCreator = :nameCreator AND nameLine = :nameLine  |
 getPaintById                       | SELECT * FROM PrintTable WHERE id = id                                              |
 updateQuantityInStorage            | UPDATE PrintTable SET quantityInStorage WHERE id = id                               |
+getAllPaintNames                   | SELECT NameCreator, NameLine FROM PaintTable                                        |
 insert                             | INSERT INTO PrintTable VALUES *                                                     |
 delete                             | DELETE FROM PrintTable WHERE id = id                                                |
 update                             | UPDATE PrintTable SET * WHERE id = id                                               |

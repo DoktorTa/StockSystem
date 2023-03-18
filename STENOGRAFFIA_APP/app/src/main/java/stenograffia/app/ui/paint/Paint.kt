@@ -1,4 +1,4 @@
-package stenograffia.app.stock.paint
+package stenograffia.app.ui.paint
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -20,8 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.core.graphics.ColorUtils
 import androidx.navigation.NavController
-import stenograffia.app.PaintViewModel
-import stenograffia.app.domain.model.PaintModel
+import stenograffia.app.vw.PaintViewModel
 import java.lang.Float.max
 import kotlin.math.roundToInt
 

@@ -1,4 +1,4 @@
-package stenograffia.app.stock.paint
+package stenograffia.app.ui.paint
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -20,7 +20,7 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.window.Dialog
 import stenograffia.app.R
-import stenograffia.app.PaintViewModel
+import stenograffia.app.vw.PaintViewModel
 
 
 @Composable
@@ -44,7 +44,10 @@ fun DialogChangeQuantity(
 }
 
 @Composable
-fun InformationText(differenceQuantity: MutableState<Int>, onStock: MutableState<Int>){
+fun InformationText(
+    differenceQuantity: MutableState<Int>,
+    onStock: MutableState<Int>
+){
     Box(modifier = Modifier.size(
         dimensionResource(R.dimen.width_dialog),
         dimensionResource(R.dimen.side_length_element)
@@ -58,8 +61,11 @@ fun InformationText(differenceQuantity: MutableState<Int>, onStock: MutableState
 }
 
 @Composable
-fun ChangeButtons(nothingInStock: MutableState<Boolean>, differenceQuantity: MutableState<Int>, onStock: MutableState<Int>){
-
+fun ChangeButtons(
+    nothingInStock: MutableState<Boolean>,
+    differenceQuantity: MutableState<Int>,
+    onStock: MutableState<Int>
+){
     Row(modifier = Modifier.background(MaterialTheme.colors.secondary)) {
 
         Button(
@@ -121,8 +127,11 @@ fun SeparationBox(){
 }
 
 @Composable
-fun DialogButton(showDialogChangeQuantity: MutableState<Boolean>, viewModel: PaintViewModel,
-                 differenceQuantity: MutableState<Int>){
+fun DialogButton(
+    showDialogChangeQuantity: MutableState<Boolean>,
+    viewModel: PaintViewModel,
+    differenceQuantity: MutableState<Int>
+){
     val modifierButton = Modifier
         .defaultMinSize(
             dimensionResource(R.dimen.width_button_nav),

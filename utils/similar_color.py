@@ -1,41 +1,39 @@
 import math
 
+from paint_model import CansModel
+
 
 class SimilarColor:
     path = r"Cans/all.txt"
-    all_color: dict = {}
+    all_cans = []
+
+    def add_cans_to_simular_color(self, cans):
+        pass
 
     def load_all_color(self):
-        with open(self.path, "r", encoding="utf-8") as file:
-            for color_line in file:
-                line = color_line.split("|")
-                rgb = line[1].split()
-                rgb_tuple = (float(rgb[0]), float(rgb[1]), float(rgb[2]))
-                self.all_color.update({int(line[0]): rgb_tuple})
-        print(self.all_color)
+        pass
 
-    def write_in_all_color(self):
-        with open(self.path, "w", encoding="utf-8") as file:
-            for key, value in self.all_color.items():
-                file.write(f'{key}|{str(value).replace(")", "").replace("(", "").replace(",", "")}\n')
-                # file.write(f'{key}|{value[0]} {value[1]} {value[2]}\n')
-
-    def get_similar_color(self, paint_id, color) -> list:
-        answer = []
-
-        hex_color = hex(color)
+    def get_lab_by_int(self, can: CansModel):
+        hex_color = hex(can.color)
         hex_color += "0" * (8 - len(hex_color))
         L, a, b = SimilarColor.rgb2lab([int(hex_color[2:4], 16), int(hex_color[4:6], 16), int(hex_color[6:8], 16)])
+        return [L, a, b]
 
-        for key, value in self.all_color.items():
-            diff = SimilarColor.ciede2000([L, a, b], value)
-            if diff < 5 and int(key) != int(paint_id):
+    def get_similar_color(self, cans: CansModel) -> list:
+        answer = []
+
+        lab_1 = self.get_lab_by_int(cans)
+
+        for can in self.all_cans:
+            lab_2 = self.get_lab_by_int(can)
+            diff = SimilarColor.ciede2000(lab_1, lab_2)
+
+            if diff < 5 and int(cans.paint_id) != int(can.paint_id):
                 percent = int(100 - diff)
-                answer.append(f"listOf({key}, {percent})")
+                answer.append(f"listOf({can.paint_id}, {percent})")
 
-        self.all_color.update({paint_id: (L, a, b)})
-
-        return answer
+        cans.similar_colors = answer
+        return cans
 
     @staticmethod
     def rgb2lab(input_color):

@@ -21,4 +21,7 @@ interface PaintDao {
 
     @Update
     fun updatePaint(paintEntity: PaintEntity)
+
+    @Query("SELECT DISTINCT nameCreator, NameLine FROM PaintEntity")
+    fun getAllPaintNames(): List<PaintNamesTuple>
 }

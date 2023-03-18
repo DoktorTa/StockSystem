@@ -3,7 +3,7 @@ from typing import List
 import requests
 from bs4 import BeautifulSoup
 
-from paint_model import PaintModel
+from paint_model import CansModel
 
 
 class DontGatePage(Exception): pass
@@ -11,7 +11,7 @@ class DontGatePage(Exception): pass
 
 class ParserHTML:
 
-    def __init__(self, array_id, name_line, name_creater, volume):
+    def __init__(self, array_id, name_creater, name_line, volume):
         self.array_id = array_id
         self.name_line = name_line
         self.name_creater = name_creater
@@ -32,14 +32,14 @@ class ParserHTML:
 
         return list_html_cans
 
-    def html_cans2paint_model(self, html) -> PaintModel:
+    def html_cans2cans_model(self, html) -> CansModel:
         pass
 
 
 class MontanaCansParserHTML(ParserHTML):
     inc = 0
 
-    def html_cans2paint_model(self, html) -> PaintModel:
+    def html_cans2cans_model(self, html) -> CansModel:
 
         cc = html.find('span', class_="color-code").text.replace(" ", "-")
         color_code = f"{cc}-{self.volume}"
@@ -52,7 +52,7 @@ class MontanaCansParserHTML(ParserHTML):
 
         color = int(label['data-hex'][1:], 16)
 
-        return PaintModel(
+        return CansModel(
             paint_id,
             self.name_creater,
             self.name_line,

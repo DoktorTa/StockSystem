@@ -1,6 +1,7 @@
 package stenograffia.app
 
 import android.app.Activity
+import android.util.Log
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
@@ -22,9 +23,14 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import stenograffia.app.stock.paint.ListPaint
-import stenograffia.app.stock.paint.Paint
-import stenograffia.app.stock.paint.customTopBar
+import stenograffia.app.domain.model.PaintNamesTupleModel
+import stenograffia.app.ui.listCreator.ListCreator
+import stenograffia.app.ui.paint.ListPaint
+import stenograffia.app.ui.paint.Paint
+import stenograffia.app.ui.paint.customTopBar
+import stenograffia.app.vw.PaintCreatorViewModel
+import stenograffia.app.vw.PaintListViewModel
+import stenograffia.app.vw.PaintViewModel
 
 
 @Composable
@@ -38,10 +44,25 @@ fun StenograffiaApp(){
     ) {
             innerPadding ->
         NavHost(navController, startDestination = Screen.Stock.route, Modifier.padding(innerPadding)) {
-            composable(Screen.Stock.route) { ListPaint(navController) }
+            composable(Screen.Stock.route) {
+                val viewModel: PaintCreatorViewModel = app.paintComponent.getPaintCreatorViewModel()
+                ListCreator(viewModel, navController)
+            }
+
             composable(Screen.Orders.route) { InFutureVersion(navController) }
             composable(Screen.Objects.route) { InFutureVersion(navController) }
             composable(Screen.Settings.route) { InFutureVersion(navController) }
+
+            composable("PaintList/{nameCreator}/{nameLine}") { backStackEntry ->
+                // TODO: Антипаттерн, полюбому, нужно продумать навигацию до релиза 0.1.0
+                val nameCreator: String = backStackEntry.arguments?.getString("nameCreator")!!
+                val nameLine: String = backStackEntry.arguments?.getString("nameLine")!!
+                val paintNameModel = PaintNamesTupleModel(nameCreator = nameCreator, nameLine = nameLine)
+
+                val viewModel: PaintListViewModel = app.paintComponent.getPaintListViewModel()
+                viewModel.loadPaintList(paintNameModel)
+                ListPaint(viewModel, navController)
+            }
 
             composable("PAINT/{paintId}") { backStackEntry ->
                 val paintId: Int = backStackEntry.arguments?.getString("paintId")!!.toInt()
@@ -49,6 +70,7 @@ fun StenograffiaApp(){
                 viewModel.loadPaintModelById(paintId)
                 Paint(viewModel, navController)
             }
+
         }
     }
 }

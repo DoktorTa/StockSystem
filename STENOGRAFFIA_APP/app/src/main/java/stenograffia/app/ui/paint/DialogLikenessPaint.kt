@@ -1,6 +1,5 @@
-package stenograffia.app.stock.paint
+package stenograffia.app.ui.paint
 
-import android.app.Activity
 import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -13,18 +12,20 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.navigation.NavController
 import stenograffia.app.App
 import stenograffia.app.domain.model.PaintModel
-import stenograffia.app.ui.theme.STENOGRAFFIAAPPTheme
+import stenograffia.app.ui.listPaint.PaintItem
 
 @Composable
-fun DialogLikenessPaint(showDialog: MutableState<Boolean>, navController: NavController, likenessList: List<List<Int>>){
+fun DialogLikenessPaint(
+    showDialog: MutableState<Boolean>,
+    navController: NavController,
+    likenessList: List<List<Int>>
+){
     Dialog(onDismissRequest = { showDialog.value = false }) {
         Box(
             modifier = Modifier
@@ -62,7 +63,8 @@ fun LikenessListPaint(likenessList: List<List<Int>>, navController: NavControlle
         horizontalArrangement = Arrangement.spacedBy(3.dp),
         content = {
             items(paintList.size) { index ->
-                LikenessListPaintItem(PaintItem.fromPaintModel(paintList[index], additionalInformation = percentLikenessList[index].toString()),
+                LikenessListPaintItem(
+                    PaintItem.fromPaintModel(paintList[index], additionalInformation = percentLikenessList[index].toString()),
                     Modifier.clickable {
                         navController.navigate("PAINT/${paintList[index].id}") })
             }

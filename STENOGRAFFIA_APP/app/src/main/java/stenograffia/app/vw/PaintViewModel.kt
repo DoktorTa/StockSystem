@@ -1,4 +1,4 @@
-package stenograffia.app
+package stenograffia.app.vw
 
 import android.util.Log
 import androidx.lifecycle.ViewModel

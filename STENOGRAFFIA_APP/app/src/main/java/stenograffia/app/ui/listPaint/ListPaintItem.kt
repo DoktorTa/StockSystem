@@ -1,6 +1,6 @@
-package stenograffia.app.stock.paint
+package stenograffia.app.ui.listPaint
 
-import android.util.Log
+import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
@@ -39,7 +39,7 @@ data class PaintItem(
             ON_STOCK to Color.Green
         )
 
-        fun fromPaintModel(paintModel: PaintModel, additionalInformation: String = ""): PaintItem{
+        fun fromPaintModel(paintModel: PaintModel, additionalInformation: String = ""): PaintItem {
             val statusPaint = getStatusPaint(paintModel)
 
             val color = Color(0xFF000000 + paintModel.color)
@@ -78,6 +78,7 @@ data class PaintItem(
     }
 }
 
+@SuppressLint("SuspiciousIndentation")
 @Composable
 fun ListPaintItem(paintItem: PaintItem, modifier: Modifier=Modifier, width: Int = 90) {
     val modifier1 = Modifier.padding(start = 2.dp)

@@ -6,13 +6,14 @@ class PaintModelPaintId:
     class Prefix:
         MONTANA_BLACK = "11"
         MONTANA_GOLD = "12"
+        ARTON = "21"
 
     @staticmethod
     def generate_array_paint_id(prefix: str) -> List[str]:
         return [f'{prefix}{i:04}' for i in range(0, 300)]
 
 
-class PaintModel:
+class CansModel:
     def __init__(self,
                  paint_id: str,
                  name_creater: str,
@@ -44,3 +45,7 @@ class PaintModel:
                rf'PaintModel({self.paint_id}, TypePaint.{self.paint_type}, "{self.name_creater}",' \
                rf' "{self.name_line}", "{self.color_code}", "{self.name_color}", " ", {hex(self.color)}, 0, listOf(),' \
                rf' listOf({sc}),  false)'
+
+    def get_csv(self):
+        return rf'{self.paint_id},{self.paint_type},{self.name_creater},{self.name_line},' \
+               rf'{self.color_code},{self.name_color},"",{self.color},0,"",{self.similar_colors},false'
