@@ -1,6 +1,8 @@
 package stenograffia.app.domain.model
 
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class PaintModel(
     val id: Int,
     val type: TypePaint,

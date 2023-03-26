@@ -1,39 +1,41 @@
 import math
 
-from paint_model import CansModel
+from cans_model import CansModel
 
 
 class SimilarColor:
     path = r"Cans/all.txt"
     all_cans = []
+    lab_all_cans = {}
 
-    def add_cans_to_simular_color(self, cans):
-        pass
+    def __init__(self, cans):
+        self.all_cans = cans
 
-    def load_all_color(self):
-        pass
+    def calculate_simular_cans(self):
 
-    def get_lab_by_int(self, can: CansModel):
+        for cans in self.all_cans:
+            lab = self.get_lab_by_int(cans)
+            self.lab_all_cans.update({cans.paint_id: lab})
+
+        for cans in self.all_cans:
+            simular = []
+            lab1 = self.lab_all_cans.get(cans.paint_id)
+
+            for cans_id, lab2 in self.lab_all_cans.items():
+                diff = SimilarColor.ciede2000(lab1, lab2)
+
+                if diff < 5 and int(cans_id) != int(cans.paint_id):
+                    percent = int(100 - diff)
+                    simular.append(f'listOf({cans_id}, {percent})')
+
+            cans.similar_colors = simular
+
+    @staticmethod
+    def get_lab_by_int(can: CansModel):
         hex_color = hex(can.color)
-        hex_color += "0" * (8 - len(hex_color))
+        hex_color = f'0x{"0" * (8 - len(hex_color))}{hex_color[2:]}'
         L, a, b = SimilarColor.rgb2lab([int(hex_color[2:4], 16), int(hex_color[4:6], 16), int(hex_color[6:8], 16)])
-        return [L, a, b]
-
-    def get_similar_color(self, cans: CansModel) -> list:
-        answer = []
-
-        lab_1 = self.get_lab_by_int(cans)
-
-        for can in self.all_cans:
-            lab_2 = self.get_lab_by_int(can)
-            diff = SimilarColor.ciede2000(lab_1, lab_2)
-
-            if diff < 5 and int(cans.paint_id) != int(can.paint_id):
-                percent = int(100 - diff)
-                answer.append(f"listOf({can.paint_id}, {percent})")
-
-        cans.similar_colors = answer
-        return cans
+        return L, a, b
 
     @staticmethod
     def rgb2lab(input_color):
@@ -177,7 +179,27 @@ class SimilarColor:
 
 
 if __name__ == '__main__':
-    cans1045 = (0, 0, 0)
-    cans2060 = (100, 0, 0)
-    diff = SimilarColor.ciede2000(cans1045, cans2060)
+    cansB = CansModel(
+            paint_id="1",
+            name_creator="a",
+            name_line="b",
+            color_code="c",
+            name_color="v",
+            color=0x30506,
+            similar_colors=[]
+        )
+    cansO = CansModel(
+            paint_id="1",
+            name_creator="a",
+            name_line="b",
+            color_code="c",
+            name_color="v",
+            color=0x255162,
+            similar_colors=[]
+        )
+    cansBlackLab = SimilarColor.get_lab_by_int(cansB)
+    cansOtherLab = SimilarColor.get_lab_by_int(cansO)
+    diff = SimilarColor.ciede2000(cansBlackLab, cansOtherLab)
+    print(hex(cansB.color), hex(cansO.color))
+    print(cansBlackLab, cansOtherLab)
     print(diff)
