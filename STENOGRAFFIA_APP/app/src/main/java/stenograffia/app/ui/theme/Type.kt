@@ -11,7 +11,7 @@ val Typography = Typography(
     h1 = TextStyle(
         fontFamily = FontFamily.Monospace,
         fontWeight = FontWeight.ExtraBold,
-        fontSize = 36.sp
+        fontSize = 32.sp
     ),
 
     body1 = TextStyle(
@@ -19,6 +19,8 @@ val Typography = Typography(
         fontWeight = FontWeight.ExtraBold,
         fontSize = 14.sp
     ),
+
+
 
     body2 = TextStyle(
         fontFamily = FontFamily.Monospace,

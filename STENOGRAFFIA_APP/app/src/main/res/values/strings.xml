@@ -13,4 +13,11 @@
 
 <!--  DialogChangeQuantity  -->
     <string name="change_quantity_description">THERE WILL BE %1$d IN STOCK</string>
+
+<!--  StockCategories  -->
+    <string name="paint_categories_handler">PAINT</string>
+    <string name="paint_categories_description">CANS, ENAMEL, EXTERIOR PAINT</string>
+    <string name="materials_categories_handler">MATERIALS</string>
+    <string name="materials_categories_description">STAIRS, GENERATORS, TOURS</string>
+
 </resources>

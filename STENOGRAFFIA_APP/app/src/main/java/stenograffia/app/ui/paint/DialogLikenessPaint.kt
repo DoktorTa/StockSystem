@@ -19,12 +19,14 @@ import androidx.navigation.NavController
 import stenograffia.app.App
 import stenograffia.app.domain.model.PaintModel
 import stenograffia.app.ui.listPaint.PaintItem
+import stenograffia.app.vw.PaintViewModel
 
 @Composable
 fun DialogLikenessPaint(
     showDialog: MutableState<Boolean>,
     navController: NavController,
-    likenessList: List<List<Int>>
+    likenessList: List<List<Int>>,
+    viewModel: PaintViewModel
 ){
     Dialog(onDismissRequest = { showDialog.value = false }) {
         Box(
@@ -40,11 +42,8 @@ fun DialogLikenessPaint(
 // TODO: Подумать чтобы likenessList внутри содержал словарь а не лист
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun LikenessListPaint(likenessList: List<List<Int>>, navController: NavController, modifier: Modifier = Modifier) {
-    Log.d("STARAR", "ads1")
-
+fun LikenessListPaint(likenessList: List<List<Int>>, navController: NavController) {
     val app = LocalContext.current.applicationContext as App
-    Log.d("STARAR", "ads2")
 
     val vm = app.paintComponent.getPaintUseCase()
     val paintList: MutableList<PaintModel> = mutableListOf()
@@ -92,13 +91,3 @@ fun LikenessListPaintItem(paintItem: PaintItem, modifier: Modifier=Modifier, wid
         Text(text = paintItem.statusPaint, color = paintItem.colorTextStatus, style = MaterialTheme.typography.body1, modifier = modifier)
     }
 }
-
-//
-//@Preview(showBackground = true)
-//@Composable
-//fun DefaultPreview() {
-//
-//    STENOGRAFFIAAPPTheme {
-//        LikenessListPaintItem()
-//    }
-//}

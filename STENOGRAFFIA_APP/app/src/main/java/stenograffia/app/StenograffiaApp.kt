@@ -28,6 +28,7 @@ import stenograffia.app.ui.listCreator.ListCreator
 import stenograffia.app.ui.paint.ListPaint
 import stenograffia.app.ui.paint.Paint
 import stenograffia.app.ui.paint.customTopBar
+import stenograffia.app.ui.stock.central.StockCategories
 import stenograffia.app.vw.PaintCreatorViewModel
 import stenograffia.app.vw.PaintListViewModel
 import stenograffia.app.vw.PaintViewModel
@@ -44,14 +45,15 @@ fun StenograffiaApp(){
     ) {
             innerPadding ->
         NavHost(navController, startDestination = Screen.Stock.route, Modifier.padding(innerPadding)) {
-            composable(Screen.Stock.route) {
-                val viewModel: PaintCreatorViewModel = app.paintComponent.getPaintCreatorViewModel()
-                ListCreator(viewModel, navController)
-            }
-
+            composable(Screen.Stock.route) {StockCategories(navController)}
             composable(Screen.Orders.route) { InFutureVersion(navController) }
             composable(Screen.Objects.route) { InFutureVersion(navController) }
             composable(Screen.Settings.route) { InFutureVersion(navController) }
+
+            composable("PaintListCreator") {
+                val viewModel: PaintCreatorViewModel = app.paintComponent.getPaintCreatorViewModel()
+                ListCreator(viewModel, navController)
+            }
 
             composable("PaintList/{nameCreator}/{nameLine}") { backStackEntry ->
                 // TODO: Антипаттерн, полюбому, нужно продумать навигацию до релиза 0.1.0
@@ -76,7 +78,7 @@ fun StenograffiaApp(){
 }
 
 sealed class Screen(val route: String, @StringRes val resourceId: Int, val image: ImageVector) {
-    object Stock : Screen("STOCK", R.string.stock_menu, Icons.Outlined.Inventory2)
+    object Stock : Screen("StockCategories", R.string.stock_menu, Icons.Outlined.Inventory2)
     object Orders : Screen("ORDERS", R.string.orders_menu, Icons.Outlined.CheckBox)
     object Objects : Screen("OBJECTS", R.string.objects_menu, Icons.Outlined.Wallpaper)
     object Settings : Screen("SETTINGS", R.string.settings_menu, Icons.Outlined.Settings)

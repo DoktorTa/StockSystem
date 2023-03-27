@@ -7,4 +7,6 @@
     <dimen name="side_length_element">50dp</dimen>
     <dimen name="padding_central_button">50dp</dimen>
 
+<!--  StockCategories  -->
+    <dimen name="stock_categories_padding_text">15dp</dimen>
 </resources>

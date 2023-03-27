@@ -175,7 +175,7 @@ fun ConstraintLayoutContent(viewModel: PaintViewModel, navController: NavControl
         val paintModel = viewModel.paintModel
 
         if(showDialogLikenessPaint.value) {
-            DialogLikenessPaint(showDialogLikenessPaint, navController, paintModel.similarColors)
+            DialogLikenessPaint(showDialogLikenessPaint, navController, paintModel.similarColors, viewModel)
         } else if (showDialogChangeQuantity.value) {
             DialogChangeQuantity(showDialogChangeQuantity, viewModel)
         }
