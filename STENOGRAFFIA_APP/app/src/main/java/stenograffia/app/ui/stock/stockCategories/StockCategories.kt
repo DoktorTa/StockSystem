@@ -1,4 +1,4 @@
-package stenograffia.app.ui.stock.central
+package stenograffia.app.ui.stock.stockCategories
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -26,7 +26,7 @@ fun StockCategories(navController: NavController){
                 .fillMaxHeight()
                 .weight(1f)
                 .background(color = colorBlackTransparent)
-                .clickable { navController.navigate("PaintListCreator") },
+                .clickable { navController.navigate("ListPaintLine") },
             contentAlignment = Alignment.Center
         ) {
             CategoryText(
@@ -50,7 +50,10 @@ fun StockCategories(navController: NavController){
 }
 
 @Composable
-fun CategoryText(handlerText: String, descriptionText: String){
+fun CategoryText(
+    handlerText: String = stringResource(R.string.default_text),
+    descriptionText: String = stringResource(R.string.default_text)
+){
     Column () {
         Text(
             text = handlerText,

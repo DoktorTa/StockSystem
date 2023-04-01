@@ -1,6 +1,5 @@
 package stenograffia.app.ui.paint
 
-import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -13,12 +12,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.navigation.NavController
 import stenograffia.app.App
 import stenograffia.app.domain.model.PaintModel
-import stenograffia.app.ui.listPaint.PaintItem
+import stenograffia.app.ui.stock.listPaint.PaintItem
 import stenograffia.app.vw.PaintViewModel
 
 @Composable
@@ -88,6 +88,10 @@ fun LikenessListPaintItem(paintItem: PaintItem, modifier: Modifier=Modifier, wid
             Text(text = paintItem.codePaint, color = paintItem.colorText, modifier = modifier1, maxLines = 1)
             Text(text = "LIKENESS: ${paintItem.additionalInformation}", color = paintItem.colorText, modifier = modifier1, maxLines = 1)
         }
-        Text(text = paintItem.statusPaint, color = paintItem.colorTextStatus, style = MaterialTheme.typography.body1, modifier = modifier)
+        Text(
+            text = stringResource(paintItem.statusPaintTextId),
+            color = paintItem.colorTextStatus,
+            style = MaterialTheme.typography.body1,
+            modifier = modifier)
     }
 }

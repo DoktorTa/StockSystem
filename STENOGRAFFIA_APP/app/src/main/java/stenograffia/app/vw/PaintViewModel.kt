@@ -8,7 +8,7 @@ import javax.inject.Inject
 
 class PaintViewModel @Inject constructor(
     val useCase: PaintUseCase
-): ViewModel() {
+) : ViewModel() {
 
     lateinit var paintModel: PaintModel
 
@@ -16,7 +16,7 @@ class PaintViewModel @Inject constructor(
         paintModel = useCase.getPaintModelById(paintId)!!
     }
 
-    fun changeQuantityPaintInStock(difference: Int){
+    fun changeQuantityPaintInStock(difference: Int) {
         useCase.changeQuantityPaintInStock(paintModel, difference)
     }
 

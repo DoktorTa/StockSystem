@@ -1,6 +1,7 @@
 package stenograffia.app.domain.useCases
 
 import android.util.Log
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.single
 import stenograffia.app.domain.model.PaintModel
 import stenograffia.app.domain.model.PaintNamesTupleModel
@@ -16,7 +17,7 @@ class PaintUseCase @Inject constructor(
         return paintRepository.getPaintById(paintId)
     }
 
-    fun getLinePaint(paintNameModel: PaintNamesTupleModel): List<PaintModel>{
+    fun getLinePaint(paintNameModel: PaintNamesTupleModel): Flow<List<PaintModel>> {
         return paintRepository.getPaintsListByCreatorAndLine(paintNameModel.nameCreator, paintNameModel.nameLine)
     }
 
@@ -25,7 +26,7 @@ class PaintUseCase @Inject constructor(
         paintRepository.updatePaint(paintModel)
     }
 
-    fun getAllPaintNames(): List<PaintNamesTupleModel>{
+    fun getAllPaintNames(): Flow<List<PaintNamesTupleModel>>{
         return paintRepository.getAllPaintNames()
     }
 }

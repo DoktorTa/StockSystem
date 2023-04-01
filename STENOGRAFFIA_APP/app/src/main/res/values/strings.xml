@@ -20,4 +20,11 @@
     <string name="materials_categories_handler">MATERIALS</string>
     <string name="materials_categories_description">STAIRS, GENERATORS, TOURS</string>
 
+<!--  PaintListItem  -->
+    <string name="paint_list_item_not_available">NOT AVAILABLE</string>
+    <string name="paint_list_item_mabye">MAYBE</string>
+    <string name="paint_list_item_on_stock">ON STOCK</string>
+
+<!--  Other  -->
+    <string name="default_text">Default text</string>
 </resources>

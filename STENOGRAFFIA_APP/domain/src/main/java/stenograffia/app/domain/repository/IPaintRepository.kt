@@ -8,9 +8,9 @@ interface IPaintRepository {
 
     fun getPaintById(paintId: Int): PaintModel?
 
-    fun getPaintsListByCreatorAndLine(nameCreator: String, nameLine: String): List<PaintModel>
+    fun getPaintsListByCreatorAndLine(nameCreator: String, nameLine: String): Flow<List<PaintModel>>
 
     fun updatePaint(paintModel: PaintModel)
 
-    fun getAllPaintNames(): List<PaintNamesTupleModel>
+    fun getAllPaintNames(): Flow<List<PaintNamesTupleModel>>
 }

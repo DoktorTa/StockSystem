@@ -19,9 +19,11 @@ class PaintRepositoryImpl(
     }
 
     override fun getPaintsListByCreatorAndLine(nameCreator: String, nameLine: String):
-            List<PaintModel> {
+            Flow<List<PaintModel>> {
         return paintDao.getListPaintsByLineAndCreator(nameCreator, nameLine).map {
-            it.toPaintModel()!!
+            it.map{paintItem ->
+                paintItem.toPaintModel()!!
+            }
         }
     }
 
@@ -29,8 +31,10 @@ class PaintRepositoryImpl(
         paintDao.updatePaint(paintModel.fromPaintEntity()!!)
     }
 
-    override fun getAllPaintNames(): List<PaintNamesTupleModel>{
-        return paintDao.getAllPaintNames().map { it.toPaintNamesTupleModel() }
+    override fun getAllPaintNames(): Flow<List<PaintNamesTupleModel>>{
+        return paintDao.getAllPaintNames().map { it.map { paintNamesTupleModel ->
+            paintNamesTupleModel.toPaintNamesTupleModel()
+        } }
     }
 
 

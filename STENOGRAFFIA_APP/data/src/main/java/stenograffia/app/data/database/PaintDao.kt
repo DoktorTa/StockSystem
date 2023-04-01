@@ -14,7 +14,7 @@ interface PaintDao {
     fun getPaintById(paintId: Int): PaintEntity?
 
     @Query("SELECT * FROM PaintEntity WHERE nameCreator = :nameCreator AND nameLine = :nameLine")
-    fun getListPaintsByLineAndCreator(nameCreator: String, nameLine: String): List<PaintEntity>
+    fun getListPaintsByLineAndCreator(nameCreator: String, nameLine: String): Flow<List<PaintEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun addPaint(paintEntity: PaintEntity)
@@ -23,5 +23,5 @@ interface PaintDao {
     fun updatePaint(paintEntity: PaintEntity)
 
     @Query("SELECT DISTINCT nameCreator, NameLine FROM PaintEntity")
-    fun getAllPaintNames(): List<PaintNamesTuple>
+    fun getAllPaintNames(): Flow<List<PaintNamesTuple>>
 }
