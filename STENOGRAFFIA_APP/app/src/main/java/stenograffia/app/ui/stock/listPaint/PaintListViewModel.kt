@@ -1,6 +1,7 @@
 package stenograffia.app.ui.stock.listPaint
 
 import androidx.lifecycle.ViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import stenograffia.app.domain.model.PaintModel
@@ -8,9 +9,10 @@ import stenograffia.app.domain.model.PaintNamesTupleModel
 import stenograffia.app.domain.useCases.PaintUseCase
 import javax.inject.Inject
 
+@HiltViewModel
 class PaintListViewModel @Inject constructor(
     val useCase: PaintUseCase
-): ViewModel() {
+) : ViewModel() {
 
     var paintList: Flow<List<PaintModel>> = flow { listOf<PaintModel>() }
     private var paintNameModelNow: PaintNamesTupleModel? = null

@@ -1,4 +1,4 @@
-package stenograffia.app.ui.paint
+package stenograffia.app.ui.stock.paint
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -18,6 +18,7 @@ import androidx.compose.ui.window.Dialog
 import androidx.navigation.NavController
 import stenograffia.app.App
 import stenograffia.app.domain.model.PaintModel
+import stenograffia.app.ui.paint.ListPaint
 import stenograffia.app.ui.stock.listPaint.PaintItem
 import stenograffia.app.vw.PaintViewModel
 
@@ -31,10 +32,16 @@ fun DialogLikenessPaint(
     Dialog(onDismissRequest = { showDialog.value = false }) {
         Box(
             modifier = Modifier
-                .defaultMinSize(50.dp, 50.dp)
+                .defaultMinSize(
+                    minWidth = 50.dp,
+                    minHeight = 50.dp
+                )
                 .background(MaterialTheme.colors.secondary)
         ) {
-            LikenessListPaint(likenessList = likenessList, navController = navController)
+            LikenessListPaint(
+                likenessList = likenessList,
+                navController = navController
+            )
         }
     }
 }
@@ -54,6 +61,10 @@ fun LikenessListPaint(likenessList: List<List<Int>>, navController: NavControlle
 //        percentLikenessList.add(it[1])
 //    }
 
+    ListPaint(
+        navController = navController,
+        paintList = paintList
+    )
 
     LazyVerticalGrid(
         modifier = Modifier.padding(start = 3.dp, end = 3.dp, top = 3.dp, bottom = 3.dp),

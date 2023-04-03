@@ -1,4 +1,4 @@
-package stenograffia.app.ui.paint
+package stenograffia.app.ui.stock.paint
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -29,12 +29,16 @@ fun DialogChangeQuantity(
     viewModel: PaintViewModel
 ) {
 
-    val differenceQuantity =  remember { mutableStateOf(0) }
+    val differenceQuantity = remember { mutableStateOf(0) }
     val quantityOnStock = remember { mutableStateOf(viewModel.paintModel.quantityInStorage) }
-    val nothingInStock = remember { mutableStateOf((quantityOnStock.value + differenceQuantity.value) > 0)}
+    val nothingInStock =
+        remember { mutableStateOf((quantityOnStock.value + differenceQuantity.value) > 0) }
 
-    Dialog(onDismissRequest = { showDialogChangeQuantity.value = false}) {
-        Column(modifier = Modifier.background(MaterialTheme.colors.secondary)) {
+    Dialog(onDismissRequest = { showDialogChangeQuantity.value = false }) {
+        Column(
+            modifier = Modifier
+                .background(color = MaterialTheme.colors.secondary)
+        ) {
             InformationText(differenceQuantity, quantityOnStock)
             ChangeButtons(nothingInStock, differenceQuantity, quantityOnStock)
             SeparationBox()
@@ -47,16 +51,20 @@ fun DialogChangeQuantity(
 fun InformationText(
     differenceQuantity: MutableState<Int>,
     onStock: MutableState<Int>
-){
-    Box(modifier = Modifier.size(
-        dimensionResource(R.dimen.width_dialog),
-        dimensionResource(R.dimen.side_length_element)
-    )) {
+) {
+    Box(
+        modifier = Modifier.size(
+            dimensionResource(id = R.dimen.width_dialog),
+            dimensionResource(id = R.dimen.side_length_element)
+        )
+    ) {
         Text(
             text = stringResource(
                 R.string.change_quantity_description,
-                onStock.value + differenceQuantity.value),
-            modifier = Modifier.align(Alignment.Center))
+                onStock.value + differenceQuantity.value
+            ),
+            modifier = Modifier.align(Alignment.Center)
+        )
     }
 }
 
@@ -65,21 +73,22 @@ fun ChangeButtons(
     nothingInStock: MutableState<Boolean>,
     differenceQuantity: MutableState<Int>,
     onStock: MutableState<Int>
-){
+) {
     Row(modifier = Modifier.background(MaterialTheme.colors.secondary)) {
 
         Button(
             onClick = {
                 nothingInStock.value = (onStock.value - differenceQuantity.value) != 0
-                differenceQuantity.value-- },
+                differenceQuantity.value--
+            },
             shape = RectangleShape,
             modifier = Modifier
-                .padding(start = dimensionResource(R.dimen.padding_central_button))
+                .padding(start = dimensionResource(id = R.dimen.padding_central_button))
                 .size(
-                    dimensionResource(R.dimen.side_length_element),
-                    dimensionResource(R.dimen.side_length_element)
+                    dimensionResource(id = R.dimen.side_length_element),
+                    dimensionResource(id = R.dimen.side_length_element)
                 )
-                .background(MaterialTheme.colors.primary),
+                .background(color = MaterialTheme.colors.primary),
             enabled = (onStock.value + differenceQuantity.value) > 0
         ) {
             Icon(
@@ -88,25 +97,32 @@ fun ChangeButtons(
             )
         }
 
-        Box(modifier = Modifier
-            .size(
-                dimensionResource(R.dimen.side_length_element),
-                dimensionResource(R.dimen.side_length_element)
+        Box(
+            modifier = Modifier
+                .size(
+                    dimensionResource(id = R.dimen.side_length_element),
+                    dimensionResource(id = R.dimen.side_length_element)
+                )
+                .background(color = MaterialTheme.colors.secondary)
+        ) {
+            Text(
+                text = "${differenceQuantity.value}",
+                modifier = Modifier.align(
+                    Alignment.Center
+                )
             )
-            .background(MaterialTheme.colors.secondary)) {
-            Text(text = "${differenceQuantity.value}", modifier = Modifier.align(Alignment.Center))
         }
 
         Button(
             onClick = { differenceQuantity.value++ },
             shape = RectangleShape,
             modifier = Modifier
-                .padding(end = dimensionResource(R.dimen.padding_central_button))
+                .padding(end = dimensionResource(id = R.dimen.padding_central_button))
                 .size(
-                    dimensionResource(R.dimen.side_length_element),
-                    dimensionResource(R.dimen.side_length_element)
+                    dimensionResource(id = R.dimen.side_length_element),
+                    dimensionResource(id = R.dimen.side_length_element)
                 )
-                .background(MaterialTheme.colors.primary)
+                .background(color = MaterialTheme.colors.primary)
         ) {
             Icon(
                 imageVector = Icons.Filled.Add,
@@ -117,13 +133,15 @@ fun ChangeButtons(
 }
 
 @Composable
-fun SeparationBox(){
-    Box(modifier = Modifier
-        .defaultMinSize(
-            dimensionResource(R.dimen.width_dialog),
-            dimensionResource(R.dimen.height_separation_box_dialog)
-        )
-        .background(MaterialTheme.colors.secondary)) {}
+fun SeparationBox() {
+    Box(
+        modifier = Modifier
+            .defaultMinSize(
+                dimensionResource(id = R.dimen.width_dialog),
+                dimensionResource(id = R.dimen.height_separation_box_dialog)
+            )
+            .background(color = MaterialTheme.colors.secondary)
+    ) {}
 }
 
 @Composable
@@ -131,11 +149,11 @@ fun DialogButton(
     showDialogChangeQuantity: MutableState<Boolean>,
     viewModel: PaintViewModel,
     differenceQuantity: MutableState<Int>
-){
+) {
     val modifierButton = Modifier
         .defaultMinSize(
-            dimensionResource(R.dimen.width_button_nav),
-            dimensionResource(R.dimen.side_length_element)
+            dimensionResource(id = R.dimen.width_button_nav),
+            dimensionResource(id = R.dimen.side_length_element)
         )
         .background(MaterialTheme.colors.primary)
 
@@ -145,16 +163,23 @@ fun DialogButton(
             modifier = modifierButton,
             shape = RectangleShape,
         ) {
-            Text(text = stringResource(R.string.cancel), color = MaterialTheme.colors.secondary)
+            Text(
+                text = stringResource(id = R.string.cancel),
+                color = MaterialTheme.colors.secondary
+            )
         }
         Button(
             onClick = {
                 viewModel.changeQuantityPaintInStock(differenceQuantity.value)
-                showDialogChangeQuantity.value = false },
+                showDialogChangeQuantity.value = false
+            },
             modifier = modifierButton,
             shape = RectangleShape,
         ) {
-            Text(text = stringResource(R.string.ok), color = MaterialTheme.colors.secondary)
+            Text(
+                text = stringResource(id = R.string.ok),
+                color = MaterialTheme.colors.secondary
+            )
         }
     }
 }

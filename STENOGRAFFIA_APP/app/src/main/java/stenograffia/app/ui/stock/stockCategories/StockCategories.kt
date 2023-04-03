@@ -16,7 +16,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 
 @Composable
-fun StockCategories(navController: NavController){
+fun StockCategories(navController: NavController) {
     // TODO: Кажется создавать тут цвет не оптимально.
     val colorBlackTransparent = Color(red = 0, green = 0, blue = 0, alpha = 0x5f)
 
@@ -53,8 +53,8 @@ fun StockCategories(navController: NavController){
 fun CategoryText(
     handlerText: String = stringResource(id = R.string.default_text),
     descriptionText: String = stringResource(id = R.string.default_text)
-){
-    Column () {
+) {
+    Column() {
         Text(
             text = handlerText,
             style = MaterialTheme.typography.h1,

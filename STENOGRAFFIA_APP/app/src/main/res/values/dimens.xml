@@ -22,6 +22,13 @@
     <dimen name="paint_list_item_arrangement">3dp</dimen>
     <dimen name="paint_list_padding">15dp</dimen>
 
+<!--  Paint  -->
+    <dimen name="paint_padding_start">15.dp</dimen>
+    <dimen name="paint_padding_end">15.dp</dimen>
+    <dimen name="paint_padding_top">15.dp</dimen>
+    <dimen name="paint_padding_bottom">15.dp</dimen>
 
+<!--  TopBar  -->
+    <dimen name="top_bar_padding_text_start">5dp</dimen>
 
 </resources>

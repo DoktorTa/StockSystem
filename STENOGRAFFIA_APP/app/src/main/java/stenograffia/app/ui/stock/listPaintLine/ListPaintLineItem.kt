@@ -17,7 +17,7 @@ import stenograffia.app.R
 fun ListCreatorItem(
     modifier: Modifier = Modifier,
     textItem: String = stringResource(id = R.string.default_text)
-){
+) {
     Box(
         modifier = modifier
             .background(color = MaterialTheme.colors.primary)

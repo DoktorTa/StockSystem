@@ -23,10 +23,10 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import stenograffia.app.domain.model.PaintNamesTupleModel
+import stenograffia.app.ui.CustomTopBar
 import stenograffia.app.ui.stock.listPaintLine.ListPaintLine
 import stenograffia.app.ui.paint.ListPaint
-import stenograffia.app.ui.paint.Paint
-import stenograffia.app.ui.paint.customTopBar
+import stenograffia.app.ui.stock.paint.Paint
 import stenograffia.app.ui.stock.stockCategories.StockCategories
 import stenograffia.app.ui.stock.listPaint.PaintListViewModel
 import stenograffia.app.vw.PaintViewModel
@@ -37,7 +37,7 @@ fun StenograffiaApp(){
     val navController = rememberNavController()
     val app = ((LocalContext.current as Activity).application as App)
     Scaffold(
-        topBar = { customTopBar() },
+        topBar = { CustomTopBar() },
         bottomBar = { NavigationMenu(navController = navController) }
     ) {
             innerPadding ->
@@ -113,3 +113,4 @@ fun NavigationMenu(modifier: Modifier = Modifier, navController: NavController) 
         }
     }
 }
+

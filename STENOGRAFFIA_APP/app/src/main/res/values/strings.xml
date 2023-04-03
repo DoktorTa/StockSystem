@@ -25,6 +25,15 @@
     <string name="paint_list_item_mabye">MAYBE</string>
     <string name="paint_list_item_on_stock">ON STOCK</string>
 
-<!--  Other  -->
+<!--  Paint  -->
+    <string name="paint_hex_color">HEX: #%1$s</string>
+    <string name="paint_cmyk_color">CMYK: cmyk(#%1$s)</string>
+    <string name="paint_hsl_color">HSL: hsl(#%1$s)</string>
+    <string name="paint_button_likeness_paint">LIKENESS PAINT</string>
+    <string name="paint_button_change_quantity">CHANGE QUANTITY</string>
+    <string name="paint_quantity_in_stock">ON STOCK: %1$d PIECES</string>
+
+
+    <!--  Other  -->
     <string name="default_text">Default text</string>
 </resources>

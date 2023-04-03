@@ -1,18 +1,12 @@
 package stenograffia.app.ui.stock.listPaintLine
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -26,15 +20,18 @@ import stenograffia.app.ui.theme.STENOGRAFFIAAPPTheme
 fun ListPaintLine(
     navController: NavController,
     viewModelPaintLine: PaintLineViewModel = hiltViewModel()
-){
-    ListPaintLine(paintLine = viewModelPaintLine.allPaintName)
+) {
+    ListPaintLine(
+        navController = navController,
+        paintLine = viewModelPaintLine.allPaintName
+    )
 }
 
 @Composable
 fun ListPaintLine(
     paintLine: Flow<List<PaintNamesTupleModel>>,
-
-){
+    navController: NavController,
+) {
     val creatorListStable by paintLine.collectAsStateWithLifecycle(
         initialValue = listOf()
     )
@@ -56,7 +53,9 @@ fun ListPaintLine(
                     modifier = Modifier.clickable {
                         val paintName: PaintNamesTupleModel = creatorListStable[index]
                         navController.navigate(
-                            "PaintList/${paintName.nameCreator}/${paintName.nameLine}")})
+                            "PaintList/${paintName.nameCreator}/${paintName.nameLine}"
+                        )
+                    })
             }
         }
     )

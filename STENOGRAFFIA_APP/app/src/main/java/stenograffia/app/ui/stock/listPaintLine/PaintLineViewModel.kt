@@ -10,7 +10,7 @@ import javax.inject.Inject
 @HiltViewModel
 class PaintLineViewModel @Inject constructor(
     val useCase: PaintUseCase,
-): ViewModel(){
+) : ViewModel() {
 
     val allPaintName: Flow<List<PaintNamesTupleModel>> =
         useCase.getAllPaintNames()
