@@ -1,7 +1,7 @@
-[version]build_data_time - тестовая сборка 
-[version]alpha_data_time - Новых фич нет полировка
-[version]beta_data_time - Тестирование + Дизайн
-[version]releas - релиз
+[version]build_data_time - тестовая сборка \
+[version]alpha_data_time - Новых фич нет, полировка \
+[version]beta_data_time - Тестирование + Дизайн \ 
+[version]releas - релиз \
 
 # Version 1.0.0
 
@@ -18,6 +18,7 @@
 
 ### Utils: 
 * Обновление позиций по линиям краски: Montana cans: Black400ml, Gold400ml; Arton paitn: arton400ml
+
 
 ## 0.2.0
 ### Android:

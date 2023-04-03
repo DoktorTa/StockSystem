@@ -30,8 +30,8 @@ fun StockCategories(navController: NavController){
             contentAlignment = Alignment.Center
         ) {
             CategoryText(
-                stringResource(R.string.paint_categories_handler),
-                stringResource(R.string.paint_categories_description)
+                stringResource(id = R.string.paint_categories_handler),
+                stringResource(id = R.string.paint_categories_description)
             )
         }
         Box(
@@ -42,8 +42,8 @@ fun StockCategories(navController: NavController){
             contentAlignment = Alignment.Center
         ) {
             CategoryText(
-                stringResource(R.string.materials_categories_handler),
-                stringResource(R.string.materials_categories_description)
+                stringResource(id = R.string.materials_categories_handler),
+                stringResource(id = R.string.materials_categories_description)
             )
         }
     }
@@ -51,8 +51,8 @@ fun StockCategories(navController: NavController){
 
 @Composable
 fun CategoryText(
-    handlerText: String = stringResource(R.string.default_text),
-    descriptionText: String = stringResource(R.string.default_text)
+    handlerText: String = stringResource(id = R.string.default_text),
+    descriptionText: String = stringResource(id = R.string.default_text)
 ){
     Column () {
         Text(
@@ -65,8 +65,8 @@ fun CategoryText(
             style = MaterialTheme.typography.body1,
             textAlign = TextAlign.Center,
             modifier = Modifier.padding(
-                start = dimensionResource(R.dimen.stock_categories_padding_text),
-                end = dimensionResource(R.dimen.stock_categories_padding_text)
+                start = dimensionResource(id = R.dimen.stock_categories_padding_text),
+                end = dimensionResource(id = R.dimen.stock_categories_padding_text)
             )
         )
     }

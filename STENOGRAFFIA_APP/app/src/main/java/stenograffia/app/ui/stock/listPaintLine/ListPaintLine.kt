@@ -14,32 +14,40 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
+import kotlinx.coroutines.flow.Flow
 import stenograffia.app.R
-import stenograffia.app.di.daggerViewModel
 import stenograffia.app.domain.model.PaintNamesTupleModel
 import stenograffia.app.ui.theme.STENOGRAFFIAAPPTheme
 
 @Composable
 fun ListPaintLine(
     navController: NavController,
-    viewModelPaintLine: PaintLineViewModel = daggerViewModel()
+    viewModelPaintLine: PaintLineViewModel = hiltViewModel()
 ){
+    ListPaintLine(paintLine = viewModelPaintLine.allPaintName)
+}
 
-    val creatorListStable by viewModelPaintLine.allPaintName.collectAsStateWithLifecycle(
+@Composable
+fun ListPaintLine(
+    paintLine: Flow<List<PaintNamesTupleModel>>,
+
+){
+    val creatorListStable by paintLine.collectAsStateWithLifecycle(
         initialValue = listOf()
     )
 
     LazyColumn(
         modifier = Modifier
             .padding(
-                start = dimensionResource(R.dimen.paint_line_list_padding),
-                end = dimensionResource(R.dimen.paint_line_list_padding),
-                top = dimensionResource(R.dimen.paint_line_list_padding_top)
+                start = dimensionResource(id = R.dimen.paint_line_list_padding),
+                end = dimensionResource(id = R.dimen.paint_line_list_padding),
+                top = dimensionResource(id = R.dimen.paint_line_list_padding_top)
             ),
         verticalArrangement = Arrangement.spacedBy(
-            dimensionResource(R.dimen.paint_line_list_vertical_arrangement)
+            dimensionResource(id = R.dimen.paint_line_list_vertical_arrangement)
         ),
         content = {
             items(creatorListStable.size) { index ->
@@ -52,29 +60,6 @@ fun ListPaintLine(
             }
         }
     )
-}
-
-@Composable
-fun ListCreatorItem(
-    modifier: Modifier = Modifier,
-    textItem: String = stringResource(R.string.default_text)
-){
-    Box(
-        modifier = modifier
-            .background(color = MaterialTheme.colors.primary)
-            .fillMaxWidth()
-    ) {
-        Text(
-            text = textItem,
-            color = MaterialTheme.colors.secondary,
-            style = MaterialTheme.typography.body2,
-            modifier = Modifier.padding(
-                start = dimensionResource(R.dimen.paint_line_item_padding),
-                top = dimensionResource(R.dimen.paint_line_item_padding),
-                bottom = dimensionResource(R.dimen.paint_line_item_padding)
-            )
-        )
-    }
 }
 
 @Preview(showBackground = true)

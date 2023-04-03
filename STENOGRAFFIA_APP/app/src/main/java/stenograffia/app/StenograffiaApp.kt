@@ -22,7 +22,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import stenograffia.app.di.Inject
 import stenograffia.app.domain.model.PaintNamesTupleModel
 import stenograffia.app.ui.stock.listPaintLine.ListPaintLine
 import stenograffia.app.ui.paint.ListPaint
@@ -37,7 +36,6 @@ import stenograffia.app.vw.PaintViewModel
 fun StenograffiaApp(){
     val navController = rememberNavController()
     val app = ((LocalContext.current as Activity).application as App)
-    Inject(app.paintComponent.getViewModelFactory()) {
     Scaffold(
         topBar = { customTopBar() },
         bottomBar = { NavigationMenu(navController = navController) }
@@ -49,31 +47,23 @@ fun StenograffiaApp(){
             composable(Screen.Objects.route) { InFutureVersion(navController) }
             composable(Screen.Settings.route) { InFutureVersion(navController) }
 
-            composable("ListPaintLine") {
-//                val viewModel: PaintCreatorViewModel = app.paintComponent.getPaintCreatorViewModel()
-                ListPaintLine(navController)
-            }
+            composable("ListPaintLine") { ListPaintLine(navController) }
 
             composable("PaintList/{nameCreator}/{nameLine}") { backStackEntry ->
-                // TODO: Антипаттерн, полюбому, нужно продумать навигацию до релиза 0.1.0
                 val nameCreator: String = backStackEntry.arguments?.getString("nameCreator")!!
                 val nameLine: String = backStackEntry.arguments?.getString("nameLine")!!
                 val paintNameModel = PaintNamesTupleModel(nameCreator = nameCreator, nameLine = nameLine)
-
-                val viewModel: PaintListViewModel = app.paintComponent.getPaintListViewModel()
-                viewModel.loadPaintList(paintNameModel)
-                ListPaint(viewModel, navController)
+                ListPaint(navController, paintNamesTupleModel = paintNameModel)
             }
 
-            composable("PAINT/{paintId}") { backStackEntry ->
-                val paintId: Int = backStackEntry.arguments?.getString("paintId")!!.toInt()
-                val viewModel: PaintViewModel = app.paintComponent.getPaintViewModel()
-                viewModel.loadPaintModelById(paintId)
-                Paint(viewModel, navController)
-            }
+//            composable("PAINT/{paintId}") { backStackEntry ->
+//                val paintId: Int = backStackEntry.arguments?.getString("paintId")!!.toInt()
+//                val viewModel: PaintViewModel = app.stockComponent.getPaintViewModel()
+//                viewModel.loadPaintModelById(paintId)
+//                Paint(viewModel, navController)
+//            }
 
         }
-    }
     }
 }
 

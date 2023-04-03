@@ -6,9 +6,9 @@ import androidx.lifecycle.ViewModel
 import androidx.savedstate.SavedStateRegistryOwner
 import dagger.Binds
 import dagger.Module
-
-@Module
-interface ViewModelFactoryModule {
-    @Binds
-    fun bindsDaggerViewModelAssistedFactory(factory: DaggerViewModelAssistedFactory): ViewModelFactory
-}
+//
+//@Module
+//interface ViewModelFactoryModule {
+//    @Binds
+//    fun bindsDaggerViewModelAssistedFactory(factory: DaggerViewModelAssistedFactory): ViewModelFactory
+//}

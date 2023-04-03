@@ -16,8 +16,12 @@
     <dimen name="paint_line_list_vertical_arrangement">3dp</dimen>
     <dimen name="paint_line_item_padding">10dp</dimen>
 
-<!--  ListPaint  -->
+<!--  ListPaintItem  -->
     <dimen name="paint_list_item_height">60dp</dimen>
     <dimen name="paint_list_item_text_start_padding">2dp</dimen>
+    <dimen name="paint_list_item_arrangement">3dp</dimen>
+    <dimen name="paint_list_padding">15dp</dimen>
+
+
 
 </resources>

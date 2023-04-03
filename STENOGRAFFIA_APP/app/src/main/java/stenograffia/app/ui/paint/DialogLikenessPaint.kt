@@ -4,8 +4,8 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.GridCells
-import androidx.compose.foundation.lazy.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -45,19 +45,19 @@ fun DialogLikenessPaint(
 fun LikenessListPaint(likenessList: List<List<Int>>, navController: NavController) {
     val app = LocalContext.current.applicationContext as App
 
-    val vm = app.paintComponent.getPaintUseCase()
+//    val vm = app.paintComponent.getPaintUseCase()
     val paintList: MutableList<PaintModel> = mutableListOf()
     val percentLikenessList: MutableList<Int> = mutableListOf()
 
-    likenessList.forEach {
-        paintList.add(vm.getPaintModelById(it[0])!!)
-        percentLikenessList.add(it[1])
-    }
+//    likenessList.forEach {
+//        paintList.add(vm.getPaintModelById(it[0])!!)
+//        percentLikenessList.add(it[1])
+//    }
 
 
     LazyVerticalGrid(
         modifier = Modifier.padding(start = 3.dp, end = 3.dp, top = 3.dp, bottom = 3.dp),
-        cells = GridCells.Fixed(2),
+        columns = GridCells.Fixed(2),
         verticalArrangement = Arrangement.spacedBy(3.dp),
         horizontalArrangement = Arrangement.spacedBy(3.dp),
         content = {

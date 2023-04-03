@@ -1,21 +1,16 @@
 package stenograffia.app.ui.stock.listPaintLine
 
-import androidx.compose.runtime.MutableState
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import dagger.assisted.AssistedFactory
-import dagger.assisted.AssistedInject
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
-import stenograffia.app.di.ViewModelAssistedFactory
 import stenograffia.app.domain.model.PaintNamesTupleModel
 import stenograffia.app.domain.useCases.PaintUseCase
+import javax.inject.Inject
 
-class PaintLineViewModel @AssistedInject constructor(
+@HiltViewModel
+class PaintLineViewModel @Inject constructor(
     val useCase: PaintUseCase,
 ): ViewModel(){
-
-    @AssistedFactory
-    interface Factory : ViewModelAssistedFactory<PaintLineViewModel>
 
     val allPaintName: Flow<List<PaintNamesTupleModel>> =
         useCase.getAllPaintNames()
