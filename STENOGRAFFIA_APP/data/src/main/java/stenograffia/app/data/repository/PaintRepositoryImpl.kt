@@ -1,7 +1,11 @@
 package stenograffia.app.data.repository
 
+import android.util.Log
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 import stenograffia.app.data.database.*
 import stenograffia.app.data.utils.DataGenerate
 import stenograffia.app.domain.model.PaintModel
@@ -39,9 +43,11 @@ class PaintRepositoryImpl(
 
 
     init {
-        val data = dataGenerate()
-        data.forEach {
-            paintDao.addPaint(it.fromPaintEntity()!!)
+        GlobalScope.launch(Dispatchers.IO){
+            val data = dataGenerate()
+            data.forEach {
+                paintDao.addPaint(it.fromPaintEntity()!!)
+            }
         }
     }
 
