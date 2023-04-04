@@ -27,8 +27,10 @@ import kotlin.math.roundToInt
 @Composable
 fun Paint(
     navController: NavController,
+    paintId: Int,
     viewModel: PaintViewModel = hiltViewModel()
 ) {
+    viewModel.loadPaintModelById(paintId)
     ConstraintLayoutContent(viewModel, navController)
 }
 
@@ -54,10 +56,9 @@ fun ConstraintLayoutContent(viewModel: PaintViewModel, navController: NavControl
 
         if (showDialogLikenessPaint.value) {
             DialogLikenessPaint(
-                showDialogLikenessPaint,
-                navController,
-                paintModel.similarColors,
-                viewModel
+                showDialog = showDialogLikenessPaint,
+                navController = navController,
+                viewModel = viewModel
             )
         } else if (showDialogChangeQuantity.value) {
             DialogChangeQuantity(showDialogChangeQuantity, viewModel)
@@ -123,21 +124,24 @@ fun ConstraintLayoutContent(viewModel: PaintViewModel, navController: NavControl
                 top.linkTo(onStockText.bottom)
             })
 
-        ButtonShowLikenessPaint(
-            showDialogLikenessPaint,
-            paintModel.similarColors.isNotEmpty(),
-            Modifier
+        ButtonShowDialog(
+            modifier = Modifier
                 .constrainAs(buttonShowLikenessPaint) {
                     top.linkTo(separationLine4.bottom)
-                }
+                },
+            showDialog = showDialogLikenessPaint,
+            text_button = stringResource(id = R.string.paint_button_likeness_paint),
+            enabled = paintModel.similarColors.isNotEmpty(),
         )
 
-        ButtonChangeQuantity(
-            showDialogChangeQuantity,
-            Modifier
+        ButtonShowDialog(
+            modifier = Modifier
                 .constrainAs(buttonChangeQuantity) {
                     top.linkTo(buttonShowLikenessPaint.bottom)
-                })
+                },
+            showDialog = showDialogChangeQuantity,
+            text_button = stringResource(id = R.string.paint_button_change_quantity)
+        )
 
         ColorSquare(color = Color(0xFF000000 + paintModel.color),
             Modifier.constrainAs(colorSquare) {
@@ -203,38 +207,11 @@ fun HandlerTextString(
 }
 
 @Composable
-fun ButtonChangeQuantity(
-    showDialogChangeQuantity: MutableState<Boolean>,
-    modifier: Modifier = Modifier
-) {
-    Button(
-        onClick = { showDialogChangeQuantity.value = true },
-        shape = RectangleShape,
-        colors = ButtonDefaults.buttonColors(
-            backgroundColor = MaterialTheme.colors.primary,
-            contentColor = MaterialTheme.colors.secondary
-        ),
-        modifier = modifier
-            .padding(
-                start = dimensionResource(id = R.dimen.paint_padding_start)
-            )
-    ) {
-        Text(
-            text = stringResource(id = R.string.paint_button_change_quantity),
-            modifier = Modifier
-                .padding(
-                    top = dimensionResource(id = R.dimen.paint_padding_top),
-                    bottom = dimensionResource(id = R.dimen.paint_padding_bottom)
-                )
-        )
-    }
-}
-
-@Composable
-fun ButtonShowLikenessPaint(
+fun ButtonShowDialog(
+    modifier: Modifier = Modifier,
     showDialog: MutableState<Boolean>,
-    enabled: Boolean,
-    modifier: Modifier = Modifier
+    text_button: String,
+    enabled: Boolean = true
 ) {
     Button(
         onClick = { showDialog.value = true },
@@ -250,11 +227,11 @@ fun ButtonShowLikenessPaint(
         enabled = enabled
     ) {
         Text(
-            text = stringResource(id = R.string.paint_button_likeness_paint),
+            text = text_button,
             modifier = Modifier
                 .padding(
-                    top = dimensionResource(id = R.dimen.paint_padding_top),
-                    bottom = dimensionResource(id = R.dimen.paint_padding_bottom)
+                    top = dimensionResource(id = R.dimen.paint_button_text_padding),
+                    bottom = dimensionResource(id = R.dimen.paint_button_text_padding)
                 )
         )
     }

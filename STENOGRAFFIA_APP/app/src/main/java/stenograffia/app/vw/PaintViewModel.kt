@@ -22,4 +22,20 @@ class PaintViewModel @Inject constructor(
         useCase.changeQuantityPaintInStock(paintModel, difference)
     }
 
+    fun getLikenessPaintList(): Pair<List<PaintModel>, Map<Int, String>>{
+        val likenessPaint = paintModel.similarColors
+
+        val paintList: MutableList<PaintModel> = mutableListOf()
+        val percentLikenessList: MutableMap<Int, String> = mutableMapOf()
+
+        likenessPaint.forEach {
+            val paintModel: PaintModel = useCase.getPaintModelById(it[0])!!
+            paintList.add(paintModel)
+            percentLikenessList[paintModel.id] = it[1].toString()
+        }
+
+        return Pair(paintList, percentLikenessList)
+
+    }
+
 }

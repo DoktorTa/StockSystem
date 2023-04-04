@@ -44,7 +44,7 @@ fun ListPaint(
     navController: NavController,
     paintList: Flow<List<PaintModel>>,
 ) {
-    val paintList by paintList.collectAsStateWithLifecycle(
+    val paintListState by paintList.collectAsStateWithLifecycle(
         initialValue = listOf()
     )
 
@@ -61,11 +61,11 @@ fun ListPaint(
             dimensionResource(id = R.dimen.paint_list_item_arrangement)
         ),
         content = {
-            items(paintList.size) { index ->
+            items(paintListState.size) { index ->
                 ListPaintItem(
-                    paintItem = PaintItem.fromPaintModel(paintList[index]),
+                    paintItem = PaintItem.fromPaintModel(paintListState[index]),
                     modifier = Modifier.clickable {
-                        navController.navigate("PAINT/${paintList[index].id}")
+                        navController.navigate("PAINT/${paintListState[index].id}")
                     })
             }
         }

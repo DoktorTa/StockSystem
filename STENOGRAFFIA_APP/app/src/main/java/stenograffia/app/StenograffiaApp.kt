@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -56,12 +57,10 @@ fun StenograffiaApp(){
                 ListPaint(navController, paintNamesTupleModel = paintNameModel)
             }
 
-//            composable("PAINT/{paintId}") { backStackEntry ->
-//                val paintId: Int = backStackEntry.arguments?.getString("paintId")!!.toInt()
-//                val viewModel: PaintViewModel = app.stockComponent.getPaintViewModel()
-//                viewModel.loadPaintModelById(paintId)
-//                Paint(viewModel, navController)
-//            }
+            composable("PAINT/{paintId}") { backStackEntry ->
+                val paintId: Int = backStackEntry.arguments?.getString("paintId")!!.toInt()
+                Paint(navController, paintId = paintId)
+            }
 
         }
     }

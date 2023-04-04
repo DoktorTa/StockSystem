@@ -33,7 +33,11 @@
     <string name="paint_button_change_quantity">CHANGE QUANTITY</string>
     <string name="paint_quantity_in_stock">ON STOCK: %1$d PIECES</string>
 
+<!--  PaintListLikeness  -->
+    <string name="paint_list_likeness_description_text">LIKENESS: %1$s</string>
 
-    <!--  Other  -->
+
+
+<!--  Other  -->
     <string name="default_text">Default text</string>
 </resources>
