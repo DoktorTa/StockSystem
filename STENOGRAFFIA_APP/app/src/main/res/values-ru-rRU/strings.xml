@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Cyber Anna</string>
+    <string name="stock_menu">СКЛАД</string>
+    <string name="orders_menu">ЗАКАЗЫ</string>
+    <string name="objects_menu">ОБЪЕКТЫ</string>
+    <string name="settings_menu">НАСТРОЙКИ</string>
+    <string name="cancel">ОТМЕНА</string>
+    <string name="ok">ОК</string>
+    <string name="paint_categories_handler">КРАСКА</string>
+    <string name="paint_categories_description">БАЛОНЫ, ЭМАЛИ, РАЗЛИЧНАЯ КРАСКА</string>
+    <string name="materials_categories_handler">МАТЕРИАЛЫ</string>
+    <string name="materials_categories_description">ЛЕСНИЦЫ, ГЕНЕРАТОРЫ, ТУРЫ</string>
+    <string name="paint_list_item_not_available">НЕ ДОСТУПНО</string>
+    <string name="paint_list_item_mabye">МОЖЕТ БЫТЬ</string>
+    <string name="paint_list_item_on_stock">НА СКЛАДЕ</string>
+    <string name="paint_button_likeness_paint">ПОХОЖАЯ КРАСКА</string>
+    <string name="paint_button_change_quantity">ИЗМЕНИТЬ КОЛЛИЧЕСТВО</string>
+    <string name="paint_quantity_in_stock">СКЛАДЕ: %1$d ШТУК</string>
+    <string name="paint_list_likeness_description_text">СХОЖЕСТЬ: %1$s</string>
+    <string name="default_text">Обычный текст</string>
+    <string name="change_quantity_description">В НАЛИЧИИ БУДЕТ %1$d</string>
+</resources>

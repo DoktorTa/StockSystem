@@ -27,6 +27,8 @@ import stenograffia.app.domain.model.PaintNamesTupleModel
 import stenograffia.app.ui.CustomTopBar
 import stenograffia.app.ui.stock.listPaintLine.ListPaintLine
 import stenograffia.app.ui.paint.ListPaint
+import stenograffia.app.ui.settings.Settings
+import stenograffia.app.ui.settings.SettingsViewModel
 import stenograffia.app.ui.stock.paint.Paint
 import stenograffia.app.ui.stock.stockCategories.StockCategories
 import stenograffia.app.ui.stock.listPaint.PaintListViewModel
@@ -34,7 +36,9 @@ import stenograffia.app.vw.PaintViewModel
 
 
 @Composable
-fun StenograffiaApp(){
+fun StenograffiaApp(
+    settingsViewModel: SettingsViewModel
+){
     val navController = rememberNavController()
     val app = ((LocalContext.current as Activity).application as App)
     Scaffold(
@@ -46,7 +50,7 @@ fun StenograffiaApp(){
             composable(Screen.StockCategories.route) {StockCategories(navController)}
             composable(Screen.Orders.route) { InFutureVersion(navController) }
             composable(Screen.Objects.route) { InFutureVersion(navController) }
-            composable(Screen.Settings.route) { InFutureVersion(navController) }
+            composable(Screen.Settings.route) { Settings(navController, settingsViewModel) }
 
             composable("ListPaintLine") { ListPaintLine(navController) }
 
