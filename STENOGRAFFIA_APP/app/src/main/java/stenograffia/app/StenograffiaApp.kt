@@ -40,7 +40,6 @@ fun StenograffiaApp(
     settingsViewModel: SettingsViewModel
 ){
     val navController = rememberNavController()
-    val app = ((LocalContext.current as Activity).application as App)
     Scaffold(
         topBar = { CustomTopBar() },
         bottomBar = { NavigationMenu(navController = navController) }
@@ -50,7 +49,7 @@ fun StenograffiaApp(
             composable(Screen.StockCategories.route) {StockCategories(navController)}
             composable(Screen.Orders.route) { InFutureVersion(navController) }
             composable(Screen.Objects.route) { InFutureVersion(navController) }
-            composable(Screen.Settings.route) { Settings(navController, settingsViewModel) }
+            composable(Screen.Settings.route) { Settings(settingsViewModel) }
 
             composable("ListPaintLine") { ListPaintLine(navController) }
 

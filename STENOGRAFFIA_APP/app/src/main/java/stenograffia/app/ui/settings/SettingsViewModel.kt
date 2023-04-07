@@ -16,11 +16,26 @@ class SettingsViewModel @Inject constructor(): ViewModel() {
     val userName: String = "User name"
     val userStatus: String = "ARTIST"
 
+    var localeActive = mutableStateOf(Locale("en"))
+        private set
+
+    fun setLocale(locale: Locale){
+        localeActive.value = locale
+    }
+
+    val localeList: Map<String, Locale> = mapOf(
+        "en" to Locale("en"),
+        "ru" to Locale("ru")
+    )
+
     var isDarkThemeEnabled = mutableStateOf(true)
         private set
 
     fun setTheme(isDarkTheme: Boolean) {
         isDarkThemeEnabled.value = isDarkTheme
     }
+
+
+
 }
 

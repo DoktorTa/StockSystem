@@ -12,6 +12,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.hilt.navigation.compose.hiltViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.Flow
 import stenograffia.app.ui.settings.DataStoreSettings
 import stenograffia.app.ui.settings.SettingsViewModel
 import stenograffia.app.ui.theme.STENOGRAFFIAAPPTheme
@@ -21,19 +22,16 @@ import java.util.*
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
+    private lateinit var dataStoreSettings: DataStoreSettings
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        
-        val locale = Locale.ENGLISH
-        val configuration = baseContext.resources.configuration
-        configuration.setLocale(locale)
-        baseContext.resources.updateConfiguration(configuration, null)
-
+        dataStoreSettings = DataStoreSettings(applicationContext)
 
         setContent {
             val settingsViewModel: SettingsViewModel = hiltViewModel()
             LoadSettings(settingsViewModel)
+            LoadLocate(settingsViewModel)
 
             STENOGRAFFIAAPPTheme(
                 darkTheme = settingsViewModel.isDarkThemeEnabled.value
@@ -45,8 +43,20 @@ class MainActivity : ComponentActivity() {
 
     @Composable
     private fun LoadSettings(settingsViewModel: SettingsViewModel){
-        val dataStoreUtil = DataStoreSettings(applicationContext)
-        val dt: State<Boolean> = dataStoreUtil.getTheme().collectAsState(initial = false)
-        settingsViewModel.setTheme(dt.value)
+        val theme: State<Boolean> = dataStoreSettings.getTheme().collectAsState(initial = false)
+        settingsViewModel.setTheme(theme.value)
+    }
+
+    @Composable
+    private fun LoadLocate(settingsViewModel: SettingsViewModel){
+        val locate: State<String> = dataStoreSettings.getLocale().collectAsState(
+            initial = Locale.ENGLISH.language
+        )
+        settingsViewModel.setLocale(Locale(locate.value))
+
+        val configuration = baseContext.resources.configuration
+        configuration.setLocale(settingsViewModel.localeActive.value)
+        baseContext.resources.updateConfiguration(configuration, null)
+
     }
 }

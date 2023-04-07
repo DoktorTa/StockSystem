@@ -20,4 +20,7 @@
     <string name="paint_list_likeness_description_text">СХОЖЕСТЬ: %1$s</string>
     <string name="default_text">Обычный текст</string>
     <string name="change_quantity_description">В НАЛИЧИИ БУДЕТ %1$d</string>
+    <string name="setting_group_name">Группа: %1$s</string>
+    <string name="setting_name_theme">Темный режим</string>
+    <string name="setting_name_locale">Язык</string>
 </resources>
