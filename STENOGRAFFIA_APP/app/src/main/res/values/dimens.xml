@@ -33,4 +33,11 @@
 <!--  TopBar  -->
     <dimen name="top_bar_padding_text_start">5dp</dimen>
 
+<!--  Settings  -->
+    <dimen name="settings_text_padding_start">15dp</dimen>
+    <dimen name="settings_text_in_block_padding_start">10dp</dimen>
+    <dimen name="settings_block_padding_start_end">15dp</dimen>
+    <dimen name="settings_block_padding_top">5dp</dimen>
+    <dimen name="settings_block_selector_padding_end">5dp</dimen>
+
 </resources>

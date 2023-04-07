@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">STENOGRAFFIA APP</string>
+    <string name="app_name">Cyber Anna</string>
 
 <!--  NavigationMenu  -->
     <string name="stock_menu">STOCK</string>
@@ -26,9 +26,9 @@
     <string name="paint_list_item_on_stock">ON STOCK</string>
 
 <!--  Paint  -->
-    <string name="paint_hex_color">HEX: #%1$s</string>
-    <string name="paint_cmyk_color">CMYK: cmyk(#%1$s)</string>
-    <string name="paint_hsl_color">HSL: hsl(#%1$s)</string>
+    <string name="paint_hex_color" translatable="false">HEX: #%1$s</string>
+    <string name="paint_cmyk_color" translatable="false">CMYK: cmyk(#%1$s)</string>
+    <string name="paint_hsl_color" translatable="false">HSL: hsl(#%1$s)</string>
     <string name="paint_button_likeness_paint">LIKENESS PAINT</string>
     <string name="paint_button_change_quantity">CHANGE QUANTITY</string>
     <string name="paint_quantity_in_stock">ON STOCK: %1$d PIECES</string>
@@ -36,7 +36,11 @@
 <!--  PaintListLikeness  -->
     <string name="paint_list_likeness_description_text">LIKENESS: %1$s</string>
 
-
+<!-- Settings -->
+    <string name="restart_the_app" translatable="false">Restart the app</string>
+    <string name="setting_group_name">Group: %1$s</string>
+    <string name="setting_name_theme">Night mod</string>
+    <string name="setting_name_locale">Language</string>
 
 <!--  Other  -->
     <string name="default_text">Default text</string>
