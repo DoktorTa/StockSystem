@@ -9,24 +9,15 @@
 
 	UserServer 
 		id: Int
+		name: String - Имя пользователя
+		login: String - логин
 		password: String - пароль НИКОГДА НЕ ХРАНИТСЯ НА КЛИЕНТЕ
-		dataTime: String - дата регистрации
-		name: String
 		group: UserGroup - группа пользоватея
 
 	UserClient 
 		id: Int
-		dataTime: String - дата регистрации
 		name: String 
 		group: UserGroup - группа пользоватея
-
-	TicketServer
-		ticketId: Int
-		userId: User.id
-		dataTimeEnd: String
-
-	TicketClient
-		ticketId: Int
 
 	UserGroup: Enum
 		ADMIN
@@ -40,10 +31,38 @@
 	
 	Users - table
 	Tickets - table
+
+### Preload data
+Для того чтобы система сразу после запуска была готова к работе должны сушествовать предварительные данные.
+Они должны быть написаны в формате который может быть прочтен человеком и должны быть загруженны в базу данных специальным скриптом.
 	
 ## API 
 
-	/login
+	/api/auth
+
+		/login
+			role: [PRESS]
+			-> 
+				login: String
+				password: String
+			<- 
+				400 -> Токен аутентификации
+					token: String
+				403 -> Bad credits
+
+		/authorization
+			role: [ADMIN]
+			->
+				name: String
+				login: String
+				password: String
+				role: List<String>
+			<-
+				400 -> Пользователь создан
+				403 FORBIDDEN -> Если роль запращиваюшего не верна
+
+
+
 
 ### Группы пользователей
 * ADMIN - Создатель
@@ -55,8 +74,12 @@
 
 Каждая верхняя группа расширяет права нижней.
 
+
+
 ### Авторитизация и аутентификация
 Пользователи не могут сами зарегестрироватся в системе.
+Пользователи могу ли аутентифицироватся в системе по предоставленной им паре (Логин пароль)
+Для Аутентивицаии пользователей будет использоватся JWT токен.
 <!---
 @startuml
 actor       Admin      as Admin
