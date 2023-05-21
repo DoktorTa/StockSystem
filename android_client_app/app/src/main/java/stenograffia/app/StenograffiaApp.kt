@@ -18,11 +18,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hierarchy
+import androidx.navigation.NavGraph
 import androidx.navigation.NavGraph.Companion.findStartDestination
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.compose.rememberNavController
+import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.*
 import stenograffia.app.domain.model.PaintNamesTupleModel
 import stenograffia.app.ui.CustomTopBar
 import stenograffia.app.ui.login.Login
@@ -41,14 +41,18 @@ fun StenograffiaApp(
     settingsViewModel: SettingsViewModel
 ){
     val navController = rememberNavController()
+//
+//    NavHost(navController = navController, startDestination = "login") {
+//        composable("login") { Login(navController) }
+//    }
+//    Test(navController = navController, settingsViewModel = settingsViewModel)
+
     Scaffold(
         topBar = { CustomTopBar() },
         bottomBar = { NavigationMenu(navController = navController) }
     ) {
             innerPadding ->
-        NavHost(navController, startDestination = "login", Modifier.padding(innerPadding)) {
-
-            composable("login") { Login() }
+        NavHost(navController, startDestination = Screen.StockCategories.route, Modifier.padding(innerPadding)) {
 
             composable(Screen.StockCategories.route) {StockCategories(navController)}
             composable(Screen.Orders.route) { InFutureVersion(navController) }
@@ -72,6 +76,60 @@ fun StenograffiaApp(
         }
     }
 }
+
+//@Composable
+//fun Test(navController: NavHostController, settingsViewModel: SettingsViewModel){
+//
+//    Scaffold(
+//        topBar = { CustomTopBar() },
+//        bottomBar = { NavigationMenu(navController = navController) }
+//    ) {
+//            innerPadding ->
+//        NavGraph()
+//        NavHost(navController, startDestination = Screen.StockCategories.route, Modifier.padding(innerPadding)) {
+//
+//            loginGraph(navController, settingsViewModel)
+//
+//        }
+//    }
+//}
+
+//fun NavGraphBuilder.loginGraph(navController: NavController, settingsViewModel: SettingsViewModel) {
+//    navigation(startDestination = "login", route = "log") {
+//        composable(Screen.StockCategories.route) {StockCategories(navController)}
+//        composable(Screen.Orders.route) { InFutureVersion(navController) }
+//        composable(Screen.Objects.route) { InFutureVersion(navController) }
+//        composable(Screen.Settings.route) { Settings(settingsViewModel) }
+//
+//        composable("ListPaintLine") { ListPaintLine(navController) }
+//
+//        composable("PaintList/{nameCreator}/{nameLine}") { backStackEntry ->
+//            val nameCreator: String = backStackEntry.arguments?.getString("nameCreator")!!
+//            val nameLine: String = backStackEntry.arguments?.getString("nameLine")!!
+//            val paintNameModel = PaintNamesTupleModel(nameCreator = nameCreator, nameLine = nameLine)
+//            ListPaint(navController, paintNamesTupleModel = paintNameModel)
+//        }
+//
+//        composable("PAINT/{paintId}") { backStackEntry ->
+//            val paintId: Int = backStackEntry.arguments?.getString("paintId")!!.toInt()
+//            Paint(navController, paintId = paintId)
+//        }
+//
+//    }
+//}
+
+//@Composable
+//fun SingUpScreens(
+//    settingsViewModel: SettingsViewModel
+//){
+//    val navController = rememberNavController()
+//
+//    NavHost(navController, startDestination = ScreenGeneral.Login.route) {
+//        composable(ScreenGeneral.Login.route) { Login(navController) }
+//        composable(ScreenGeneral.General.route) { StenograffiaApp(navController, settingsViewModel) }
+//    }
+//}
+
 
 sealed class Screen(val route: String, @StringRes val resourceId: Int, val image: ImageVector) {
     object StockCategories : Screen("StockCategories", R.string.stock_menu, Icons.Outlined.Inventory2)

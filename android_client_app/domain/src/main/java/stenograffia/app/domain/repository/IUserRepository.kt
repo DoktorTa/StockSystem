@@ -5,6 +5,5 @@ import stenograffia.app.domain.model.AuthTokens
 import stenograffia.app.domain.model.UserModel
 
 interface IUserRepository {
-    suspend fun loginServerByCredentials(login: String, password: String):
-            ApiResponse<Pair<AuthTokens, UserModel>>
+    suspend fun loginServerByCredentials(login: String, password: String): ApiResponse<AuthTokens>
 }

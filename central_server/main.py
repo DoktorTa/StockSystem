@@ -64,7 +64,7 @@ def login(login_data: LoginBase) -> Token:
     logg = logging.getLogger()
     logg.error(f'Test: {login_data}')
     token_str = auth.authenticate_user(**login_data.dict())
-    token = Token(access_token=token_str['access_token'], refresh_token=token_str['access_token'])
+    token = Token(access_token=token_str['access_token'], refresh_token=token_str['refresh_token'])
     return token
 
 

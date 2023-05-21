@@ -4,6 +4,8 @@ sealed class ApiResponse<T>(
     data: T? = null,
     exception: Exception? = null
 ) {
-    data class Success<T>(val data: T) : ApiResponse<T>(data, null)
-    data class Error<T>(val exception: Exception) : ApiResponse<T>(null, exception)
+    class Success<T>(val data: T) : ApiResponse<T>(data, null)
+    class Error<T>(exception: Exception) : ApiResponse<T>(null, exception)
+    class Unauthorized<T>() : ApiResponse<T>(null, null)
+    class ServerDisconnect<T>() : ApiResponse<T>(null, null)
 }

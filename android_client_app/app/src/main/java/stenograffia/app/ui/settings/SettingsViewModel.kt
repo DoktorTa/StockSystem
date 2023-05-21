@@ -3,6 +3,7 @@ package stenograffia.app.ui.settings
 import android.os.LocaleList
 import android.provider.ContactsContract.Contacts.Data
 import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import org.intellij.lang.annotations.Language
@@ -13,6 +14,8 @@ import kotlin.random.Random
 
 @HiltViewModel
 class SettingsViewModel @Inject constructor(): ViewModel() {
+    val loginCorrect: MutableLiveData<Boolean> = MutableLiveData(false)
+
     val internetConnection: Boolean = false
     var lastAuthSession: Data? = null
     val userName: String = "User name"

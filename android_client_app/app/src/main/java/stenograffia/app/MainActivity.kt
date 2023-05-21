@@ -10,9 +10,13 @@ import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.hilt.navigation.compose.hiltViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.Flow
+import stenograffia.app.ui.login.Login
+//import stenograffia.app.ui.login.SingUpScreens
 import stenograffia.app.ui.settings.DataStoreSettings
 import stenograffia.app.ui.settings.SettingsViewModel
 import stenograffia.app.ui.theme.STENOGRAFFIAAPPTheme
@@ -36,7 +40,14 @@ class MainActivity : ComponentActivity() {
             STENOGRAFFIAAPPTheme(
                 darkTheme = settingsViewModel.isDarkThemeEnabled.value
             ) {
-                StenograffiaApp(settingsViewModel)
+                val loginCorrect by settingsViewModel.loginCorrect.observeAsState(false)
+
+                if (loginCorrect){
+                    StenograffiaApp(settingsViewModel = settingsViewModel)
+                } else {
+                    Login(settingsViewModel)
+                }
+//                SingUpScreens(settingsViewModel)
             }
         }
     }

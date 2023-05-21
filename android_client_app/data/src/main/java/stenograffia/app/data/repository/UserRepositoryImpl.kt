@@ -7,42 +7,31 @@ import stenograffia.app.domain.ApiResponse
 import stenograffia.app.domain.model.AuthTokens
 import stenograffia.app.domain.model.UserModel
 import stenograffia.app.domain.repository.IUserRepository
+import java.net.SocketTimeoutException
 
 class UserRepositoryImpl (
     val serverApi: ServerAPI
 ): IUserRepository {
 
     override suspend fun loginServerByCredentials(login: String, password: String) :
-            ApiResponse<Pair<AuthTokens, UserModel>>
+            ApiResponse<AuthTokens>
     {
         try {
-            Log.d("Credits", "${login}")
-//            test()
             val loginRequest = LoginRequest(login, password)
             val response = serverApi.login(loginRequest)
 
             if (response.code() == 200) {
                 val responseToken = response.body()!!
                 val authToken = AuthTokens(responseToken.accessToken, responseToken.refreshToken)
-                val userModel = UserModel(responseToken.userName, responseToken.userGroup)
-
-                return ApiResponse.Success(data = Pair(authToken, userModel))
+                return ApiResponse.Success(data = authToken)
             } else if (response.code() == 403) {
-                return ApiResponse.Error(Exception("Invalid credentials"))
+                return ApiResponse.Unauthorized()
             }
             throw RuntimeException()
         } catch (e: RuntimeException) {
             return ApiResponse.Error(e)
+        } catch (e: SocketTimeoutException) {
+            return ApiResponse.ServerDisconnect()
         }
-    }
-
-    private suspend fun test(){
-        try {
-            val rest =  serverApi.test()
-            Log.d("Test", rest)
-        } catch (e: RuntimeException){
-            Log.d("Test, Ex", e.toString())
-        }
-
     }
 }
