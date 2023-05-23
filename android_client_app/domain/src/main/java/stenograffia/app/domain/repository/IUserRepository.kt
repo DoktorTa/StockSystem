@@ -6,4 +6,6 @@ import stenograffia.app.domain.model.UserModel
 
 interface IUserRepository {
     suspend fun loginServerByCredentials(login: String, password: String): ApiResponse<AuthTokens>
+
+    suspend fun refreshTokens(refreshToken: String): ApiResponse<AuthTokens>
 }

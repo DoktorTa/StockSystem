@@ -6,6 +6,10 @@ class LoginBase(BaseModel):
     password: str
 
 
+class RefreshBase(BaseModel):
+    refresh_token: str
+
+
 class User(BaseModel):
     user_id: int
     username: str

@@ -7,7 +7,7 @@ from fastapi import FastAPI, Response, Depends, HTTPException
 
 from auth.auth_config import AuthConfig
 from auth.models.token import Token
-from auth.models.user_base import LoginBase, Group, User
+from auth.models.user_base import LoginBase, Group, User, RefreshBase
 
 # from stock.repository.repository_stock import RepositoryStock
 
@@ -61,11 +61,14 @@ async def say_hello(authorize: bool = Depends(RoleChecker(allowed_roles=Group.AD
 
 @app.post('/login')
 def login(login_data: LoginBase) -> Token:
-    logg = logging.getLogger()
-    logg.error(f'Test: {login_data}')
     token_str = auth.authenticate_user(**login_data.dict())
-    token = Token(access_token=token_str['access_token'], refresh_token=token_str['refresh_token'])
-    return token
+    return Token(access_token=token_str['access_token'], refresh_token=token_str['refresh_token'])
+
+
+@app.post('/refresh_token')
+def refresh_token(refresh_data: RefreshBase) -> Token:
+    token_str = auth.refreshed_token(**refresh_data.dict())
+    return Token(access_token=token_str['access_token'], refresh_token=token_str['refresh_token'])
 
 
 # @app.get("/getPaintById")

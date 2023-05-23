@@ -27,10 +27,12 @@ import java.util.*
 class MainActivity : ComponentActivity() {
 
     private lateinit var dataStoreSettings: DataStoreSettings
+//    private lateinit var dataStoreAuthTokens: DataStoreAuthTokens
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         dataStoreSettings = DataStoreSettings(applicationContext)
+//        dataStoreAuthTokens = DataStoreAuthTokens(applicationContext)
 
         setContent {
             val settingsViewModel: SettingsViewModel = hiltViewModel()
@@ -40,14 +42,7 @@ class MainActivity : ComponentActivity() {
             STENOGRAFFIAAPPTheme(
                 darkTheme = settingsViewModel.isDarkThemeEnabled.value
             ) {
-                val loginCorrect by settingsViewModel.loginCorrect.observeAsState(false)
-
-                if (loginCorrect){
-                    StenograffiaApp(settingsViewModel = settingsViewModel)
-                } else {
-                    Login(settingsViewModel)
-                }
-//                SingUpScreens(settingsViewModel)
+                StenograffiaApp(settingsViewModel = settingsViewModel)
             }
         }
     }

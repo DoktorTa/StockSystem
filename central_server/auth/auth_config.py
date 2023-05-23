@@ -12,7 +12,7 @@ from auth.repository.user_repository import UserRepository
 
 
 class AuthConfig:
-    userRepository: UserRepository = UserRepository()
+    user_repository: UserRepository = UserRepository()
     jwt_token: JwtToken = JwtToken()
 
     # oauth_scheme = OAuth2PasswordBearer(
@@ -22,9 +22,23 @@ class AuthConfig:
 
     def authenticate_user(self, login: str, password: str) -> dict:
         try:
-            user = self.userRepository.get_user_by_login(login)
+            user = self.user_repository.get_user_by_login(login)
 
             if self.jwt_token.password_check(password, user['password']):
+                access_token = self.jwt_token.encode_access_token(user['login'])
+                refresh_token = self.jwt_token.encode_refresh_token(user['login'])
+                return {'access_token': access_token, 'refresh_token': refresh_token}
+            else:
+                raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='Invalid credentials')
+        except Exception as e:
+            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='Invalid credentials')
+
+    def refreshed_token(self, refresh_token: str) -> dict:
+        try:
+            login = self.jwt_token.decode_refresh_token(refresh_token)
+            user = self.user_repository.get_user_by_login(login)
+
+            if user is not None:
                 access_token = self.jwt_token.encode_access_token(user['login'])
                 refresh_token = self.jwt_token.encode_refresh_token(user['login'])
                 return {'access_token': access_token, 'refresh_token': refresh_token}
@@ -43,7 +57,7 @@ class AuthConfig:
         login = self.jwt_token.decode_access_token(token)
         loger.error(login)
         # login = decoded['sub']
-        user = self.userRepository.get_user_by_login(login)
+        user = self.user_repository.get_user_by_login(login)
         if user is not None:
             loger.error(f'{user}')
             return User(**user)

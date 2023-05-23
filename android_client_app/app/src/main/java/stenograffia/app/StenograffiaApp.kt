@@ -1,8 +1,11 @@
 package stenograffia.app
 
 import android.app.Activity
+import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.CheckBox
@@ -15,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hierarchy
@@ -30,6 +34,7 @@ import stenograffia.app.ui.stock.listPaintLine.ListPaintLine
 import stenograffia.app.ui.paint.ListPaint
 import stenograffia.app.ui.settings.Settings
 import stenograffia.app.ui.settings.SettingsViewModel
+import stenograffia.app.ui.splash.SplashScreen
 import stenograffia.app.ui.stock.paint.Paint
 import stenograffia.app.ui.stock.stockCategories.StockCategories
 import stenograffia.app.ui.stock.listPaint.PaintListViewModel
@@ -48,11 +53,13 @@ fun StenograffiaApp(
 //    Test(navController = navController, settingsViewModel = settingsViewModel)
 
     Scaffold(
-        topBar = { CustomTopBar() },
         bottomBar = { NavigationMenu(navController = navController) }
     ) {
             innerPadding ->
-        NavHost(navController, startDestination = Screen.StockCategories.route, Modifier.padding(innerPadding)) {
+        NavHost(navController, startDestination = Screen.SplashScreen.route, Modifier.padding(innerPadding)) {
+
+            composable(Screen.SplashScreen.route) { SplashScreen(navController) }
+            composable(Screen.Login.route) { Login(navController) }
 
             composable(Screen.StockCategories.route) {StockCategories(navController)}
             composable(Screen.Orders.route) { InFutureVersion(navController) }
@@ -77,61 +84,15 @@ fun StenograffiaApp(
     }
 }
 
-//@Composable
-//fun Test(navController: NavHostController, settingsViewModel: SettingsViewModel){
-//
-//    Scaffold(
-//        topBar = { CustomTopBar() },
-//        bottomBar = { NavigationMenu(navController = navController) }
-//    ) {
-//            innerPadding ->
-//        NavGraph()
-//        NavHost(navController, startDestination = Screen.StockCategories.route, Modifier.padding(innerPadding)) {
-//
-//            loginGraph(navController, settingsViewModel)
-//
-//        }
-//    }
-//}
 
-//fun NavGraphBuilder.loginGraph(navController: NavController, settingsViewModel: SettingsViewModel) {
-//    navigation(startDestination = "login", route = "log") {
-//        composable(Screen.StockCategories.route) {StockCategories(navController)}
-//        composable(Screen.Orders.route) { InFutureVersion(navController) }
-//        composable(Screen.Objects.route) { InFutureVersion(navController) }
-//        composable(Screen.Settings.route) { Settings(settingsViewModel) }
-//
-//        composable("ListPaintLine") { ListPaintLine(navController) }
-//
-//        composable("PaintList/{nameCreator}/{nameLine}") { backStackEntry ->
-//            val nameCreator: String = backStackEntry.arguments?.getString("nameCreator")!!
-//            val nameLine: String = backStackEntry.arguments?.getString("nameLine")!!
-//            val paintNameModel = PaintNamesTupleModel(nameCreator = nameCreator, nameLine = nameLine)
-//            ListPaint(navController, paintNamesTupleModel = paintNameModel)
-//        }
-//
-//        composable("PAINT/{paintId}") { backStackEntry ->
-//            val paintId: Int = backStackEntry.arguments?.getString("paintId")!!.toInt()
-//            Paint(navController, paintId = paintId)
-//        }
-//
-//    }
-//}
+sealed class Screen(
+    val route: String,
+    @StringRes val resourceId: Int?,
+    val image: ImageVector?
+) {
+    object SplashScreen : Screen("SplashScreen", null, null)
+    object Login : Screen("Login", null, null)
 
-//@Composable
-//fun SingUpScreens(
-//    settingsViewModel: SettingsViewModel
-//){
-//    val navController = rememberNavController()
-//
-//    NavHost(navController, startDestination = ScreenGeneral.Login.route) {
-//        composable(ScreenGeneral.Login.route) { Login(navController) }
-//        composable(ScreenGeneral.General.route) { StenograffiaApp(navController, settingsViewModel) }
-//    }
-//}
-
-
-sealed class Screen(val route: String, @StringRes val resourceId: Int, val image: ImageVector) {
     object StockCategories : Screen("StockCategories", R.string.stock_menu, Icons.Outlined.Inventory2)
     object Orders : Screen("ORDERS", R.string.orders_menu, Icons.Outlined.CheckBox)
     object Objects : Screen("OBJECTS", R.string.objects_menu, Icons.Outlined.Wallpaper)
@@ -145,36 +106,49 @@ val items = listOf(
     Screen.Settings
 )
 
+val noBarScreen = listOf(
+    Screen.Login,
+    Screen.SplashScreen
+)
+
 @Composable
 fun NavigationMenu(modifier: Modifier = Modifier, navController: NavController) {
-    BottomNavigation(
-        modifier = modifier,
-    ) {
-        val navBackStackEntry by navController.currentBackStackEntryAsState()
-        val currentDestination = navBackStackEntry?.destination
-        items.forEach { screen: Screen ->
-            BottomNavigationItem(
-                icon = {
-                    Icon(
-                        imageVector = screen.image,
-                        contentDescription = null
-                    )
-                },
-                label = {
-                    Text(stringResource(screen.resourceId))
-                },
-                selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true,
-                onClick = {
-                    navController.navigate(screen.route){
-                        popUpTo(navController.graph.findStartDestination().id) {
-                            saveState = true
+
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentDestination = navBackStackEntry?.destination
+    if (currentDestination?.route !in noBarScreen.map { item -> item.route }) {
+
+        BottomNavigation(
+            modifier = modifier,
+        ) {
+            val navBackStackEntry by navController.currentBackStackEntryAsState()
+            val currentDestination = navBackStackEntry?.destination
+            items.forEach { screen: Screen ->
+                BottomNavigationItem(
+                    icon = {
+                        Icon(
+                            imageVector = screen.image!!,
+                            contentDescription = null
+                        )
+                    },
+                    label = {
+                        Text(stringResource(screen.resourceId!!))
+                    },
+                    selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true,
+                    onClick = {
+                        navController.navigate(screen.route) {
+                            popUpTo(navController.graph.findStartDestination().id) {
+                                saveState = true
+                            }
+                            launchSingleTop = true
+                            restoreState = true
                         }
-                        launchSingleTop = true
-                        restoreState = true
                     }
-                }
-            )
+                )
+            }
         }
+    } else {
+        Spacer(modifier = Modifier.width(0.dp))
     }
 }
 

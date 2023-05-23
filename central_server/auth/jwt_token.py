@@ -64,8 +64,8 @@ class JwtToken:
         try:
             payload = jwt.decode(token, key=self.secret, algorithms=['HS256'])
             if payload['scope'] == 'refresh_token':
-                login = self.decode_access_token(token)
-                return self.encode_access_token(login)
+                # login = self.decode_access_token(token)
+                return payload['sub']
             else:
                 raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='Invalid token')
         except jwt.ExpiredSignatureError:

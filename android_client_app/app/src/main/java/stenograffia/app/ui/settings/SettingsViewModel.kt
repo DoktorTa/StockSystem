@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import org.intellij.lang.annotations.Language
+import stenograffia.app.domain.model.AuthTokens
 import java.time.LocalTime
 import java.util.*
 import javax.inject.Inject
@@ -14,10 +15,15 @@ import kotlin.random.Random
 
 @HiltViewModel
 class SettingsViewModel @Inject constructor(): ViewModel() {
-    val loginCorrect: MutableLiveData<Boolean> = MutableLiveData(false)
+    var loginCorrect: MutableLiveData<Boolean> = MutableLiveData(false)
+        private set
 
-    val internetConnection: Boolean = false
-    var lastAuthSession: Data? = null
+    fun setLoginCorrect(loginCorrectValue: Boolean){
+        loginCorrect.value = loginCorrectValue
+    }
+
+    var authTokens: AuthTokens? = null
+
     val userName: String = "User name"
     val userStatus: String = "ARTIST"
 
@@ -43,7 +49,5 @@ class SettingsViewModel @Inject constructor(): ViewModel() {
 //    fun loginVerification(): Boolean{
 //        return getAccessTokenByRefreshToken()
 //    }
-
-
 }
 
