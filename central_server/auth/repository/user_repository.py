@@ -1,30 +1,13 @@
-import logging
+from auth.db.users import Users
+from auth.db.users_dao import UsersDao
+from db.database import session_factory
 
 
 class UserRepository:
-    users = [
-        {   # password
-            'user_id': 1,
-            'username': 'Tass',
-            'login': 'admin',
-            'password': br'$2b$12$uSQBzTEf/VmBucYKlIK8P.EoIybv3aLEWsvlJMaHFOLeUQHKzPVDW',
-            'group': 0
-        },
-        {   # password1
-            'user_id': 2,
-            'username': 'Sveta',
-            'login': 'stock',
-            'password': b'$2b$12$4MynTSbvVNhGWJjXAtN7UOMxPifRe4sS2Bo.l5OLOrLw/qgtR0Oim',
-            'group': 1
-        }
-    ]
+    user_dao: UsersDao
 
-    def get_user_by_login(self, login: str) -> dict | None:
-        answer = None
+    def __init__(self):
+        self.user_dao = UsersDao()
 
-        for user in self.users:
-            if user['login'] == login:
-                answer = user
-                break
-        logging.getLogger().info(answer)
-        return answer
+    def get_user_by_login(self, login: str) -> Users | None:
+        return self.user_dao.get_password_by_login(session_factory(), login)

@@ -1,4 +1,3 @@
-import logging
 import os
 from datetime import datetime, timedelta
 
@@ -17,7 +16,8 @@ class JwtToken:
     def password_check(password: str, hashed_password: bytes) -> bool:
         return bcrypt.checkpw(password.encode(), hashed_password)
 
-    def password_hashing(self, password: str) -> bytes:
+    @staticmethod
+    def password_hashing(password: str) -> bytes:
         return bcrypt.hashpw(password.encode(), bcrypt.gensalt())
 
     def encode_access_token(self, login: str) -> str:
@@ -50,7 +50,7 @@ class JwtToken:
             'iss': self.server_name,
             'scope': 'refresh_token',
             'sub': login,
-            'jti': 1,  # TODO: id долен генериться сам
+            'jti': 1,  # TODO: id долен генерироваться сам
             'exp': datetime.utcnow() + self.time_refresh,
             'iat': datetime.utcnow()
         }
@@ -64,7 +64,6 @@ class JwtToken:
         try:
             payload = jwt.decode(token, key=self.secret, algorithms=['HS256'])
             if payload['scope'] == 'refresh_token':
-                # login = self.decode_access_token(token)
                 return payload['sub']
             else:
                 raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='Invalid token')

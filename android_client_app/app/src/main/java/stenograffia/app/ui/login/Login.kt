@@ -1,48 +1,21 @@
 package stenograffia.app.ui.login
 
-import android.annotation.SuppressLint
 import android.util.Log
-import android.widget.EditText
 import android.widget.Toast
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.launch
-import stenograffia.app.InFutureVersion
-import stenograffia.app.NavigationMenu
 import stenograffia.app.Screen
-import stenograffia.app.StenograffiaApp
-import stenograffia.app.domain.model.AuthTokens
-import stenograffia.app.domain.model.PaintNamesTupleModel
-import stenograffia.app.ui.CustomTopBar
-import stenograffia.app.ui.paint.ListPaint
 import stenograffia.app.ui.settings.DataStoreSettings
-import stenograffia.app.ui.settings.Settings
-import stenograffia.app.ui.settings.SettingsViewModel
-import stenograffia.app.ui.stock.listPaintLine.ListPaintLine
-import stenograffia.app.ui.stock.paint.Paint
-import stenograffia.app.ui.stock.stockCategories.StockCategories
-import stenograffia.app.ui.theme.STENOGRAFFIAAPPTheme
 
 
 @Composable
