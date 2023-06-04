@@ -7,7 +7,7 @@ from auth.db.users import Users
 class UsersDao:
     users: Users
 
-    def __int__(self):
+    def __init__(self):
         self.users: Users = Users()
 
     @staticmethod

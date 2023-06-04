@@ -1,8 +1,11 @@
+import logging
+
 from fastapi import HTTPException
 from starlette import status
 
 
 from auth.jwt_token import JwtToken
+from auth.models.user_base import User
 from auth.repository.user_repository import UserRepository
 
 
@@ -36,3 +39,17 @@ class AuthConfig:
                 raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='Invalid credentials')
         except Exception as e:
             raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='Invalid credentials')
+
+    def get_current_user(
+            self,
+            token: str
+    ) -> User:
+        loger = logging.getLogger()
+        login = self.jwt_token.decode_access_token(token)
+        loger.error(login)
+        # login = decoded['sub']
+        user = self.user_repository.get_user_by_login(login)
+        user = self.user_repository.get_user_by_login(login)
+        if user is not None:
+            loger.error(f'{user}')
+            return User(**user)

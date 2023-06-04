@@ -9,10 +9,12 @@ from auth.auth_config import AuthConfig
 from auth.models.token import Token
 from auth.models.user_base import LoginBase, Group, User, RefreshBase
 
-# from stock.repository.repository_stock import RepositoryStock
+from stock.repository.repository_stock import RepositoryStock
+
 
 app = FastAPI()
 auth = AuthConfig()
+rep = RepositoryStock()
 
 
 class RoleChecker:
@@ -77,4 +79,5 @@ def refresh_token(refresh_data: RefreshBase) -> Token:
 #     return {"paint": repository_stock.get_paint_by_id(paint_id)}
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="192.168.1.112", port=8000)
+    # uvicorn.run(app, host="192.168.1.112", port=8000)
+    uvicorn.run(app, host="127.0.0.1", port=8000)

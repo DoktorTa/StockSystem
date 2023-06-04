@@ -3,9 +3,17 @@
 # from stock.models.paint import Paint
 #
 #
-# class RepositoryStock:
-#     all_paint: List[Paint]
-#
+import logging
+
+from stock.db.stock_dao import StockDao
+
+
+class RepositoryStock:
+    stock_dao: StockDao
+
+    def __init__(self):
+        self.stock_dao = StockDao()
+
 #     def __init__(self):
 #         paint = Paint()
 #         paint.paint_id = 110000
