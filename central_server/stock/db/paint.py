@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Boolean
+from sqlalchemy import Column, Integer, String, Boolean, CheckConstraint
 from sqlalchemy.dialects.postgresql import ARRAY
 
 
@@ -9,7 +9,7 @@ class Paint(DeclarativeBase):
     __tablename__ = 'paint'
 
     paint_id = Column(Integer, primary_key=True)
-    data_time = Column('data_time', String)
+    data_time = Column('data_time', Integer)
     paint_type = Column('type', String)
 
     name_creator = Column('name_creator', String)
@@ -20,7 +20,7 @@ class Paint(DeclarativeBase):
     description_color = Column('description_color', String)
     color = Column('color', Integer)
 
-    quantity_in_storage = Column('quantity_in_storage', Integer)
+    quantity_in_storage = Column('quantity_in_storage', Integer, CheckConstraint("quantity_in_storage >= 0"))
 
     possible_to_buy = Column('possible_to_buy', Boolean)
 

@@ -1,46 +1,12 @@
-import logging
-
 import uvicorn
-from fastapi import FastAPI, Response, Depends, HTTPException
-# from fastapi.security import OAuth2PasswordBearer, SecurityScopes
+from fastapi import FastAPI, Depends
 
+from auth.models.group import Group
+from auth.api import router as router_auth, RoleChecker
 
-from auth.auth_config import AuthConfig
-from auth.models.token import Token
-from auth.models.user_base import LoginBase, Group, User, RefreshBase
-
-from stock.repository.repository_stock import RepositoryStock
-
+from stock.api import router
 
 app = FastAPI()
-auth = AuthConfig()
-rep = RepositoryStock()
-
-
-class RoleChecker:
-    def __init__(self, allowed_roles: int):
-        self.allowed_roles = allowed_roles
-
-    def __call__(self, user: User = Depends(auth.get_current_user)):
-        if user.group > self.allowed_roles:
-            raise HTTPException(status_code=403, detail="Operation not permitted")
-        else:
-            return True
-
-    # def __call__(self, user: str):
-    #     lof = logging.getLogger()
-    #     lof.error("!!!!!!")
-    #     # if user.group > self.allowed_roles:
-    #     #     raise HTTPException(status_code=403, detail="Operation not permitted")
-    #     # else:
-    #     return True
-
-# oauth_scheme = OAuth2PasswordBearer(
-#     tokenUrl="token",
-#     scopes={'items': 'permissions to access items'}
-# )
-
-# repository_stock = RepositoryStock()
 
 
 @app.get("/")
@@ -60,23 +26,9 @@ async def say_hello(authorize: bool = Depends(RoleChecker(allowed_roles=Group.AD
     else:
         return {'message': 'FALSE'}
 
+app.include_router(router_auth)
+app.include_router(router)
 
-@app.post('/login')
-def login(login_data: LoginBase) -> Token:
-    token_str = auth.authenticate_user(**login_data.dict())
-    return Token(access_token=token_str['access_token'], refresh_token=token_str['refresh_token'])
-
-
-@app.post('/refresh_token')
-def refresh_token(refresh_data: RefreshBase) -> Token:
-    token_str = auth.refreshed_token(**refresh_data.dict())
-    return Token(access_token=token_str['access_token'], refresh_token=token_str['refresh_token'])
-
-
-# @app.get("/getPaintById")
-# async def get_paint_by_id(response: Response):
-#     paint_id: int = response.body["id"]
-#     return {"paint": repository_stock.get_paint_by_id(paint_id)}
 
 if __name__ == "__main__":
     # uvicorn.run(app, host="192.168.1.112", port=8000)

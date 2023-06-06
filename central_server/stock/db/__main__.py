@@ -11,15 +11,8 @@ from stock.db.paint import Paint
 
 
 def load_paint():
-
-    l = logging.getLogger()
-    l.error("0")
-
     path = os.getenv('PATH_ALL_CSV')
     session = session_factory()
-
-    reader = csv.reader(path)
-    l.error("1")
 
     with open(path, 'r') as file:
         reader = csv.reader(file, delimiter=',')
@@ -40,7 +33,7 @@ def load_paint():
 
             paint = Paint(
                 paint_id=int(row[0]),
-                data_time=row[2],
+                data_time=int(row[2]),
                 paint_type=row[1],
 
                 name_creator=row[3],

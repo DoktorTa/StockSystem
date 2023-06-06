@@ -8,4 +8,3 @@ class Material(BaseModel):
     about: str
     unique: bool
     location: int
-
