@@ -16,9 +16,9 @@ import kotlinx.coroutines.flow.Flow
 import stenograffia.app.R
 import stenograffia.app.domain.model.PaintModel
 import stenograffia.app.domain.model.PaintNamesTupleModel
-import stenograffia.app.ui.stock.listPaint.ListPaintItem
-import stenograffia.app.ui.stock.listPaint.PaintItem
-import stenograffia.app.ui.stock.listPaint.PaintListViewModel
+import stenograffia.app.ui.screens.stock.listPaint.ListPaintItem
+import stenograffia.app.ui.screens.stock.listPaint.PaintItem
+import stenograffia.app.ui.screens.stock.listPaint.PaintListViewModel
 
 
 @SuppressLint("RememberReturnType")

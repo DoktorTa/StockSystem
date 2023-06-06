@@ -1,9 +1,7 @@
-package stenograffia.app.ui.stock.listPaint
+package stenograffia.app.ui.screens.stock.paint
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -11,11 +9,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import stenograffia.app.R
+import stenograffia.app.ui.screens.stock.listPaint.PaintItem
 
-
-@SuppressLint("SuspiciousIndentation")
 @Composable
-fun ListPaintItem(
+fun PaintLikenessListItem(
     modifier: Modifier = Modifier,
     paintItem: PaintItem = PaintItem()
 ) {
@@ -23,29 +20,33 @@ fun ListPaintItem(
         start = dimensionResource(id = R.dimen.paint_list_item_text_start_padding)
     )
 
-    Column(
+    Column (
         modifier = modifier
             .wrapContentHeight()
-            .background(color = MaterialTheme.colors.primary)
-    ) {
-        Column(
+            .background(color = MaterialTheme.colors.primary)) {
+        Column (
             modifier = Modifier
                 .height(dimensionResource(id = R.dimen.paint_list_item_height))
                 .background(color = paintItem.color)
-                .fillMaxWidth()
-        ) {
+                .fillMaxWidth()) {
             Text(
                 text = paintItem.nameColor,
                 color = paintItem.colorText,
                 modifier = modifierPaddingTextStart,
-                style = MaterialTheme.typography.body1,
                 maxLines = 1
             )
             Text(
                 text = paintItem.codePaint,
                 color = paintItem.colorText,
                 modifier = modifierPaddingTextStart,
-                style = MaterialTheme.typography.body1,
+                maxLines = 1
+            )
+            Text(
+                text = stringResource(
+                    id = R.string.paint_list_likeness_description_text,
+                    paintItem.additionalInformation),
+                color = paintItem.colorText,
+                modifier = modifierPaddingTextStart,
                 maxLines = 1
             )
         }
@@ -53,7 +54,6 @@ fun ListPaintItem(
             text = stringResource(paintItem.statusPaintTextId),
             color = paintItem.colorTextStatus,
             style = MaterialTheme.typography.body1,
-            modifier = modifierPaddingTextStart
-        )
+            modifier = modifierPaddingTextStart)
     }
 }

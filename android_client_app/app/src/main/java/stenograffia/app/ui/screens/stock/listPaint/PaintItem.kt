@@ -1,4 +1,4 @@
-package stenograffia.app.ui.stock.listPaint
+package stenograffia.app.ui.screens.stock.listPaint
 
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.graphics.Color

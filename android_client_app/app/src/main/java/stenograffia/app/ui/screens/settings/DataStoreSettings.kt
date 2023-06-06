@@ -1,4 +1,4 @@
-package stenograffia.app.ui.settings
+package stenograffia.app.ui.screens.settings
 
 import android.content.Context
 import androidx.datastore.core.DataStore

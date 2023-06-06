@@ -1,4 +1,4 @@
-package stenograffia.app.ui.stock.listPaint
+package stenograffia.app.ui.screens.stock.listPaint
 
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel

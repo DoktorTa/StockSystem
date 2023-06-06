@@ -1,4 +1,4 @@
-package stenograffia.app.ui.stock.paint
+package stenograffia.app.ui.screens.stock.paint
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*

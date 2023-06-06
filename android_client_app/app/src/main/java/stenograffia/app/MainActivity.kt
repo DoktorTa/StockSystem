@@ -15,10 +15,11 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.hilt.navigation.compose.hiltViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.Flow
-import stenograffia.app.ui.login.Login
+import stenograffia.app.ui.navigation.GraphNavigation
+import stenograffia.app.ui.screens.login.Login
 //import stenograffia.app.ui.login.SingUpScreens
-import stenograffia.app.ui.settings.DataStoreSettings
-import stenograffia.app.ui.settings.SettingsViewModel
+import stenograffia.app.ui.screens.settings.DataStoreSettings
+import stenograffia.app.ui.screens.settings.SettingsViewModel
 import stenograffia.app.ui.theme.STENOGRAFFIAAPPTheme
 import java.time.LocalTime
 import java.util.*
@@ -42,7 +43,7 @@ class MainActivity : ComponentActivity() {
             STENOGRAFFIAAPPTheme(
                 darkTheme = settingsViewModel.isDarkThemeEnabled.value
             ) {
-                StenograffiaApp(settingsViewModel = settingsViewModel)
+                GraphNavigation(settingsViewModel = settingsViewModel)
             }
         }
     }

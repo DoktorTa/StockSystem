@@ -1,4 +1,4 @@
-package stenograffia.app.ui.splash
+package stenograffia.app.ui.screens.splash
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,10 +14,10 @@ import androidx.navigation.NavController
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
-import stenograffia.app.Screen
+import stenograffia.app.ui.navigation.Screens
 import stenograffia.app.domain.model.AuthTokens
-import stenograffia.app.ui.login.LoginViewModel
-import stenograffia.app.ui.settings.DataStoreSettings
+import stenograffia.app.ui.screens.login.LoginViewModel
+import stenograffia.app.ui.screens.settings.DataStoreSettings
 
 @Composable
 fun SplashScreen(
@@ -36,12 +36,12 @@ fun SplashScreen(
 
             if (viewModel.authTokens != null){
                 dataStoreAuthTokens.saveTokens(viewModel.authTokens!!)
-                navController.navigate(Screen.StockCategories.route)
+                navController.navigate(Screens.StockCategories.route)
             } else {
-                navController.navigate(Screen.Login.route)
+                navController.navigate(Screens.Login.route)
             }
         } else {
-            navController.navigate(Screen.Login.route)
+            navController.navigate(Screens.Login.route)
         }
     }
 

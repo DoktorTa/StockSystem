@@ -1,4 +1,4 @@
-package stenograffia.app.ui.login
+package stenograffia.app.ui.screens.login
 
 import android.util.Log
 import android.widget.Toast
@@ -14,8 +14,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import stenograffia.app.Screen
-import stenograffia.app.ui.settings.DataStoreSettings
+import stenograffia.app.ui.navigation.Screens
+import stenograffia.app.ui.screens.settings.DataStoreSettings
 
 
 @Composable
@@ -78,7 +78,7 @@ fun Login(
             if (loginCorrect){
                 LaunchedEffect(true) {
                     dataStoreAuthTokens.saveTokens(viewModel.authTokens!!)
-                    navController.navigate(Screen.StockCategories.route)
+                    navController.navigate(Screens.StockCategories.route)
                 }
             } else {
                 Toast.makeText(LocalContext.current, infoText, Toast.LENGTH_LONG).show()

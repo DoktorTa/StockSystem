@@ -1,4 +1,4 @@
-package stenograffia.app.ui.settings
+package stenograffia.app.ui.screens.settings
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column

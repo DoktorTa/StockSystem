@@ -1,4 +1,4 @@
-package stenograffia.app.ui.stock.stockCategories
+package stenograffia.app.ui.screens.stock.stockCategories
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable

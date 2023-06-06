@@ -1,4 +1,4 @@
-package stenograffia.app.ui.stock.listPaintLine
+package stenograffia.app.ui.screens.stock.listPaintLine
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
