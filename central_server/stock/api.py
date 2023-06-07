@@ -22,7 +22,7 @@ async def get_paint(time_request: PaintRequest):
 
 @router.post("/update_paint")
 async def update_paint(update_request: UpdatePaintRequest):
-    return {"answer": repository_stock.update_paint_by_id(
+    return {"paint": repository_stock.update_paint_by_id(
         update_request.id_paint,
         update_request.diff_quantity)
     }

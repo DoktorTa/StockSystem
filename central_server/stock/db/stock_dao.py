@@ -37,7 +37,7 @@ class StockDao:
             )
             session.execute(stmt)
             session.commit()
-            return session.query(Paint).where(Paint.paint_id == paint_id).get(1)
+            return session.query(Paint).where(Paint.paint_id == paint_id).all()[0]
         except IntegrityError as e:
             return False
         except SQLAlchemyError as e:

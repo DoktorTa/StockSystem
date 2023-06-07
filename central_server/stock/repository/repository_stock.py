@@ -19,6 +19,8 @@ class RepositoryStock:
         return new_time, self.stock_dao.get_paint_by_time(session_factory(), time)
 
     def update_paint_by_id(self, id_paint: int, diff_quantity: int):
+        l = logging.getLogger()
+        l.error(diff_quantity)
         answer = self.stock_dao.update_paint(session_factory(), id_paint, diff_quantity)
         if answer is False:
             raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail='Less zero')
