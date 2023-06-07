@@ -1,4 +1,4 @@
-package stenograffia.app.ui.screens.stock.paint
+package stenograffia.app.ui.screens.stockStock.paint
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -13,14 +13,12 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.core.graphics.ColorUtils
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import stenograffia.app.R
-import stenograffia.app.vw.PaintViewModel
 import kotlin.math.roundToInt
 
 

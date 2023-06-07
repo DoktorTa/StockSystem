@@ -10,15 +10,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import kotlinx.coroutines.flow.Flow
 import stenograffia.app.R
 import stenograffia.app.domain.model.PaintModel
 import stenograffia.app.domain.model.PaintNamesTupleModel
-import stenograffia.app.ui.screens.stock.listPaint.ListPaintItem
-import stenograffia.app.ui.screens.stock.listPaint.PaintItem
-import stenograffia.app.ui.screens.stock.listPaint.PaintListViewModel
+import stenograffia.app.ui.screens.stockStock.listPaint.ListPaintItem
+import stenograffia.app.ui.screens.stockStock.listPaint.PaintItem
+import stenograffia.app.ui.screens.stockStock.listPaint.PaintListViewModel
 
 
 @SuppressLint("RememberReturnType")

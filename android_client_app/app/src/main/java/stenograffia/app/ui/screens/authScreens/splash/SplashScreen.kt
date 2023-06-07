@@ -1,4 +1,4 @@
-package stenograffia.app.ui.screens.splash
+package stenograffia.app.ui.screens.authScreens.splash
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,7 +16,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import stenograffia.app.ui.navigation.Screens
 import stenograffia.app.domain.model.AuthTokens
-import stenograffia.app.ui.screens.login.LoginViewModel
+import stenograffia.app.ui.screens.authScreens.login.LoginViewModel
 import stenograffia.app.ui.screens.settings.DataStoreSettings
 
 @Composable

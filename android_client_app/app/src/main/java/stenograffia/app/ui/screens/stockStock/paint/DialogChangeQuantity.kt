@@ -1,4 +1,4 @@
-package stenograffia.app.ui.screens.stock.paint
+package stenograffia.app.ui.screens.stockStock.paint
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -20,7 +20,6 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.window.Dialog
 import stenograffia.app.R
-import stenograffia.app.vw.PaintViewModel
 
 
 @Composable

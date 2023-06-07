@@ -1,4 +1,4 @@
-package stenograffia.app.ui.screens.stock.listPaintLine
+package stenograffia.app.ui.screens.stockStock.listPaintLine
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement

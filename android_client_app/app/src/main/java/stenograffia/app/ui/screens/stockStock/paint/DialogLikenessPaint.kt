@@ -1,4 +1,4 @@
-package stenograffia.app.ui.screens.stock.paint
+package stenograffia.app.ui.screens.stockStock.paint
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -14,8 +14,7 @@ import androidx.compose.ui.window.Dialog
 import androidx.navigation.NavController
 import stenograffia.app.R
 import stenograffia.app.domain.model.PaintModel
-import stenograffia.app.ui.screens.stock.listPaint.PaintItem
-import stenograffia.app.vw.PaintViewModel
+import stenograffia.app.ui.screens.stockStock.listPaint.PaintItem
 
 @Composable
 fun DialogLikenessPaint(

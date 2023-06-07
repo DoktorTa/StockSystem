@@ -1,4 +1,4 @@
-package stenograffia.app.ui.screens.login
+package stenograffia.app.ui.screens.authScreens.login
 
 import android.util.Log
 import android.widget.Toast

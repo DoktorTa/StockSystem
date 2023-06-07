@@ -1,6 +1,5 @@
-package stenograffia.app.vw
+package stenograffia.app.ui.screens.stockStock.paint
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import stenograffia.app.domain.model.PaintModel
