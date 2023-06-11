@@ -7,7 +7,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import stenograffia.app.data.database.DataBase
-import stenograffia.app.data.database.PaintDao
+import stenograffia.app.data.database.StockDao
 import javax.inject.Singleton
 
 @Module
@@ -16,8 +16,8 @@ class DatabaseModel {
 
     @Singleton
     @Provides
-    fun providePaintDao(database: DataBase): PaintDao {
-        return database.paintDao()
+    fun provideStockDao(database: DataBase): StockDao {
+        return database.stockDao()
     }
 
     @Singleton

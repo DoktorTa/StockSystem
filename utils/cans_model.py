@@ -1,3 +1,4 @@
+import datetime
 import json
 
 from typing import List
@@ -15,6 +16,7 @@ class CansModel:
                  ):
         self.paint_id: str = paint_id
         self.paint_type: str = "CANS"
+        self.data_time: int = int(datetime.datetime.utcnow().timestamp())  # datetime.datetime.utcfromtimestamp(1685184037)
         self.name_creator: str = name_creator
         self.name_line: str = name_line
         self.color_code: str = color_code
@@ -24,7 +26,7 @@ class CansModel:
         self.quantity_in_storage: int = 0
         self.places_of_possible_availability: List[str] = []
         self.similar_colors: List[int] = similar_colors
-        self.possible_to_buy: bool = False
+        self.possible_to_buy: int = 0
 
     def get_kotlin_code(self):
         """
@@ -42,9 +44,9 @@ class CansModel:
                 'places_of_possible_availability', 'similar_colors', 'possible_to_buy']
 
     def get_csv(self):
-        return [self.paint_id, self.paint_type, self.name_creator, self.name_line, self.color_code,
+        return [self.paint_id, self.paint_type, self.data_time, self.name_creator, self.name_line, self.color_code,
                 self.name_color, self.description_color, self.color, self.quantity_in_storage,
-                self.places_of_possible_availability, self.similar_colors, self.possible_to_buy]
+                self.places_of_possible_availability, str(self.similar_colors).replace("'", ""), self.possible_to_buy]
 
 
 class CansModelEncoder(json.JSONEncoder):

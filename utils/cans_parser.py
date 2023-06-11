@@ -1,8 +1,6 @@
 import argparse
 import csv
-import json
 
-from cans_model import CansModel, CansModelEncoder
 from similar_color import SimilarColor
 from parser_csv import ParserCSV
 from parser_web import MontanaCansParserHTML
@@ -41,17 +39,17 @@ def get_all_cans_by_parser() -> list:
     return all_cans
 
 
-def main():
-    output_type = pars_arg()
-    all_cans = get_all_cans_by_parser()
+def write_to_csv(all_cans):
 
-    similar_color = SimilarColor(all_cans)
-    similar_color.calculate_simular_cans()
+    with open('Cans/all.csv', 'w', newline='', encoding="utf-8") as file:
+        writer = csv.writer(file)
 
+        for cans in all_cans:
+            writer.writerow(cans.get_csv())
+
+
+def write_to_kotlin(all_cans):
     all_id = []
-
-    # with open('Cans/all.json', 'w', encoding="utf-8") as file:
-    #     json.dump(all_cans, file, cls=CansModelEncoder)
 
     with open('Cans/all.txt', 'w', encoding="utf-8") as file:
         for cans in all_cans:
@@ -60,6 +58,19 @@ def main():
             all_id.append(f"p{cans.paint_id}")
         l = f'listOf({str(all_id).replace("[", "").replace("]", "")})'
         file.write(l.replace("'", ""))
+
+
+def main():
+    output_type = pars_arg()
+    all_cans = get_all_cans_by_parser()
+
+    similar_color = SimilarColor(all_cans)
+    similar_color.calculate_simular_cans()
+
+    if output_type == 'csv':
+        write_to_csv(all_cans)
+    else:
+        write_to_kotlin(all_cans)
 
 
 if __name__ == '__main__':

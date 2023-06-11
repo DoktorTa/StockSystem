@@ -1,37 +1,26 @@
-# from typing import List
-#
-# from stock.models.paint import Paint
-#
-#
-# class RepositoryStock:
-#     all_paint: List[Paint]
-#
-#     def __init__(self):
-#         paint = Paint()
-#         paint.paint_id = 110000
-#         paint.paint_type = "CANS"
-#         paint.nameCreator = "MONTANA CANS"
-#         paint.nameLine = "BLACK - 400ml"
-#         paint.codePaint = "BLK-1005-400"
-#         paint.nameColor = "Smash137´s Potato"
-#         paint.descriptionColor = " "
-#         paint.color= 0xf4e593
-#         paint.quantityInStorage = 0
-#         paint.placesOfPossibleAvailability = []
-#         paint.similarColors = []
-#         paint.possibleToBuy = False
-#
-#         self.all_paint.append(paint)
-#
-#     def get_all_paint(self) -> List[Paint]:
-#         return self.all_paint
-#
-#     def get_paint_by_id(self, paint_id: int) -> Paint:
-#         answer = None
-#
-#         for paint in self.all_paint:
-#             if paint.paint_id == paint_id:
-#                 answer = paint
-#
-#         return answer
+import logging
+from datetime import datetime
 
+from fastapi import HTTPException
+from starlette import status
+
+from stock.db.stock_dao import StockDao
+from db.database import session_factory
+
+
+class RepositoryStock:
+    stock_dao: StockDao
+
+    def __init__(self):
+        self.stock_dao = StockDao()
+
+    def get_paint_by_time(self, time: int):
+        new_time = int(datetime.utcnow().timestamp())
+        return new_time, self.stock_dao.get_paint_by_time(session_factory(), time)
+
+    def update_paint_by_id(self, id_paint: int, diff_quantity: int):
+        answer = self.stock_dao.update_paint(session_factory(), id_paint, diff_quantity)
+        if answer is False:
+            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail='Less zero')
+        else:
+            return answer

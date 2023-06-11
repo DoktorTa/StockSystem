@@ -26,7 +26,7 @@ class SimilarColor:
 
                 if diff < 5 and int(cans_id) != int(cans.paint_id):
                     percent = int(100 - diff)
-                    simular.append(f'listOf({cans_id}, {percent})')
+                    simular.append(f'{cans_id};{percent}')
 
             cans.similar_colors = simular
 

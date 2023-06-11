@@ -9,12 +9,14 @@
 	Уникальный обьект (Material):
 		id: Int
 		type: String - тип обьекта
+		data_time: Int - время последнего изменения этого обьекта
 		description: String - описание обьекта
 		about: String - другие дополнение к обьекту
 		unique: Boolean - уникальный элемент (генератора) или не уникальный (кисточки)
 		location: Object.id - местонахождение обьекта
 	Пример: 
 		id = 024923
+		data_time = 01.01.2017 00:00:00
 		type = "Лесница"
 		description = "6 метровая, трех секционная лекция, каждая секция длинной 2 два метра"
 		about = "Не забудте о том что лесница тяжёлая"
@@ -24,6 +26,7 @@
 
 	Обьект краски (Paint):
 		id: Int
+		data_time: Int - время последнего изменения этого обьекта
 		type: String - тип краски
 		nameCreater: String - название производителя
 		nameLine: String - название линейки краски
@@ -37,6 +40,7 @@
 		possibleToBuy: Boolean - можно ли попробовать достать краску
 	Пример:
 		id = 1342
+		data_time = 01.01.2017 00:00:00
 		type = "Банка"
 		nameCreater = "ArtonPaint"
 		nameLine = "Arton 400ml"
@@ -50,11 +54,6 @@
 		possibleToBuy = True
 	Типы краски: 
 		Банка, НитроЭмаль, Фасадная, ПФ 
-
-
-	Обьект фотографии краски (PaintPhoto):
-		id: Paint.id
-		photo: Map<String, ByteArray> - что за фото, фото
 
 
 ## Database
@@ -80,13 +79,6 @@ delete                             | DELETE FROM PrintTable WHERE id = id       
 update                             | UPDATE PrintTable SET * WHERE id = id                                               |
 updatePlacesOfPossibleAvailability | UPDATE PrintTable SET updatePlacesOfPossibleAvailability WHERE id = id              |
 
-PaintPhotoTable:
-Method                             | SQL                                         |
----------------------------------- | ------------------------------------------- |
-getById                            | SELECT * FROM PaintPhotoTable WHERE id = id |
-insert                             | INSERT INTO PaintPhotoTable VALUES *        |
-delete                             | DELETE FROM PaintPhotoTable WHERE id = id   |
-
 
 ## API
 	/getAllMaterials
@@ -101,16 +93,10 @@ delete                             | DELETE FROM PaintPhotoTable WHERE id = id  
 		200 -> UniqueElement
 		400 -> Error
 
-	/getAllPaint
+	/get_paint_by_time
 		Права использования: >= PRESS
 		GET 
 		200 -> [PaintTable]
-		400 -> Error
-
-	/getByIdPaint
-		Права использования: >= PRESS
-		GET 
-		200 -> Paint
 		400 -> Error
 
 	/updateQuantityInStorage
@@ -119,11 +105,9 @@ delete                             | DELETE FROM PaintPhotoTable WHERE id = id  
 		200 -> Paint
 		400 -> Error
 
-	/getByIdPaintPhoto
-		Права использования: >= PRESS
-		GET 
-		200 -> PaintPhoto
-		400 -> Error
+
+## Работа с краской
+У каждой позиции есть метка data_time - когда пользователь отправляет метку времени свойей базы, на сервере пользователю отправляются только то что старше этой ветки.
 
 
 ### Materials 
@@ -176,11 +160,11 @@ HEX HSL CYMK цвета                                  | [surely]             
 
 Версия | Название производителя | Название линейки       | Обьем | Добавленно | Выявлен цвет | Похожие цвета | Доступно в городе | 
 ------ | ---------------------- | ---------------------- | ----- | ---------- | ------------ | ------------- | ----------------- |
-1.0    | Montana Cans           | BLACK                  | 400   | -          | +            | -             | -                 |
-2.0    | Montana Cans           | GOLD                   | 400   | -          | +            | -             | -                 |
-3.0    | Montana Cans           | WHITE                  | 400   | -          | +            | -             | -                 |
-2.0    | Montana Colors         | MTN94                  | 400   | -          | +            | -             | -                 |
-3.0    | Montana Colors         | Hardcore               | 400   | -          | +            | -             | -                 |
+1.0    | Montana Cans           | BLACK                  | 400   | -          | +            | +             | -                 |
+2.0    | Montana Cans           | GOLD                   | 400   | -          | +            | +             | -                 |
+3.0    | Montana Cans           | WHITE                  | 400   | -          | +            | +             | -                 |
+2.0    | Montana Colors         | MTN94                  | 400   | -          | +            | +             | -                 |
+3.0    | Montana Colors         | Hardcore               | 400   | -          | +            | +             | -                 |
 3.0    | MOLOTOW                | FLAME ORANGE           | 400   | -          | -            | -             | -                 |
 3.0    | MOLOTOW                | FLAME ORANGE           | 600   | -          | -            | -             | -                 |
 3.0    | MOLOTOW                | FLAME BLUE             | 400   | -          | -            | -             | -                 |
@@ -189,7 +173,7 @@ HEX HSL CYMK цвета                                  | [surely]             
 3.0    | MOLOTOW                | COVERSALL™ WATER-BASED | 400   | -          | -            | -             | -                 |
 3.0    | MOLOTOW                | COVERSALL™ COLOR       | 400   | -          | -            | -             | -                 |
 2.0    | Loop                   | LOOP                   | 400   | -          | -            | -             | -                 |
-1.0    | ARTON                  | PAINT                  | 400   | -          | -            | -             | -                 |
+1.0    | ARTON                  | PAINT                  | 400   | -          | +            | +             | -                 |
 1.0    | ARTON                  | PAINT                  | 600   | -          | -            | -             | -                 |
 3.0    | Trane                  | TRANE                  | 400   | -          | -            | -             | -                 |
 3.0    | Easy                   | EASY                   | 400   | -          | -            | -             | -                 |
