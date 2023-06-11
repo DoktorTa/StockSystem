@@ -8,18 +8,6 @@ import java.lang.reflect.Type
 class PaintTypeConverter {
 
     @TypeConverter
-    fun toPlacesOfPossibleAvailability(value: String): List<Int> {
-        val type: Type = object : TypeToken<List<Int>>() {}.type
-        return Gson().fromJson(value, type)
-    }
-
-    @TypeConverter
-    fun fromPlacesOfPossibleAvailability(list: List<Int>): String {
-        return Gson().toJson(list)
-    }
-
-
-    @TypeConverter
     fun toSimilarColors(value: String): List<List<Int>> {
         val type: Type = object : TypeToken<List<List<Int>>>() {}.type
         return Gson().fromJson(value, type)

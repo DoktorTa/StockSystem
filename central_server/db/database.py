@@ -6,7 +6,7 @@ from sqlalchemy.ext.declarative import declarative_base
 
 url = os.getenv('DATABASE_URL')
 
-engine = create_engine(url)
+engine = create_engine(url, isolation_level="SERIALIZABLE")
 _SessionFactory = sessionmaker(bind=engine)
 DeclarativeBase = declarative_base()
 

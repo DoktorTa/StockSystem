@@ -30,10 +30,9 @@ class AuthConfig:
         try:
             login = self.jwt_token.decode_refresh_token(refresh_token)
             user = self.user_repository.get_user_by_login(login)
-
             if user is not None:
-                access_token = self.jwt_token.encode_access_token(user['login'])
-                refresh_token = self.jwt_token.encode_refresh_token(user['login'])
+                access_token = self.jwt_token.encode_access_token(user.user_login)
+                refresh_token = self.jwt_token.encode_refresh_token(user.user_login)
                 return {'access_token': access_token, 'refresh_token': refresh_token}
             else:
                 raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='Invalid credentials')

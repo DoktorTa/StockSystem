@@ -14,6 +14,7 @@ import stenograffia.app.R
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
+import stenograffia.app.ui.navigation.Screens
 
 @Composable
 fun StockCategories(navController: NavController) {
@@ -26,7 +27,7 @@ fun StockCategories(navController: NavController) {
                 .fillMaxHeight()
                 .weight(1f)
                 .background(color = colorBlackTransparent)
-                .clickable { navController.navigate("ListPaintLine") },
+                .clickable { navController.navigate(Screens.ListPaintLine.route) },
             contentAlignment = Alignment.Center
         ) {
             CategoryText(

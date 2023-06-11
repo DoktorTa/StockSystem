@@ -6,29 +6,27 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import stenograffia.app.domain.model.PaintModel
-import stenograffia.app.domain.useCases.PaintUseCase
 import stenograffia.app.domain.useCases.StockUseCase
 import javax.inject.Inject
 
 @HiltViewModel
 class PaintViewModel @Inject constructor(
-    val useCase: PaintUseCase,
-    val stockUseCase: StockUseCase
+    private val stockUseCase: StockUseCase
 ) : ViewModel() {
 
     lateinit var paintModel: PaintModel
 
     fun loadPaintModelById(paintId: Int) {
-        paintModel = useCase.getPaintModelById(paintId)!!
+        paintModel = stockUseCase.getPaintModelById(paintId)!!
     }
 
     fun changeQuantityPaintInStock(difference: Int) {
         viewModelScope.launch {
             val ans = stockUseCase.updateQuantityById(paintModel.id, difference)
+            // TODO: Доделать тост с ответом
             Log.d("PaintViewModel", ans.toString())
             loadPaintModelById(paintModel.id)
         }
-//        useCase.changeQuantityPaintInStock(paintModel, difference)
     }
 
     fun getLikenessPaintList(): Pair<List<PaintModel>, Map<Int, String>>{
@@ -38,7 +36,7 @@ class PaintViewModel @Inject constructor(
         val percentLikenessList: MutableMap<Int, String> = mutableMapOf()
 
         likenessPaint.forEach {
-            val paintModel: PaintModel = useCase.getPaintModelById(it[0])!!
+            val paintModel: PaintModel = stockUseCase.getPaintModelById(it[0])!!
             paintList.add(paintModel)
             percentLikenessList[paintModel.id] = it[1].toString()
         }

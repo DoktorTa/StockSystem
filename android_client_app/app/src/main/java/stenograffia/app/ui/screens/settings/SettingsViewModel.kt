@@ -1,17 +1,12 @@
 package stenograffia.app.ui.screens.settings
 
-import android.os.LocaleList
-import android.provider.ContactsContract.Contacts.Data
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import org.intellij.lang.annotations.Language
 import stenograffia.app.domain.model.AuthTokens
-import java.time.LocalTime
 import java.util.*
 import javax.inject.Inject
-import kotlin.random.Random
 
 @HiltViewModel
 class SettingsViewModel @Inject constructor(): ViewModel() {
@@ -45,9 +40,5 @@ class SettingsViewModel @Inject constructor(): ViewModel() {
     fun setTheme(isDarkTheme: Boolean) {
         isDarkThemeEnabled.value = isDarkTheme
     }
-
-//    fun loginVerification(): Boolean{
-//        return getAccessTokenByRefreshToken()
-//    }
 }
 

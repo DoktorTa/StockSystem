@@ -23,7 +23,6 @@ class DataStoreSettings(private val context: Context) {
 
         val ACCESS_TOKEN = stringPreferencesKey("access_token")
         val REFRESH_TOKEN = stringPreferencesKey("refresh_token")
-//        val LOGIN_CORRECT_KEY = booleanPreferencesKey("login_correct")
     }
 
     suspend fun saveTokens(authTokens: AuthTokens){
@@ -64,12 +63,6 @@ class DataStoreSettings(private val context: Context) {
         .map { preferences ->
             preferences[LOCALE_KEY] ?: "en"
         }
-
-//    suspend fun saveLoginCorrect(loginCorrect: Boolean) {
-//        context.dataStore.edit { preferences ->
-//            preferences[LOGIN_CORRECT_KEY] = loginCorrect
-//        }
-//    }
 
     suspend fun saveTheme(isDarkThemeEnabled: Boolean) {
         context.dataStore.edit { preferences ->

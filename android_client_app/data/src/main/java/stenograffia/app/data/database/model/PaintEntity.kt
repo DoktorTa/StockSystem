@@ -1,4 +1,4 @@
-package stenograffia.app.data.database
+package stenograffia.app.data.database.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -13,13 +13,13 @@ data class PaintEntity(
     @PrimaryKey val id: Int,
     val type: String,
     val nameCreator: String,
+    val timeLabel: Int,
     val nameLine: String,
     val codePaint: String,
     val nameColor: String,
     val descriptionColor: String,
     val color: Int,
     val quantityInStorage: Int,
-    val placesOfPossibleAvailability: List<Int>,
     val similarColors: List<List<Int>>,
     val possibleToBuy: Boolean
 )
@@ -29,6 +29,7 @@ fun PaintEntity?.toPaintModel(): PaintModel?{
     return PaintModel(
         id = this.id,
         type = TypePaint.createByString(this.type),
+        timeLabel = this.timeLabel,
         nameCreator = this.nameCreator,
         nameLine = this.nameLine,
         codePaint = this.codePaint,
@@ -36,7 +37,6 @@ fun PaintEntity?.toPaintModel(): PaintModel?{
         descriptionColor = this.descriptionColor,
         color = this.color,
         quantityInStorage = this.quantityInStorage,
-        placesOfPossibleAvailability = this.placesOfPossibleAvailability,
         similarColors = this.similarColors,
         possibleToBuy = this.possibleToBuy
     )
@@ -47,6 +47,7 @@ fun PaintModel?.fromPaintEntity(): PaintEntity?{
     return PaintEntity(
         id = this.id,
         type = this.type.name,
+        timeLabel = this.timeLabel,
         nameCreator = this.nameCreator,
         nameLine = this.nameLine,
         codePaint = this.codePaint,
@@ -54,7 +55,6 @@ fun PaintModel?.fromPaintEntity(): PaintEntity?{
         descriptionColor = this.descriptionColor,
         color = this.color,
         quantityInStorage = this.quantityInStorage,
-        placesOfPossibleAvailability = this.placesOfPossibleAvailability,
         similarColors = this.similarColors,
         possibleToBuy = this.possibleToBuy
     )

@@ -1,10 +1,13 @@
 package stenograffia.app.domain.useCases
 
 import android.util.Log
+import kotlinx.coroutines.flow.Flow
 import stenograffia.app.domain.ApiResponse
 import stenograffia.app.domain.model.PaintModel
+import stenograffia.app.domain.model.PaintNamesTupleModel
 import stenograffia.app.domain.repository.IStockDataBaseRepository
 import stenograffia.app.domain.repository.IStockNetworkRepository
+import stenograffia.app.domain.utils.StockChangeQuantityText
 import javax.inject.Inject
 
 class StockUseCase @Inject constructor(
@@ -12,32 +15,43 @@ class StockUseCase @Inject constructor(
     private val stockDataBaseRepository: IStockDataBaseRepository
 ) {
 
-    suspend fun updateQuantityById(idPaint: Int, quantity: Int): PaintModel? {
-        // {"paint":
-        // {
-        // "name_creator":"MONTANA CANS",
-        // "data_time":1685876080,
-        // "paint_type":"CANS",
-        // "name_color":"Smash137Вґs Potato",
-        // "description_color":" ",
-        // "quantity_in_storage":35,
-        // "name_line":"BLACK - 400ml",
-        // "paint_id":110000,
-        // "code_paint":"BLK-1005-400",
-        // "color":16049555,
-        // "possible_to_buy":false,
-        // "similar_colors":[[120000,97],[210000,97]]}}
+    suspend fun updateQuantityById(idPaint: Int, quantity: Int): StockChangeQuantityText {
 
         val answer: ApiResponse<PaintModel?> =
             stockNetworkRepository.updateQuantityById(idPaint, quantity)
 
         if (answer is ApiResponse.Success) {
             if (answer.data == null) {
-                return null
+                return StockChangeQuantityText.ErrorUpdate()
             } else {
-                stockDataBaseRepository.updatePaint(answer.data)
+                stockDataBaseRepository.updateAllPaint(listOf(answer.data))
+                return StockChangeQuantityText
+                    .CorrectUpdate(answer.data.quantityInStorage.toString())
             }
         }
-        return null
+        return StockChangeQuantityText.ErrorConnect()
+    }
+
+    suspend fun updatePaintsByTime() {
+        val timeLabel = stockDataBaseRepository.getMaxTimeLabel()
+        val updatedPaints: ApiResponse<List<PaintModel>> =
+            stockNetworkRepository.getAllPaintsByTime(timeLabel)
+
+        if (updatedPaints is ApiResponse.Success){
+            stockDataBaseRepository.updateAllPaint(updatedPaints.data)
+        }
+    }
+
+    fun getPaintModelById(paintId: Int): PaintModel? {
+        return stockDataBaseRepository.getPaintById(paintId)
+    }
+
+    fun getLinePaint(paintNameModel: PaintNamesTupleModel): Flow<List<PaintModel>> {
+        return stockDataBaseRepository
+            .getPaintsListByCreatorAndLine(paintNameModel.nameCreator, paintNameModel.nameLine)
+    }
+
+    fun getAllPaintNames(): Flow<List<PaintNamesTupleModel>> {
+        return stockDataBaseRepository.getAllPaintNames()
     }
 }

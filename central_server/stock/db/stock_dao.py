@@ -18,7 +18,7 @@ class StockDao:
     @staticmethod
     def get_paint_by_time(session: Session, time: int):
         try:
-            names = session.query(Paint).where(Paint.data_time < time).all()
+            names = session.query(Paint).where(Paint.data_time > time).all()
             return names
         except IntegrityError as e:
             raise e.orig
@@ -39,8 +39,10 @@ class StockDao:
             session.commit()
             return session.query(Paint).where(Paint.paint_id == paint_id).all()[0]
         except IntegrityError as e:
+            session.rollback()
             return False
         except SQLAlchemyError as e:
+            session.rollback()
             raise e
         finally:
             session.close()

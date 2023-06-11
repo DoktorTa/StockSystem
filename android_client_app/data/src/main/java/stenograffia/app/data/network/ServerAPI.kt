@@ -2,7 +2,6 @@ package stenograffia.app.data.network
 
 import retrofit2.Response
 import retrofit2.http.Body
-import retrofit2.http.GET
 import retrofit2.http.POST
 import stenograffia.app.data.network.data.*
 
@@ -17,7 +16,7 @@ interface ServerAPI {
     @POST(Urls.UPDATE_PAINT_QUANTITY)
     suspend fun updatePaintQuantity(@Body request: UpdateQuantityRequest): Response<SinglePaintResponse>
 
-//    @GET(Urls.TEST)
-//    suspend fun test(): String
+    @POST(Urls.GET_PAINTS_BY_TIME)
+    suspend fun getAllPaintByTime(@Body request: GetPaintRequest): Response<ManyPaintResponse>
 
 }

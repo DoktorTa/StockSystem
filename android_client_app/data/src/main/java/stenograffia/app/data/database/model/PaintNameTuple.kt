@@ -1,4 +1,4 @@
-package stenograffia.app.data.database
+package stenograffia.app.data.database.model
 
 import androidx.room.ColumnInfo
 import stenograffia.app.domain.model.PaintModel

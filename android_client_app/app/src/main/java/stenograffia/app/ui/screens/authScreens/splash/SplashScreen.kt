@@ -32,7 +32,7 @@ fun SplashScreen(
         val refreshToken: String = authToken.first().refreshToken
         if (refreshToken != ""){
             viewModel.refreshTokens(refreshToken)
-            delay(3_000L)
+            delay(1_000L)
 
             if (viewModel.authTokens != null){
                 dataStoreAuthTokens.saveTokens(viewModel.authTokens!!)

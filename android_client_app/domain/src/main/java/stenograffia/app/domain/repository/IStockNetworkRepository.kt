@@ -6,4 +6,6 @@ import stenograffia.app.domain.model.PaintModel
 interface IStockNetworkRepository {
 
     suspend fun updateQuantityById(idPaint: Int, quantity: Int): ApiResponse<PaintModel?>
+
+    suspend fun getAllPaintsByTime(time: Int) : ApiResponse<List<PaintModel>>
 }
