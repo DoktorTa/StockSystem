@@ -1,7 +1,7 @@
 from sqlalchemy.exc import IntegrityError, SQLAlchemyError
 from sqlalchemy.orm import Session
 
-from auth.db.users import Users
+from auth.db.entitys.users import Users
 
 
 class UsersDao:

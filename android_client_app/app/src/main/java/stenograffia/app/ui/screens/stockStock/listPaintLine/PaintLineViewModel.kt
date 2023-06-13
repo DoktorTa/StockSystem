@@ -1,8 +1,5 @@
 package stenograffia.app.ui.screens.stockStock.listPaintLine
 
-import android.util.Log
-import androidx.lifecycle.asLiveData
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,10 +17,7 @@ class PaintLineViewModel @Inject constructor(
     val allPaintName: Flow<List<PaintNamesTupleModel>> = getAllPaintNames()
 
     private fun getAllPaintNames(): Flow<List<PaintNamesTupleModel>> {
-        Log.d("PaintLineViewModel", "1")
         viewModelScope.launch { stockUseCase.updatePaintsByTime() }
-        Log.d("PaintLineViewModel", "12")
-        Log.d("PaintLineViewModel", stockUseCase.getPaintModelById(110000).toString())
         return stockUseCase.getAllPaintNames()
     }
 

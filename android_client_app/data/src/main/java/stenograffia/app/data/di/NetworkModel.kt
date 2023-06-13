@@ -5,8 +5,10 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
+import retrofit2.Retrofit
+import stenograffia.app.data.network.AuthApi
 import stenograffia.app.data.network.NetworkClient
-import stenograffia.app.data.network.ServerAPI
+import stenograffia.app.data.network.StockApi
 import stenograffia.app.data.repository.UserRepositoryImpl
 import stenograffia.app.domain.repository.IUserRepository
 import javax.inject.Singleton
@@ -17,19 +19,26 @@ class NetworkModel {
 
     @Singleton
     @Provides
-    fun provideHttpClient() : OkHttpClient {
-        return NetworkClient.getHttpClient()
+    fun provideRetrofit() : Retrofit {
+        return NetworkClient.getRetrofit()
     }
 
     @Singleton
     @Provides
-    fun provideServerAPI(client: OkHttpClient) : ServerAPI {
-        return NetworkClient.getServerAPI(client)
+    fun provideAuthApi(retrofit: Retrofit) : AuthApi {
+        return NetworkClient.getAuthApi(retrofit)
     }
 
     @Singleton
     @Provides
-    fun provideUserRepository(serverAPI: ServerAPI): IUserRepository {
-        return UserRepositoryImpl(serverAPI)
+    fun provideStockApi(retrofit: Retrofit) : StockApi {
+        return NetworkClient.getStockApi(retrofit)
+    }
+
+
+    @Singleton
+    @Provides
+    fun provideUserRepository(authApi: AuthApi): IUserRepository {
+        return UserRepositoryImpl(authApi)
     }
 }

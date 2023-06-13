@@ -8,27 +8,35 @@ import retrofit2.converter.gson.GsonConverterFactory
 class NetworkClient {
 
     companion object {
-        private const val baseUrl = "https://droid-test-server.doubletapp.ru/api/"
+        private const val baseUrl = Urls.BASE_URL
 
-        fun getHttpClient(): OkHttpClient {
+        fun getRetrofit(): Retrofit {
             val logInterceptor = HttpLoggingInterceptor()
             logInterceptor.level = HttpLoggingInterceptor.Level.BODY
 
-            return OkHttpClient()
+            val client = OkHttpClient()
                 .newBuilder()
 //                .addInterceptor(AuthInterceptor())
                 .addInterceptor(logInterceptor)
                 .build()
+
+            return createRetrofit(client)
         }
 
-        fun getServerAPI(client: OkHttpClient): ServerAPI{
-            val retrofit = Retrofit.Builder()
+        private fun createRetrofit(client: OkHttpClient): Retrofit{
+            return Retrofit.Builder()
                 .baseUrl(baseUrl)
                 .client(client)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
+        }
 
-            return retrofit.create(ServerAPI::class.java)
+        fun getAuthApi(retrofit: Retrofit): AuthApi {
+            return retrofit.create(AuthApi::class.java)
+        }
+
+        fun getStockApi(retrofit: Retrofit): StockApi {
+            return retrofit.create(StockApi::class.java)
         }
     }
 }

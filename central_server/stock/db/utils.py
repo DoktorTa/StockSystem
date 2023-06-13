@@ -1,17 +1,16 @@
 import csv
-import logging
 import os
-import sys
 
-from sqlalchemy.dialects.postgresql import array, ARRAY, INTEGER
-from sqlalchemy import Column, Integer, cast
+from sqlalchemy.dialects.postgresql import array, ARRAY
+from sqlalchemy import Integer, cast
 
 from db.database import session_factory
-from stock.db.paint import Paint
+from db.entitys.material import Material
+from stock.db.entitys.paint import Paint
 
 
 def load_paint():
-    path = os.getenv('PATH_ALL_CSV')
+    path = os.getenv('PATH_PRELOAD_PAINTS')
     session = session_factory()
 
     with open(path, 'r') as file:
@@ -20,7 +19,6 @@ def load_paint():
         for row in reader:
             similar_colors_new = []
             similar_colors = str(row[11]).replace('[', '').replace(']', '').split(',')
-            # l.error(similar_colors)
             for i in similar_colors:
                 if i != '':
                     s = array([int(x) for x in i.split(';')], type_=Integer)
@@ -52,6 +50,29 @@ def load_paint():
             )
 
             session.add(paint)
+            session.commit()
+
+    session.close()
+
+
+def load_materials():
+    path = os.getenv('PATH_PRELOAD_MATERIALS')
+    session = session_factory()
+
+    with open(path, 'r') as file:
+        reader = csv.reader(file, delimiter=',')
+
+        for row in reader:
+            material = Material(
+                material_id=int(row[0]),
+                material_type=row[1],
+                time_label=int(row[2]),
+
+                description=row[4],
+                unique=bool(int(row[4])),
+                location=row[5]
+            )
+            session.add(material)
             session.commit()
 
     session.close()

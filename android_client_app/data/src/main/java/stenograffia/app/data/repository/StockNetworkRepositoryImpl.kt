@@ -1,9 +1,9 @@
 package stenograffia.app.data.repository
 
-import android.util.Log
-import stenograffia.app.data.network.ServerAPI
-import stenograffia.app.data.network.data.GetPaintRequest
-import stenograffia.app.data.network.data.UpdateQuantityRequest
+import stenograffia.app.data.network.StockApi
+import stenograffia.app.data.network.data.ChangeQuantityPaint
+import stenograffia.app.data.network.data.TimeRequest
+import stenograffia.app.data.network.model.toPaintModel
 import stenograffia.app.domain.ApiResponse
 import stenograffia.app.domain.model.PaintModel
 import stenograffia.app.domain.repository.IStockNetworkRepository
@@ -11,16 +11,16 @@ import java.net.SocketTimeoutException
 import javax.inject.Inject
 
 class StockNetworkRepositoryImpl @Inject constructor(
-    val serverApi: ServerAPI
+    private val stockApi: StockApi
 ) : IStockNetworkRepository {
 
-    override suspend fun updateQuantityById(idPaint: Int, quantity: Int) : ApiResponse<PaintModel?>{
+    override suspend fun changeQuantityById(idPaint: Int, quantity: Int) : ApiResponse<List<PaintModel>?> {
         try {
-            val updateQuantityRequest = UpdateQuantityRequest(idPaint, quantity)
-            val response = serverApi.updatePaintQuantity(updateQuantityRequest)
+            val updateQuantityRequest = ChangeQuantityPaint(idPaint, quantity)
+            val response = stockApi.changeQuantityPaint(updateQuantityRequest)
 
             if (response.code() == 200) {
-                return ApiResponse.Success(response.body()!!.paint.toPaintModel())
+                return ApiResponse.Success(response.body()!!.paints.map {it.toPaintModel()})
             } else if (response.code() == 400) {
                 return ApiResponse.Success(null)
             }
@@ -34,8 +34,8 @@ class StockNetworkRepositoryImpl @Inject constructor(
 
     override suspend fun getAllPaintsByTime(time: Int) : ApiResponse<List<PaintModel>> {
         try {
-            val request = GetPaintRequest(time)
-            val response = serverApi.getAllPaintByTime(request)
+            val request = TimeRequest(time)
+            val response = stockApi.getAllPaintByTime(request)
 
             if (response.code() == 200) {
                 return ApiResponse.Success(response.body()!!.paints.map {it.toPaintModel()})

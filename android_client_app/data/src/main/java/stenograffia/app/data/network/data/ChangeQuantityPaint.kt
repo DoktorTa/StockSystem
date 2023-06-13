@@ -2,7 +2,7 @@ package stenograffia.app.data.network.data
 
 import com.google.gson.annotations.SerializedName
 
-data class UpdateQuantityRequest(
+data class ChangeQuantityPaint(
 
     @SerializedName("id_paint")
     var paintId: Int,

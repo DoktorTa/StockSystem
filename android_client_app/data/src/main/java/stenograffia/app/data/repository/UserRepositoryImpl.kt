@@ -1,6 +1,6 @@
 package stenograffia.app.data.repository
 
-import stenograffia.app.data.network.ServerAPI
+import stenograffia.app.data.network.AuthApi
 import stenograffia.app.data.network.data.LoginRequest
 import stenograffia.app.data.network.data.RefreshRequest
 import stenograffia.app.domain.ApiResponse
@@ -9,7 +9,7 @@ import stenograffia.app.domain.repository.IUserRepository
 import java.net.SocketTimeoutException
 
 class UserRepositoryImpl (
-    val serverApi: ServerAPI
+    private val authApi: AuthApi
 ): IUserRepository {
 
     override suspend fun loginServerByCredentials(login: String, password: String) :
@@ -17,7 +17,7 @@ class UserRepositoryImpl (
     {
         try {
             val loginRequest = LoginRequest(login, password)
-            val response = serverApi.getAccessTokens(loginRequest)
+            val response = authApi.getAccessTokens(loginRequest)
 
             if (response.code() == 200) {
                 val responseToken = response.body()!!
@@ -36,7 +36,7 @@ class UserRepositoryImpl (
 
     override suspend fun refreshTokens(refreshToken: String): ApiResponse<AuthTokens> {
         try {
-            val response = serverApi.refreshTokens(RefreshRequest(refreshToken))
+            val response = authApi.refreshTokens(RefreshRequest(refreshToken))
 
             if (response.code() == 200) {
                 val responseToken = response.body()!!

@@ -1,6 +1,5 @@
 package stenograffia.app.domain.useCases
 
-import android.util.Log
 import kotlinx.coroutines.flow.Flow
 import stenograffia.app.domain.ApiResponse
 import stenograffia.app.domain.model.PaintModel
@@ -18,7 +17,7 @@ class StockUseCase @Inject constructor(
     suspend fun updateQuantityById(idPaint: Int, quantity: Int): StockChangeQuantityText {
 
         val answer: ApiResponse<PaintModel?> =
-            stockNetworkRepository.updateQuantityById(idPaint, quantity)
+            stockNetworkRepository.changeQuantityById(idPaint, quantity)
 
         if (answer is ApiResponse.Success) {
             if (answer.data == null) {

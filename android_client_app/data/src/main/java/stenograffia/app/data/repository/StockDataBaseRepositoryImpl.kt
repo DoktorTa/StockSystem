@@ -1,6 +1,5 @@
 package stenograffia.app.data.repository
 
-import android.util.Log
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import stenograffia.app.data.database.*
@@ -18,18 +17,11 @@ class StockDataBaseRepositoryImpl @Inject constructor(
 
 
     override suspend fun updateAllPaint(paintModel: List<PaintModel>) {
-        try {
-            Log.d("StockDatabaseRepositoryImpl", "s")
-            val x = paintModel.map { it.fromPaintEntity()!! }
-            Log.d("StockDatabaseRepositoryImpl", x[0].toString())
-            stockDao.addAllPaint(paintModel.map { it.fromPaintEntity()!! })
-        } catch (e: Exception) {
-            Log.d("StockDatabaseRepositoryImpl", e.toString())
-        }
+        stockDao.addAllPaint(paintModel.map { it.fromPaintEntity()!! })
     }
 
     override suspend fun getMaxTimeLabel(): Int {
-        return stockDao.getMaxTimeLabel() ?: 0
+        return stockDao.getMaxPaintTimeLabel() ?: 0
     }
 
     override fun getPaintById(paintId: Int): PaintModel? {

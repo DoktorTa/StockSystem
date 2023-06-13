@@ -5,7 +5,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import stenograffia.app.data.database.StockDao
-import stenograffia.app.data.network.ServerAPI
+import stenograffia.app.data.network.StockApi
 import stenograffia.app.data.repository.StockNetworkRepositoryImpl
 import stenograffia.app.data.repository.StockDataBaseRepositoryImpl
 import stenograffia.app.domain.repository.IStockDataBaseRepository
@@ -18,8 +18,8 @@ import javax.inject.Singleton
 class StockRepositoryModel {
     @Singleton
     @Provides
-    fun provideStockNetworkRepository(serverAPI: ServerAPI): IStockNetworkRepository {
-        return StockNetworkRepositoryImpl(serverAPI)
+    fun provideStockNetworkRepository(stockApi: StockApi): IStockNetworkRepository {
+        return StockNetworkRepositoryImpl(stockApi)
     }
 
     @Singleton

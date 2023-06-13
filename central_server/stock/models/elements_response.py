@@ -1,6 +1,5 @@
 from pydantic import BaseModel
 
 
-class PaintResponse(BaseModel):
-    time: int
+class ElementsResponse(BaseModel):
     elements: list
