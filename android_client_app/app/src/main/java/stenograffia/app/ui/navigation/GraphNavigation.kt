@@ -14,7 +14,10 @@ import stenograffia.app.ui.screens.authScreens.login.Login
 import stenograffia.app.ui.screens.settings.Settings
 import stenograffia.app.ui.screens.settings.SettingsViewModel
 import stenograffia.app.ui.screens.authScreens.splash.SplashScreen
+import stenograffia.app.ui.screens.stockStock.listMaterial.ListMaterialScreen
 import stenograffia.app.ui.screens.stockStock.listPaintLine.ListPaintLine
+import stenograffia.app.ui.screens.stockStock.material.Material
+import stenograffia.app.ui.screens.stockStock.material.MaterialScreen
 import stenograffia.app.ui.screens.stockStock.paint.Paint
 import stenograffia.app.ui.screens.stockStock.stockCategories.StockCategories
 
@@ -51,6 +54,13 @@ fun GraphNavigation(
                 val paintId: Int = backStackEntry.arguments?.getString("paintId")!!.toInt()
                 Paint(navController, paintId = paintId)
             }
+
+            composable(Screens.MaterialsList.route) { ListMaterialScreen(navController) }
+            composable(Screens.Material.route) { backStackEntry ->
+                val materialId: Int = backStackEntry.arguments?.getString("materialId")!!.toInt()
+                Material(materialId = materialId)
+            }
+
 
         }
     }

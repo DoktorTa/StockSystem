@@ -39,7 +39,8 @@ fun StockCategories(navController: NavController) {
             modifier = Modifier
                 .fillMaxHeight()
                 .weight(1f)
-                .background(color = colorBlackTransparent),
+                .background(color = colorBlackTransparent)
+                .clickable { navController.navigate(Screens.MaterialsList.route) },
             contentAlignment = Alignment.Center
         ) {
             CategoryText(

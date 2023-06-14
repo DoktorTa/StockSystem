@@ -16,3 +16,4 @@ rootProject.name = "android_client_app"
 include ':app'
 include ':domain'
 include ':data'
+include ':LocalData'

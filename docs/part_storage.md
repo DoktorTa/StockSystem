@@ -35,12 +35,11 @@
 		descriptionColor: String - описание цвета
 		color: Int - цвет (dec)
 		quantityInStorage: Int - колличество краски на складе 
-		placesOfPossibleAvailability: List<Object.id> - места где может находится краска кроме склада
 		similarColors: List<Paint.id> - похожие цвета из других линеек или производителей
 		possibleToBuy: Boolean - можно ли попробовать достать краску
 	Пример:
 		id = 1342
-		data_time = 01.01.2017 00:00:00
+		data_time = 1346432
 		type = "Банка"
 		nameCreater = "ArtonPaint"
 		nameLine = "Arton 400ml"
@@ -49,7 +48,6 @@
 		descriptionColor = "Небесно голубой цвет"
 		color: Int = 49151
 		quantityInStorage: Int = 12 
-		placesOfPossibleAvailability: List<Object.id> = [001, 342]
 		similarColors: List<Paint.id> = [2312, 2133]
 		possibleToBuy = True
 	Типы краски: 
@@ -72,13 +70,9 @@ Method                             | SQL                                        
 ---------------------------------- | ----------------------------------------------------------------------------------- |
 getListPaintsByLineAndCreator      | SELECT * FROM PrintTable WHERE nameCreator = :nameCreator AND nameLine = :nameLine  |
 getPaintById                       | SELECT * FROM PrintTable WHERE id = id                                              |
-updateQuantityInStorage            | UPDATE PrintTable SET quantityInStorage WHERE id = id                               |
 getAllPaintNames                   | SELECT NameCreator, NameLine FROM PaintTable                                        |
 insert                             | INSERT INTO PrintTable VALUES *                                                     |
 delete                             | DELETE FROM PrintTable WHERE id = id                                                |
-update                             | UPDATE PrintTable SET * WHERE id = id                                               |
-updatePlacesOfPossibleAvailability | UPDATE PrintTable SET updatePlacesOfPossibleAvailability WHERE id = id              |
-
 
 ## API
 	/getAllMaterials
@@ -108,7 +102,6 @@ updatePlacesOfPossibleAvailability | UPDATE PrintTable SET updatePlacesOfPossibl
 
 ## Работа с краской
 У каждой позиции есть метка data_time - когда пользователь отправляет метку времени свойей базы, на сервере пользователю отправляются только то что старше этой ветки.
-
 
 ### Materials 
 Поскольку у данный группы элементов со склада очень много различных групп (Генераторы, лесницы, кисти и т.д.) то у этой группы должна быть только таблица в которой они собраны.

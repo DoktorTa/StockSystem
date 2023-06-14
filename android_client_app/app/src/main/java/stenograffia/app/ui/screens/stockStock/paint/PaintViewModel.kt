@@ -24,7 +24,6 @@ class PaintViewModel @Inject constructor(
         viewModelScope.launch {
             val ans = stockUseCase.updateQuantityById(paintModel.id, difference)
             // TODO: Доделать тост с ответом
-            Log.d("PaintViewModel", ans.toString())
             loadPaintModelById(paintModel.id)
         }
     }

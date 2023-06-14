@@ -2,5 +2,6 @@ from pydantic import BaseModel
 
 
 class UpdatePaintRequest(BaseModel):
-    id_paint: int
+    time_label: int
+    paint_id: int
     diff_quantity: int

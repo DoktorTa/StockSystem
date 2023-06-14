@@ -1,12 +1,13 @@
 package stenograffia.app.data.repository
 
-import android.util.Log
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import stenograffia.app.data.database.*
-import stenograffia.app.data.database.model.fromPaintEntity
-import stenograffia.app.data.database.model.toPaintModel
-import stenograffia.app.data.database.model.toPaintNamesTupleModel
+import stenograffia.app.data.database.model.*
+import stenograffia.app.domain.model.MaterialModel
 import stenograffia.app.domain.model.PaintModel
 import stenograffia.app.domain.model.PaintNamesTupleModel
 import stenograffia.app.domain.repository.IStockDataBaseRepository
@@ -18,18 +19,11 @@ class StockDataBaseRepositoryImpl @Inject constructor(
 
 
     override suspend fun updateAllPaint(paintModel: List<PaintModel>) {
-        try {
-            Log.d("StockDatabaseRepositoryImpl", "s")
-            val x = paintModel.map { it.fromPaintEntity()!! }
-            Log.d("StockDatabaseRepositoryImpl", x[0].toString())
-            stockDao.addAllPaint(paintModel.map { it.fromPaintEntity()!! })
-        } catch (e: Exception) {
-            Log.d("StockDatabaseRepositoryImpl", e.toString())
-        }
+        stockDao.addAllPaint(paintModel.map { it.fromPaintEntity()!! })
     }
 
     override suspend fun getMaxTimeLabel(): Int {
-        return stockDao.getMaxTimeLabel() ?: 0
+        return stockDao.getMaxPaintTimeLabel() ?: 0
     }
 
     override fun getPaintById(paintId: Int): PaintModel? {
@@ -50,4 +44,29 @@ class StockDataBaseRepositoryImpl @Inject constructor(
             paintNamesTupleModel.toPaintNamesTupleModel()
         } }
     }
+
+    override fun getAllMaterials(): Flow<List<MaterialModel>> {
+        return stockDao.getAllMaterials().map { it.map { it.toMaterialModel() } }
+    }
+
+    override fun getMaterialById(materialId: Int): MaterialModel {
+        return stockDao.getMaterialById(materialId).toMaterialModel()
+    }
+
+    override fun addAllMaterials(materialModel: List<MaterialModel>) {
+        stockDao.addAllMaterials(materialModel.map { it.fromMaterialEntity() })
+    }
+
+    override fun getMaxMaterialTimeLabel(): Int {
+        return stockDao.getMaxMaterialTimeLabel() ?: 0
+    }
+
+
+//    fun getAllMaterials(): Flow<List<MaterialEntity>>
+//
+//    fun getMaterialById(materialId: Int): MaterialEntity
+//
+//    fun addAllMaterials(materialEntity: List<MaterialEntity>)
+//
+//    fun getMaxMaterialTimeLabel(): Int?
 }

@@ -1,4 +1,4 @@
-from auth.db.users import Users
+from auth.db.entitys.users import Users
 from auth.db.users_dao import UsersDao
 from db.database import session_factory
 
