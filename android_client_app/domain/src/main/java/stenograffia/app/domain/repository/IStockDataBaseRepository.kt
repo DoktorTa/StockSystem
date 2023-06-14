@@ -1,6 +1,7 @@
 package stenograffia.app.domain.repository
 
 import kotlinx.coroutines.flow.Flow
+import stenograffia.app.domain.model.MaterialModel
 import stenograffia.app.domain.model.PaintModel
 import stenograffia.app.domain.model.PaintNamesTupleModel
 
@@ -16,4 +17,12 @@ interface IStockDataBaseRepository {
     fun getPaintsListByCreatorAndLine(nameCreator: String, nameLine: String): Flow<List<PaintModel>>
 
     fun getAllPaintNames(): Flow<List<PaintNamesTupleModel>>
+
+    fun getAllMaterials(): Flow<List<MaterialModel>>
+
+    fun getMaterialById(materialId: Int): MaterialModel
+
+    fun addAllMaterials(materialModel: List<MaterialModel>)
+
+    fun getMaxMaterialTimeLabel(): Int
 }

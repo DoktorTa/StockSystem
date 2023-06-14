@@ -68,7 +68,7 @@ def load_materials():
                 material_type=row[1],
                 time_label=int(row[2]),
 
-                description=row[4],
+                description=row[3],
                 unique=bool(int(row[4])),
                 location=row[5]
             )

@@ -1,12 +1,11 @@
 from sqlalchemy import Column, Integer, String, Boolean, CheckConstraint
 from sqlalchemy.dialects.postgresql import ARRAY
 
-
 from db.database import DeclarativeBase
 
 
 class Paint(DeclarativeBase):
-    __tablename__ = 'paint'
+    __tablename__ = 'paints'
 
     paint_id = Column(Integer, primary_key=True)
     data_time = Column('data_time', Integer)

@@ -5,6 +5,7 @@ from db.database import DeclarativeBase
 
 class Material(DeclarativeBase):
     __tablename__ = 'materials'
+    __table_args__ = {'extend_existing': True}
 
     material_id = Column('id', Integer, primary_key=True)
     material_type = Column('type', String)

@@ -4,10 +4,13 @@ import com.google.gson.annotations.SerializedName
 
 data class ChangeQuantityPaint(
 
-    @SerializedName("id_paint")
+    @SerializedName("paint_id")
     var paintId: Int,
 
     @SerializedName("diff_quantity")
-    var diffQuantity: Int
+    var diffQuantity: Int,
+
+    @SerializedName("time_label")
+    var timeLabel: Int
 
 ) {}

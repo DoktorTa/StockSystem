@@ -15,17 +15,19 @@ router = APIRouter()
 @router.post("/get_paints")
 async def get_paint(time_request: TimeRequest):
     return ElementsResponse(
-        elements=repository_stock.get_paint_by_time(time_request.time)
+        elements=repository_stock.get_paint_by_time(time_request.timeLabel)
     )
 
 
 @router.post("/change_quantity_paint")
 async def change_quantity_paint(update_request: UpdatePaintRequest):
+    l = logging.getLogger()
+    l.error(update_request)
     return ElementsResponse(
         elements=repository_stock.change_quantity_paint(
             paint_id=update_request.paint_id,
             diff_quantity=update_request.diff_quantity,
-            time=update_request.time
+            time=update_request.time_label
         )
     )
 
@@ -33,7 +35,7 @@ async def change_quantity_paint(update_request: UpdatePaintRequest):
 @router.post("/get_materials")
 async def get_materials(time_request: TimeRequest):
     return ElementsResponse(
-        elements=repository_stock.get_material_by_time_label(time_request.time)
+        elements=repository_stock.get_material_by_time_label(time_request.timeLabel)
     )
 
 

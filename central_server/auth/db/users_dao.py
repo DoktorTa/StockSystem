@@ -2,6 +2,7 @@ from sqlalchemy.exc import IntegrityError, SQLAlchemyError
 from sqlalchemy.orm import Session
 
 from auth.db.entitys.users import Users
+from auth.db.utils import load_users
 
 
 class UsersDao:
@@ -9,6 +10,7 @@ class UsersDao:
 
     def __init__(self):
         self.users: Users = Users()
+        # load_users()
 
     @staticmethod
     def get_password_by_login(session: Session, login: str) -> Users | None:

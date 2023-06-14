@@ -2,6 +2,7 @@ package stenograffia.app.domain.useCases
 
 import kotlinx.coroutines.flow.Flow
 import stenograffia.app.domain.ApiResponse
+import stenograffia.app.domain.model.MaterialModel
 import stenograffia.app.domain.model.PaintModel
 import stenograffia.app.domain.model.PaintNamesTupleModel
 import stenograffia.app.domain.repository.IStockDataBaseRepository
@@ -15,17 +16,17 @@ class StockUseCase @Inject constructor(
 ) {
 
     suspend fun updateQuantityById(idPaint: Int, quantity: Int): StockChangeQuantityText {
+        val timeLabel = stockDataBaseRepository.getMaxTimeLabel()
 
-        val answer: ApiResponse<PaintModel?> =
-            stockNetworkRepository.changeQuantityById(idPaint, quantity)
+        val answer: ApiResponse<List<PaintModel>?> =
+            stockNetworkRepository.changeQuantityById(idPaint, quantity, timeLabel)
 
         if (answer is ApiResponse.Success) {
             if (answer.data == null) {
                 return StockChangeQuantityText.ErrorUpdate()
             } else {
-                stockDataBaseRepository.updateAllPaint(listOf(answer.data))
-                return StockChangeQuantityText
-                    .CorrectUpdate(answer.data.quantityInStorage.toString())
+                stockDataBaseRepository.updateAllPaint(answer.data)
+                return StockChangeQuantityText.CorrectUpdate(quantity.toString())
             }
         }
         return StockChangeQuantityText.ErrorConnect()
@@ -52,5 +53,23 @@ class StockUseCase @Inject constructor(
 
     fun getAllPaintNames(): Flow<List<PaintNamesTupleModel>> {
         return stockDataBaseRepository.getAllPaintNames()
+    }
+
+    suspend fun updateMaterialsByTime() {
+        val timeLabel = stockDataBaseRepository.getMaxMaterialTimeLabel()
+        val updatedMaterials: ApiResponse<List<MaterialModel>> =
+            stockNetworkRepository.getMaterialsByTime(timeLabel)
+
+        if (updatedMaterials is ApiResponse.Success) {
+            stockDataBaseRepository.addAllMaterials(updatedMaterials.data)
+        }
+    }
+
+    fun getMaterials(): Flow<List<MaterialModel>> {
+        return stockDataBaseRepository.getAllMaterials()
+    }
+
+    fun getMaterialById(materialId: Int) : MaterialModel {
+        return stockDataBaseRepository.getMaterialById(materialId)
     }
 }

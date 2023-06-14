@@ -23,7 +23,7 @@ sealed class Screens(
     object ListPaintLine : Screens("ListPaintLine", null, null)
     object ListPaint : Screens("PaintList/{nameCreator}/{nameLine}", null, null)
     object Material : Screens("Material/{materialId}", null, null)
-    object MaterialsList : Screens("MaterialList}", null, null)
+    object MaterialsList : Screens("MaterialList", null, null)
 
     object StockCategories : Screens("StockCategories", R.string.stock_menu, Icons.Outlined.Inventory2)
     object Orders : Screens("ORDERS", R.string.orders_menu, Icons.Outlined.CheckBox)
