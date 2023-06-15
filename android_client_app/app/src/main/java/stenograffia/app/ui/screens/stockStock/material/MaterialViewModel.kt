@@ -1,16 +1,13 @@
 package stenograffia.app.ui.screens.stockStock.material
 
-import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import stenograffia.app.R
 import stenograffia.app.domain.model.MaterialModel
-import stenograffia.app.domain.useCases.ChangeLocationMaterialMsg
 import stenograffia.app.domain.useCases.StockUseCase
+import stenograffia.app.domain.utils.ChangeMsg
 import javax.inject.Inject
 
 @HiltViewModel
@@ -31,11 +28,13 @@ class MaterialViewModel @Inject constructor(
     fun changeLocationMaterial(materialId: Int, newLocation: String) {
         viewModelScope.launch {
             val answer = stockUseCase.changeLocationMaterial(materialId, newLocation)
-            when (answer) {
-                ChangeLocationMaterialMsg.CorrectChange() -> infoText = R.string.correct_change
-                ChangeLocationMaterialMsg.ErrorChange() -> infoText = R.string.not_correct_change
-                ChangeLocationMaterialMsg.ErrorConnect() -> infoText = R.string.server_disconnect
-                else -> {infoText = R.string.server_disconnect}
+            infoText = when (answer) {
+                ChangeMsg.CorrectChange() -> R.string.correct_change
+                ChangeMsg.ErrorChange() -> R.string.not_correct_change
+                ChangeMsg.ErrorConnect() -> R.string.server_disconnect
+                else -> {
+                    R.string.server_disconnect
+                }
             }
         }
     }

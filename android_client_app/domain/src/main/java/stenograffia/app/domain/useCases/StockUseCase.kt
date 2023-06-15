@@ -7,7 +7,7 @@ import stenograffia.app.domain.model.PaintModel
 import stenograffia.app.domain.model.PaintNamesTupleModel
 import stenograffia.app.domain.repository.IStockDataBaseRepository
 import stenograffia.app.domain.repository.IStockNetworkRepository
-import stenograffia.app.domain.utils.StockChangeQuantityText
+import stenograffia.app.domain.utils.ChangeMsg
 import javax.inject.Inject
 
 class StockUseCase @Inject constructor(
@@ -15,21 +15,21 @@ class StockUseCase @Inject constructor(
     private val stockDataBaseRepository: IStockDataBaseRepository
 ) {
 
-    suspend fun updateQuantityById(idPaint: Int, quantity: Int): StockChangeQuantityText {
+    suspend fun updateQuantityById(idPaint: Int, quantity: Int): ChangeMsg {
         val timeLabel = stockDataBaseRepository.getMaxTimeLabel()
-
         val answer: ApiResponse<List<PaintModel>?> =
             stockNetworkRepository.changeQuantityById(idPaint, quantity, timeLabel)
+        updatePaintsByTime()
 
-        if (answer is ApiResponse.Success) {
-            if (answer.data == null) {
-                return StockChangeQuantityText.ErrorUpdate()
+        return if (answer is ApiResponse.Success) {
+            if (answer.data != null) {
+                ChangeMsg.CorrectChange()
             } else {
-                stockDataBaseRepository.updateAllPaint(answer.data)
-                return StockChangeQuantityText.CorrectUpdate(quantity.toString())
+                ChangeMsg.ErrorChange()
             }
+        } else {
+            ChangeMsg.ErrorConnect()
         }
-        return StockChangeQuantityText.ErrorConnect()
     }
 
     suspend fun updatePaintsByTime() {
@@ -79,7 +79,7 @@ class StockUseCase @Inject constructor(
         return allLocation
     }
 
-    suspend fun changeLocationMaterial(materialId: Int, newLocation: String) : ChangeLocationMaterialMsg {
+    suspend fun changeLocationMaterial(materialId: Int, newLocation: String) : ChangeMsg {
         val timeLabel = stockDataBaseRepository.getMaxMaterialTimeLabel()
         val location: ApiResponse<List<MaterialModel>?> = stockNetworkRepository
             .changeLocationMaterial(materialId, newLocation, timeLabel)
@@ -87,18 +87,12 @@ class StockUseCase @Inject constructor(
 
         return if (location is ApiResponse.Success) {
             if (location.data != null) {
-                ChangeLocationMaterialMsg.CorrectChange()
+                ChangeMsg.CorrectChange()
             } else {
-                ChangeLocationMaterialMsg.ErrorChange()
+                ChangeMsg.ErrorChange()
             }
         } else {
-            ChangeLocationMaterialMsg.ErrorConnect()
+            ChangeMsg.ErrorConnect()
         }
     }
-}
-
-sealed class ChangeLocationMaterialMsg () {
-    class CorrectChange() : ChangeLocationMaterialMsg()
-    class ErrorChange() : ChangeLocationMaterialMsg()
-    class ErrorConnect() : ChangeLocationMaterialMsg()
 }

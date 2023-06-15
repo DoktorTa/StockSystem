@@ -14,6 +14,8 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
 import stenograffia.app.R
 import stenograffia.app.domain.model.MaterialModel
+import stenograffia.app.ui.composables.HandlerTextString
+import stenograffia.app.ui.composables.TextString
 import stenograffia.app.ui.screens.stockStock.paint.*
 
 @Composable
@@ -36,7 +38,7 @@ fun MaterialScreen(
             .background(MaterialTheme.colors.secondary)
     ) {
         val (
-            typeMaterial, descriptionMaterial, locationMaterial, buttonChangeLocation
+            typeMaterial, descriptionMaterial, locationMaterial
         ) = createRefs()
 
         val material: State<MaterialModel> = remember {

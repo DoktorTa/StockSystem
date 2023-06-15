@@ -21,8 +21,6 @@ async def get_paint(time_request: TimeRequest):
 
 @router.post("/change_quantity_paint")
 async def change_quantity_paint(update_request: UpdatePaintRequest):
-    l = logging.getLogger()
-    l.error(update_request)
     return ElementsResponse(
         elements=repository_stock.change_quantity_paint(
             paint_id=update_request.paint_id,
