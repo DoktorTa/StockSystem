@@ -1,9 +1,9 @@
-package stenograffia.app.data.database.model
+package stenograffia.app.localdata.database.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
-import stenograffia.app.data.database.typeconverters.PaintTypeConverter
+import stenograffia.app.localdata.database.typeconverters.PaintTypeConverter
 import stenograffia.app.domain.model.PaintModel
 import stenograffia.app.domain.model.TypePaint
 

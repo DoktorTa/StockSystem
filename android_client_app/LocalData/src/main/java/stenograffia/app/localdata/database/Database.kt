@@ -1,11 +1,11 @@
-package stenograffia.app.data.database
+package stenograffia.app.localdata.database
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import stenograffia.app.data.database.model.MaterialEntity
-import stenograffia.app.data.database.model.PaintEntity
+import stenograffia.app.localdata.database.model.MaterialEntity
+import stenograffia.app.localdata.database.model.PaintEntity
 
 @Database(entities = [PaintEntity::class, MaterialEntity::class], version = 1, exportSchema = false)
 abstract class DataBase: RoomDatabase() {

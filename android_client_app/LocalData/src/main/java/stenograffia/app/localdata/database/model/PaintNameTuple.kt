@@ -1,9 +1,7 @@
-package stenograffia.app.data.database.model
+package stenograffia.app.localdata.database.model
 
 import androidx.room.ColumnInfo
-import stenograffia.app.domain.model.PaintModel
 import stenograffia.app.domain.model.PaintNamesTupleModel
-import stenograffia.app.domain.model.TypePaint
 
 data class PaintNamesTuple(
     @ColumnInfo(name = "nameCreator") val nameCreator: String,

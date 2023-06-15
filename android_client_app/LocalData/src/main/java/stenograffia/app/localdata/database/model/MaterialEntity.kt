@@ -1,4 +1,4 @@
-package stenograffia.app.data.database.model
+package stenograffia.app.localdata.database.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

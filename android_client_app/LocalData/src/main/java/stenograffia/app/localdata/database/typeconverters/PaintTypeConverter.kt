@@ -1,4 +1,4 @@
-package stenograffia.app.data.database.typeconverters
+package stenograffia.app.localdata.database.typeconverters
 
 import androidx.room.TypeConverter
 import com.google.gson.reflect.TypeToken

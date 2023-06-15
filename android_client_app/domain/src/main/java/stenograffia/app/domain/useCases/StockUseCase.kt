@@ -72,4 +72,33 @@ class StockUseCase @Inject constructor(
     fun getMaterialById(materialId: Int) : MaterialModel {
         return stockDataBaseRepository.getMaterialById(materialId)
     }
+
+    fun getLocations() : Set<String> {
+        val allLocation: MutableSet<String> = stockDataBaseRepository.getLocations()
+        allLocation.addAll(setOf("ON STOCK", "NOT ON STOCK"))
+        return allLocation
+    }
+
+    suspend fun changeLocationMaterial(materialId: Int, newLocation: String) : ChangeLocationMaterialMsg {
+        val timeLabel = stockDataBaseRepository.getMaxMaterialTimeLabel()
+        val location: ApiResponse<List<MaterialModel>?> = stockNetworkRepository
+            .changeLocationMaterial(materialId, newLocation, timeLabel)
+        updateMaterialsByTime()
+
+        return if (location is ApiResponse.Success) {
+            if (location.data != null) {
+                ChangeLocationMaterialMsg.CorrectChange()
+            } else {
+                ChangeLocationMaterialMsg.ErrorChange()
+            }
+        } else {
+            ChangeLocationMaterialMsg.ErrorConnect()
+        }
+    }
+}
+
+sealed class ChangeLocationMaterialMsg () {
+    class CorrectChange() : ChangeLocationMaterialMsg()
+    class ErrorChange() : ChangeLocationMaterialMsg()
+    class ErrorConnect() : ChangeLocationMaterialMsg()
 }

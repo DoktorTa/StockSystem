@@ -1,4 +1,4 @@
-package stenograffia.app.data.di
+package stenograffia.app.localdata.di
 
 import android.content.Context
 import dagger.Module
@@ -6,8 +6,8 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import stenograffia.app.data.database.DataBase
-import stenograffia.app.data.database.StockDao
+import stenograffia.app.localdata.database.DataBase
+import stenograffia.app.localdata.database.StockDao
 import javax.inject.Singleton
 
 @Module

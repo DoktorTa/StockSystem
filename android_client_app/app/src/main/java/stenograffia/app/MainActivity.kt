@@ -18,12 +18,10 @@ import java.util.*
 class MainActivity : ComponentActivity() {
 
     private lateinit var dataStoreSettings: DataStoreSettings
-//    private lateinit var dataStoreAuthTokens: DataStoreAuthTokens
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         dataStoreSettings = DataStoreSettings(applicationContext)
-//        dataStoreAuthTokens = DataStoreAuthTokens(applicationContext)
 
         setContent {
             val settingsViewModel: SettingsViewModel = hiltViewModel()

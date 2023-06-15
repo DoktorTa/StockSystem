@@ -1,14 +1,13 @@
-package stenograffia.app.data.database
+package stenograffia.app.localdata.database
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import androidx.room.Update
 import kotlinx.coroutines.flow.Flow
-import stenograffia.app.data.database.model.MaterialEntity
-import stenograffia.app.data.database.model.PaintEntity
-import stenograffia.app.data.database.model.PaintNamesTuple
+import stenograffia.app.localdata.database.model.MaterialEntity
+import stenograffia.app.localdata.database.model.PaintEntity
+import stenograffia.app.localdata.database.model.PaintNamesTuple
 
 @Dao
 interface StockDao {
@@ -21,9 +20,6 @@ interface StockDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun addAllPaint(paintEntity: List<PaintEntity>)
-
-    @Update
-    fun updateAllPaints(paintEntity: List<PaintEntity>)
 
     @Query("SELECT MAX(timeLabel) FROM PaintEntity")
     fun getMaxPaintTimeLabel(): Int?
@@ -42,4 +38,7 @@ interface StockDao {
 
     @Query("SELECT MAX(timeLabel) FROM MaterialEntity")
     fun getMaxMaterialTimeLabel(): Int?
+
+    @Query("SELECT DISTINCT(location) FROM MaterialEntity")
+    fun getLocations(): List<String>
 }

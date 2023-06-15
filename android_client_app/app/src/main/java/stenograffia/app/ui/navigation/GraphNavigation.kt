@@ -9,7 +9,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import stenograffia.app.InFutureVersion
 import stenograffia.app.domain.model.PaintNamesTupleModel
-import stenograffia.app.ui.paint.ListPaint
+import stenograffia.app.ui.screens.stockStock.listPaint.ListPaint
 import stenograffia.app.ui.screens.authScreens.login.Login
 import stenograffia.app.ui.screens.settings.Settings
 import stenograffia.app.ui.screens.settings.SettingsViewModel
@@ -17,7 +17,6 @@ import stenograffia.app.ui.screens.authScreens.splash.SplashScreen
 import stenograffia.app.ui.screens.stockStock.listMaterial.ListMaterialScreen
 import stenograffia.app.ui.screens.stockStock.listPaintLine.ListPaintLine
 import stenograffia.app.ui.screens.stockStock.material.Material
-import stenograffia.app.ui.screens.stockStock.material.MaterialScreen
 import stenograffia.app.ui.screens.stockStock.paint.Paint
 import stenograffia.app.ui.screens.stockStock.stockCategories.StockCategories
 

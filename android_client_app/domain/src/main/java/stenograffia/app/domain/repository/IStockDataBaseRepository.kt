@@ -25,4 +25,6 @@ interface IStockDataBaseRepository {
     fun addAllMaterials(materialModel: List<MaterialModel>)
 
     fun getMaxMaterialTimeLabel(): Int
+
+    fun getLocations() : MutableSet<String>
 }
