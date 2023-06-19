@@ -145,7 +145,7 @@ fun ConstraintLayoutContent(
             enabled = paintModel.value.similarColors.isNotEmpty(),
         )
 
-        if (settingsViewModel.getUserStatus()!!.level > UserRole.STOCK.level) {
+        if (settingsViewModel.getUserStatus()!!.level <= UserRole.STOCK.level) {
             ButtonShowDialog(
                 modifier = Modifier
                     .constrainAs(buttonChangeQuantity) {

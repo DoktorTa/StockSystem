@@ -72,7 +72,7 @@ fun MaterialScreen(
         var expanded by remember { mutableStateOf(false) }
         var selectedText by remember { mutableStateOf(material.value.location) }
 
-        if (settingsViewModel.getUserStatus()!!.level > UserRole.STOCK.level) {
+        if (settingsViewModel.getUserStatus()!!.level <= UserRole.STOCK.level) {
             Box(
                 modifier = Modifier
                     .constrainAs(locationMaterial) { top.linkTo(descriptionMaterial.bottom) }

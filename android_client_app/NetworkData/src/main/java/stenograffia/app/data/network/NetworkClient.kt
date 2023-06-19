@@ -51,7 +51,7 @@ class NetworkClient {
         }
 
         private fun setTokens(tokenManager: DataStoreToken){
-            AuthInterceptor().setTokens(tokenManager)
+            AuthInterceptor().setTokenManager(tokenManager)
         }
 
         fun getStockApi(retrofit: Retrofit): StockApi {

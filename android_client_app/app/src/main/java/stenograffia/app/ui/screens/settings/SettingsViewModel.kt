@@ -29,12 +29,10 @@ class SettingsViewModel @Inject constructor(
         return userStatus
     }
 
-    fun loadUserByAccessToken(){
-        viewModelScope.launch {
-            val user: UserModel = userUseCase.getUser()
-            userName = user.username
-            userStatus = user.userRole
-        }
+    suspend fun loadUserByAccessToken(){
+        val user: UserModel = userUseCase.getUser()
+        userName = user.username
+        userStatus = user.userRole
     }
 
     var localeActive = mutableStateOf(Locale("en"))
