@@ -11,7 +11,7 @@ android {
     compileSdk 33
 
     defaultConfig {
-        minSdk 26
+        minSdk 24
         targetSdk 33
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -37,6 +37,8 @@ android {
 }
 
 dependencies {
+    implementation "androidx.datastore:datastore-preferences:1.0.0"
+
     implementation project(path: ':domain')
 
     implementation 'org.apache.commons:commons-csv:1.5'

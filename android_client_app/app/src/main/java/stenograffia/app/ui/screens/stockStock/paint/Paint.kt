@@ -1,20 +1,16 @@
 package stenograffia.app.ui.screens.stockStock.paint
 
-import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
@@ -22,10 +18,12 @@ import androidx.core.graphics.ColorUtils
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import stenograffia.app.R
+import stenograffia.app.domain.model.UserRole
 import stenograffia.app.ui.composables.ButtonShowDialog
 import stenograffia.app.ui.composables.HandlerTextString
 import stenograffia.app.ui.composables.SeparationLine
 import stenograffia.app.ui.composables.TextString
+import stenograffia.app.ui.screens.settings.SettingsViewModel
 import kotlin.math.roundToInt
 
 
@@ -39,7 +37,12 @@ fun Paint(
 }
 
 @Composable
-fun ConstraintLayoutContent(viewModel: PaintViewModel, navController: NavController, paintId: Int) {
+fun ConstraintLayoutContent(
+    viewModel: PaintViewModel,
+    navController: NavController,
+    paintId: Int,
+    settingsViewModel: SettingsViewModel = hiltViewModel()
+) {
     ConstraintLayout(
         modifier = Modifier
             .fillMaxSize()
@@ -142,14 +145,17 @@ fun ConstraintLayoutContent(viewModel: PaintViewModel, navController: NavControl
             enabled = paintModel.value.similarColors.isNotEmpty(),
         )
 
-        ButtonShowDialog(
-            modifier = Modifier
-                .constrainAs(buttonChangeQuantity) {
-                    top.linkTo(buttonShowLikenessPaint.bottom)
-                },
-            showDialog = showDialogChangeQuantity,
-            text_button = stringResource(id = R.string.paint_button_change_quantity)
-        )
+        if (settingsViewModel.getUserStatus()!!.level > UserRole.STOCK.level) {
+            ButtonShowDialog(
+                modifier = Modifier
+                    .constrainAs(buttonChangeQuantity) {
+                        top.linkTo(buttonShowLikenessPaint.bottom)
+                    },
+                showDialog = showDialogChangeQuantity,
+                text_button = stringResource(id = R.string.paint_button_change_quantity)
+            )
+        }
+
 
         ColorSquare(color = Color(0xFF000000 + paintModel.value.color),
             Modifier.constrainAs(colorSquare) {

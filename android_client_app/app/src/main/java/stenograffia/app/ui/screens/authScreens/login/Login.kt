@@ -17,14 +17,16 @@ import androidx.navigation.NavController
 import stenograffia.app.R
 import stenograffia.app.ui.navigation.Screens
 import stenograffia.app.ui.screens.settings.DataStoreSettings
+import stenograffia.app.ui.screens.settings.SettingsViewModel
 
 
 @Composable
 fun Login(
     navController: NavController,
+    settingsViewModel: SettingsViewModel = hiltViewModel(),
     viewModel: LoginViewModel = hiltViewModel()
 ){
-    val dataStoreAuthTokens = DataStoreSettings(LocalContext.current)
+    val dataStoreAuthTokens = viewModel.dataStoreToken
 
     val loginText = remember { mutableStateOf("") }
     val passwordText = remember { mutableStateOf("") }
@@ -77,6 +79,7 @@ fun Login(
             if (loginCorrect){
                 LaunchedEffect(true) {
                     dataStoreAuthTokens.saveTokens(viewModel.authTokens!!)
+                    settingsViewModel.loadUserByAccessToken()
                     navController.navigate(Screens.StockCategories.route)
                 }
             } else {

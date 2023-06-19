@@ -4,3 +4,4 @@ class Group:
     STOCK = 2
     VOLUNTEER = 3
     PRESS = 4
+    GUIDE = 5

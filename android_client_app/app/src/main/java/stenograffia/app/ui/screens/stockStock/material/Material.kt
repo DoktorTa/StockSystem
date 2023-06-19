@@ -14,8 +14,10 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
 import stenograffia.app.R
 import stenograffia.app.domain.model.MaterialModel
+import stenograffia.app.domain.model.UserRole
 import stenograffia.app.ui.composables.HandlerTextString
 import stenograffia.app.ui.composables.TextString
+import stenograffia.app.ui.screens.settings.SettingsViewModel
 import stenograffia.app.ui.screens.stockStock.paint.*
 
 @Composable
@@ -30,7 +32,8 @@ fun Material(
 @Composable
 fun MaterialScreen(
     viewModel: MaterialViewModel,
-    materialId: Int
+    materialId: Int,
+    settingsViewModel: SettingsViewModel = hiltViewModel()
 ) {
     ConstraintLayout(
         modifier = Modifier
@@ -69,38 +72,40 @@ fun MaterialScreen(
         var expanded by remember { mutableStateOf(false) }
         var selectedText by remember { mutableStateOf(material.value.location) }
 
-        Box(
-            modifier = Modifier
-                .constrainAs(locationMaterial) { top.linkTo(descriptionMaterial.bottom) }
-                .padding(start = dimensionResource(id = R.dimen.paint_padding_start))
-        ) {
-            ExposedDropdownMenuBox(
-                expanded = expanded,
-                onExpandedChange = {
-                    expanded = !expanded
-                }
+        if (settingsViewModel.getUserStatus()!!.level > UserRole.STOCK.level) {
+            Box(
+                modifier = Modifier
+                    .constrainAs(locationMaterial) { top.linkTo(descriptionMaterial.bottom) }
+                    .padding(start = dimensionResource(id = R.dimen.paint_padding_start))
             ) {
-                TextField(
-                    value = selectedText,
-                    onValueChange = {},
-                    readOnly = true,
-                    trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
-                )
-
-                ExposedDropdownMenu(
+                ExposedDropdownMenuBox(
                     expanded = expanded,
-                    onDismissRequest = { expanded = false }
+                    onExpandedChange = {
+                        expanded = !expanded
+                    }
                 ) {
-                    viewModel.getLocation().forEach { item ->
-                        DropdownMenuItem(
-                            content = { Text(text = item) },
-                            onClick = {
-                                selectedText = item
-                                expanded = false
-                                viewModel.changeLocationMaterial(material.value.id, item)
-                                Toast.makeText(context, item, Toast.LENGTH_SHORT).show()
-                            }
-                        )
+                    TextField(
+                        value = selectedText,
+                        onValueChange = {},
+                        readOnly = true,
+                        trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
+                    )
+
+                    ExposedDropdownMenu(
+                        expanded = expanded,
+                        onDismissRequest = { expanded = false }
+                    ) {
+                        viewModel.getLocation().forEach { item ->
+                            DropdownMenuItem(
+                                content = { Text(text = item) },
+                                onClick = {
+                                    selectedText = item
+                                    expanded = false
+                                    viewModel.changeLocationMaterial(material.value.id, item)
+                                    Toast.makeText(context, item, Toast.LENGTH_SHORT).show()
+                                }
+                            )
+                        }
                     }
                 }
             }

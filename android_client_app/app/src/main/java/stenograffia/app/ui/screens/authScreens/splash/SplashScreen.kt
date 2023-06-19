@@ -18,13 +18,15 @@ import stenograffia.app.ui.navigation.Screens
 import stenograffia.app.domain.model.AuthTokens
 import stenograffia.app.ui.screens.authScreens.login.LoginViewModel
 import stenograffia.app.ui.screens.settings.DataStoreSettings
+import stenograffia.app.ui.screens.settings.SettingsViewModel
 
 @Composable
 fun SplashScreen(
     navController: NavController,
-    viewModel: LoginViewModel = hiltViewModel()
+    viewModel: LoginViewModel = hiltViewModel(),
+    settingsViewModel: SettingsViewModel = hiltViewModel()
 ) {
-    val dataStoreAuthTokens = DataStoreSettings(LocalContext.current)
+    val dataStoreAuthTokens = viewModel.dataStoreToken
 
     val authToken: Flow<AuthTokens> = dataStoreAuthTokens.getTokens()
 
@@ -35,6 +37,7 @@ fun SplashScreen(
             delay(1_000L)
 
             if (viewModel.authTokens != null){
+                settingsViewModel.loadUserByAccessToken()
                 dataStoreAuthTokens.saveTokens(viewModel.authTokens!!)
                 navController.navigate(Screens.StockCategories.route)
             } else {

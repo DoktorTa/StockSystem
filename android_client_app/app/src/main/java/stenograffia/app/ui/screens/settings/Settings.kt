@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 import stenograffia.app.R
+import javax.inject.Singleton
 
 
 @Composable
@@ -30,14 +31,14 @@ fun Settings(
 
     Column {
         Text(
-            text = settingsViewModel.userName,
+            text = settingsViewModel.getUserName(),
             style = MaterialTheme.typography.h1,
             modifier = Modifier.padding(
                 start = dimensionResource(id = R.dimen.settings_text_padding_start)
             )
         )
         Text(
-            text = stringResource(id = R.string.setting_group_name, settingsViewModel.userStatus),
+            text = stringResource(id = R.string.setting_group_name, settingsViewModel.getUserStatus()!!.name),
             style = MaterialTheme.typography.body1,
             modifier = Modifier.padding(
                 start = dimensionResource(id = R.dimen.settings_text_padding_start)

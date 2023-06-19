@@ -43,12 +43,13 @@ class AuthConfig:
             self,
             token: str
     ) -> User:
-        loger = logging.getLogger()
         login = self.jwt_token.decode_access_token(token)
-        loger.error(login)
-        # login = decoded['sub']
-        user = self.user_repository.get_user_by_login(login)
         user = self.user_repository.get_user_by_login(login)
         if user is not None:
-            loger.error(f'{user}')
-            return User(**user)
+            return User(
+                user_id=user.user_id,
+                username=user.user_name,
+                login=user.user_login,
+                password=user.user_password,
+                group=user.user_group
+            )
