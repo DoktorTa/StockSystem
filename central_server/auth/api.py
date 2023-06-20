@@ -1,3 +1,5 @@
+import logging
+
 from fastapi import APIRouter, Depends, HTTPException, Request
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 
@@ -48,6 +50,7 @@ async def refresh_token(refresh_data: RefreshBase) -> Token:
 
 
 @router.post('/get_user')
-async def get_user_by_access_token(user=Depends(RoleChecker(allowed_roles=Group.GUIDE))) -> GetUserResponse:
+async def get_user_by_access_token(request: Request, user=Depends(RoleChecker(allowed_roles=Group.GUIDE))) -> GetUserResponse:
     user_name, user_role = user.username, user.group
+    logging.info(f'{request.client.host}:{request.client.port} - {user_name}')
     return GetUserResponse(user_name=user_name, user_role=user_role)
