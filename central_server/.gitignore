@@ -1,3 +1,5 @@
 /venv
 /preload_data
-/log
+/logs
+/__pycache__
+/.idea
