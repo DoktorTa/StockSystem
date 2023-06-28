@@ -17,6 +17,7 @@ fun HandlerTextString(
     Text(
         text,
         style = MaterialTheme.typography.h1,
+        color = MaterialTheme.colors.primary,
         modifier = modifier
             .padding(start = dimensionResource(id = R.dimen.paint_padding_start))
     )

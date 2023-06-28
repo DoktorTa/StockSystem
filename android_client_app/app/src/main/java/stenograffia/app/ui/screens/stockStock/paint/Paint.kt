@@ -170,7 +170,13 @@ fun ColorSquare(
     color: Color,
     modifier: Modifier = Modifier
 ) {
-    val widthScreen = LocalConfiguration.current.screenWidthDp.dp
+    var widthScreen = LocalConfiguration.current.screenWidthDp.dp
+    val heightScreen = LocalConfiguration.current.screenHeightDp.dp
+
+    if (widthScreen * 2 >= heightScreen){
+        widthScreen /= 2
+    }
+
     Box(
         modifier = modifier
             .size(

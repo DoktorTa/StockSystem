@@ -12,7 +12,8 @@ class CansModel:
                  color_code: str,
                  name_color: str,
                  color: int,
-                 similar_colors: List[int]
+                 similar_colors: List[int],
+                 possible_to_buy=0,
                  ):
         self.paint_id: str = paint_id
         self.paint_type: str = "CANS"
@@ -26,7 +27,7 @@ class CansModel:
         self.quantity_in_storage: int = 0
         self.places_of_possible_availability: List[str] = []
         self.similar_colors: List[int] = similar_colors
-        self.possible_to_buy: int = 0
+        self.possible_to_buy: int = possible_to_buy
 
     def get_kotlin_code(self):
         """

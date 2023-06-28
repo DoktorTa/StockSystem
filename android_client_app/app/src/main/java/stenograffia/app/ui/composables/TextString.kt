@@ -17,6 +17,7 @@ fun TextString(
     Text(
         text,
         style = MaterialTheme.typography.body1,
+        color = MaterialTheme.colors.primary,
         modifier = modifier
             .padding(start = dimensionResource(id = R.dimen.paint_padding_start))
     )

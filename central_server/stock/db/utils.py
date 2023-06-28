@@ -4,14 +4,17 @@ import os
 from sqlalchemy.dialects.postgresql import array, ARRAY
 from sqlalchemy import Integer, cast
 
-from db.database import session_factory
-from db.entitys.material import Material
+from db.database import session_factory, engine
+from stock.db.entitys.material import Material
 from stock.db.entitys.paint import Paint
 
 
 def load_paint():
     path = os.getenv('PATH_PRELOAD_PAINTS')
     session = session_factory()
+
+    Paint.__table__.drop(engine)  # TODO: CODE переделать на инсерт?
+    Paint.__table__.create(engine)
 
     with open(path, 'r') as file:
         reader = csv.reader(file, delimiter=',')
@@ -58,6 +61,9 @@ def load_paint():
 def load_materials():
     path = os.getenv('PATH_PRELOAD_MATERIALS')
     session = session_factory()
+
+    Material.__table__.drop(engine)  # TODO: CODE переделать на инсерт?
+    Material.__table__.create(engine)
 
     with open(path, 'r') as file:
         reader = csv.reader(file, delimiter=',')

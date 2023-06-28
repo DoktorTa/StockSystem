@@ -1,22 +1,35 @@
-from logger import logger
+import os
+from dotenv import load_dotenv
+
+dotenv_path = os.path.join(os.path.dirname(__file__), 'local.env')
+if os.path.exists(dotenv_path):
+    load_dotenv(dotenv_path)
 
 import uvicorn
-from fastapi import Request
-from fastapi import FastAPI, Depends
+from fastapi import FastAPI
 
 from auth.api import router as router_auth
 from stock.api import router
 from log_config import LOGGING_CONFIG
 
-
 app = FastAPI()
+
+
+@app.get('/')
+async def login():
+    return {"MES": "SEM"}
 
 app.include_router(router_auth)
 app.include_router(router)
 
 
 if __name__ == "__main__":
-    # uvicorn.run(app, host="192.168.1.112", port=8000)
-    uvicorn.run(app, host="0.0.0.0", port=8000, log_config=LOGGING_CONFIG)
-    # uvicorn.run(app, host="0.0.0.0", port=8000)
-
+    uvicorn.run(
+        "main:app",
+        reload=True,
+        host="0.0.0.0",
+        port=8000,
+        log_config=LOGGING_CONFIG,
+        ssl_keyfile="./key.pem",
+        ssl_certfile="./cert.pem"
+    )

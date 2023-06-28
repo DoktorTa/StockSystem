@@ -1,3 +1,4 @@
+import logging
 import os
 
 from sqlalchemy.orm import sessionmaker

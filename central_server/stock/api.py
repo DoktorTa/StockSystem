@@ -2,9 +2,9 @@ import logging
 
 from fastapi import APIRouter, Depends, Request
 
-from api import RoleChecker
-from models.change_location_meterials_request import ChangeLocationMaterialsRequest
-from models.group import Group
+from auth.api import RoleChecker
+from auth.models.group import Group
+from stock.models.change_location_meterials_request import ChangeLocationMaterialsRequest
 from stock.models.update_request import UpdatePaintRequest
 from stock.repository.repository_stock import RepositoryStock
 from stock.models.time_request import TimeRequest

@@ -7,8 +7,8 @@ from auth.auth_config import AuthConfig
 from auth.models.token import Token
 from auth.models.login_base import LoginBase
 from auth.models.refresh_base import RefreshBase
-from models.get_user_response import GetUserResponse
-from models.group import Group
+from auth.models.get_user_response import GetUserResponse
+from auth.models.group import Group
 
 router = APIRouter()
 auth = AuthConfig()
