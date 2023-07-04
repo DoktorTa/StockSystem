@@ -3,7 +3,6 @@ from auth.db.users_dao import UsersDao
 from db.database import session_factory
 
 
-
 class UserRepository:
     user_dao: UsersDao
 

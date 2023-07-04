@@ -3,18 +3,23 @@ import csv
 
 from similar_color import SimilarColor
 from parser_csv import ParserCSV
-from parser_web import MontanaCansParserHTML
 from parser_data import *
-
+from web_parsers.molotow_parsers import MolotowParserHTML
+from web_parsers.montana_cans_parsers import MontanaCansParserHTML
+from web_parsers.montana_colors_parsers import MontanaColorsParserHTML
 
 output_types: list = ["csv", "kotlin"]
 
 internet_parsers = [
     MontanaCansParserHTML(MontanaBlack400Data()),
-    MontanaCansParserHTML(MontanaGold400Data())
+    MontanaCansParserHTML(MontanaGold400Data()),
+    MolotowParserHTML(MolotowCoversall()),
+    MolotowParserHTML(MolotowPremium()),
+    MontanaColorsParserHTML(MontanaColorsPremium())
 ]
 csv_parsers = [
-    ParserCSV(ArtonColor400Data())
+    ParserCSV(ArtonColor400Data()),
+    ParserCSV(LoopColor400Data())
 ]
 
 
@@ -61,7 +66,8 @@ def write_to_kotlin(all_cans):
 
 
 def main():
-    output_type = pars_arg()
+    # output_type = pars_arg()
+    output_type = 'csv'
     all_cans = get_all_cans_by_parser()
 
     similar_color = SimilarColor(all_cans)

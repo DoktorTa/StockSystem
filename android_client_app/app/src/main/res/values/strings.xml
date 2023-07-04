@@ -44,4 +44,12 @@
 
 <!--  Other  -->
     <string name="default_text">Default text</string>
+
+<!--  AuthScreens  -->
+    <string name="server_disconnect">SERVER DISCONNECT</string>
+    <string name="login_label">Login</string>
+    <string name="password_label">Password</string>
+    <string name="sing_in_button_text">SING IN</string>
+    <string name="correct_change">Complete</string>
+    <string name="not_correct_change">Invalid data</string>
 </resources>

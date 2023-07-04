@@ -1,4 +1,4 @@
-package stenograffia.app.ui.paint
+package stenograffia.app.ui.screens.stockStock.listPaint
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.clickable
@@ -15,9 +15,6 @@ import kotlinx.coroutines.flow.Flow
 import stenograffia.app.R
 import stenograffia.app.domain.model.PaintModel
 import stenograffia.app.domain.model.PaintNamesTupleModel
-import stenograffia.app.ui.screens.stockStock.listPaint.ListPaintItem
-import stenograffia.app.ui.screens.stockStock.listPaint.PaintItem
-import stenograffia.app.ui.screens.stockStock.listPaint.PaintListViewModel
 
 
 @SuppressLint("RememberReturnType")
@@ -64,7 +61,7 @@ fun ListPaint(
                 ListPaintItem(
                     paintItem = PaintItem.fromPaintModel(paintListState[index]),
                     modifier = Modifier.clickable {
-                        navController.navigate("PAINT/${paintListState[index].id}")
+                        navController.navigate("Paint/${paintListState[index].id}")
                     })
             }
         }

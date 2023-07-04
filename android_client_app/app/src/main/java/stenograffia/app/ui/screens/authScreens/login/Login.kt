@@ -1,6 +1,5 @@
 package stenograffia.app.ui.screens.authScreens.login
 
-import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
@@ -11,19 +10,24 @@ import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import kotlinx.coroutines.delay
+import stenograffia.app.R
 import stenograffia.app.ui.navigation.Screens
 import stenograffia.app.ui.screens.settings.DataStoreSettings
+import stenograffia.app.ui.screens.settings.SettingsViewModel
 
 
 @Composable
 fun Login(
     navController: NavController,
+    settingsViewModel: SettingsViewModel = hiltViewModel(),
     viewModel: LoginViewModel = hiltViewModel()
 ){
-    val dataStoreAuthTokens = DataStoreSettings(LocalContext.current)
+    val dataStoreAuthTokens = viewModel.dataStoreToken
 
     val loginText = remember { mutableStateOf("") }
     val passwordText = remember { mutableStateOf("") }
@@ -41,7 +45,7 @@ fun Login(
         ) {
             if (!serverConnect){
                 Text(
-                    text = "SERVER DISCONNECT",
+                    text = stringResource(id = R.string.server_disconnect),
                     style = MaterialTheme.typography.body1,
                     color = Color.Red,
                     fontWeight = FontWeight.Bold,
@@ -53,24 +57,22 @@ fun Login(
                 onValueChange = {
                     loginText.value = it
                 },
-                label = { Text("Login") }
+                label = { Text(stringResource(id = R.string.login_label)) }
             )
             TextField(
                 value = passwordText.value,
                 onValueChange = {
                     passwordText.value = it
                 },
-                label = { Text("Password") }
+                label = { Text(stringResource(id = R.string.password_label)) }
             )
             Button(
                 onClick = {
                     viewModel.singIn(loginText.value, passwordText.value)
-                    Log.d("LOGIN", "${loginText.value}, ${passwordText.value}")
-
                 },
                 modifier = Modifier.align(Alignment.CenterHorizontally),
             ) {
-                Text(text = "SIGN IN")
+                Text(text = stringResource(id = R.string.sing_in_button_text))
             }
         }
 
@@ -78,6 +80,7 @@ fun Login(
             if (loginCorrect){
                 LaunchedEffect(true) {
                     dataStoreAuthTokens.saveTokens(viewModel.authTokens!!)
+                    settingsViewModel.loadUserByAccessToken()
                     navController.navigate(Screens.StockCategories.route)
                 }
             } else {

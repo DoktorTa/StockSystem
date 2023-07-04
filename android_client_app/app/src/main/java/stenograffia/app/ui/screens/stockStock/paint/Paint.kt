@@ -1,17 +1,16 @@
 package stenograffia.app.ui.screens.stockStock.paint
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
@@ -19,6 +18,12 @@ import androidx.core.graphics.ColorUtils
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import stenograffia.app.R
+import stenograffia.app.domain.model.UserRole
+import stenograffia.app.ui.composables.ButtonShowDialog
+import stenograffia.app.ui.composables.HandlerTextString
+import stenograffia.app.ui.composables.SeparationLine
+import stenograffia.app.ui.composables.TextString
+import stenograffia.app.ui.screens.settings.SettingsViewModel
 import kotlin.math.roundToInt
 
 
@@ -28,13 +33,16 @@ fun Paint(
     paintId: Int,
     viewModel: PaintViewModel = hiltViewModel()
 ) {
-    viewModel.loadPaintModelById(paintId)
-    ConstraintLayoutContent(viewModel, navController)
+    ConstraintLayoutContent(viewModel, navController, paintId)
 }
 
-
 @Composable
-fun ConstraintLayoutContent(viewModel: PaintViewModel, navController: NavController) {
+fun ConstraintLayoutContent(
+    viewModel: PaintViewModel,
+    navController: NavController,
+    paintId: Int,
+    settingsViewModel: SettingsViewModel = hiltViewModel()
+) {
     ConstraintLayout(
         modifier = Modifier
             .fillMaxSize()
@@ -47,30 +55,35 @@ fun ConstraintLayoutContent(viewModel: PaintViewModel, navController: NavControl
             colorSquare, buttonShowLikenessPaint,
         ) = createRefs()
 
-
         val showDialogLikenessPaint = remember { mutableStateOf(false) }
         val showDialogChangeQuantity = remember { mutableStateOf(false) }
-        val paintModel = viewModel.paintModel
+        val paintModel = remember { mutableStateOf(viewModel.loadPaintModelById(paintId = paintId)) }
 
         if (showDialogLikenessPaint.value) {
             DialogLikenessPaint(
                 showDialog = showDialogLikenessPaint,
                 navController = navController,
-                viewModel = viewModel
+                viewModel = viewModel,
+                paintModel = paintModel
             )
         } else if (showDialogChangeQuantity.value) {
-            DialogChangeQuantity(showDialogChangeQuantity, viewModel)
+            DialogChangeQuantity(showDialogChangeQuantity, paintModel, viewModel)
         }
 
+        val infoText = remember { mutableStateOf(viewModel.infoText) }
+        if (infoText.value != 0){
+            Toast.makeText(LocalContext.current, infoText.value, Toast.LENGTH_SHORT).show()
+            infoText.value = 0
+        }
 
         HandlerTextString(
-            text = paintModel.nameColor,
+            text = paintModel.value.nameColor,
             modifier = Modifier.constrainAs(nameColor) {
                 top.linkTo(parent.top)
             })
 
         TextString(
-            text = paintModel.codePaint,
+            text = paintModel.value.codePaint,
             modifier = Modifier.constrainAs(namePaint) {
                 top.linkTo(nameColor.bottom)
             })
@@ -82,7 +95,7 @@ fun ConstraintLayoutContent(viewModel: PaintViewModel, navController: NavControl
 
         TextString(
             text = stringResource(
-                id = R.string.paint_hex_color, colorToHex(paintModel.color)
+                id = R.string.paint_hex_color, colorToHex(paintModel.value.color)
             ),
             modifier = Modifier.constrainAs(hexColor) {
                 top.linkTo(separationLine1.bottom)
@@ -90,7 +103,7 @@ fun ConstraintLayoutContent(viewModel: PaintViewModel, navController: NavControl
 
         TextString(
             text = stringResource(
-                id = R.string.paint_hsl_color, colorToHsl(paintModel.color)
+                id = R.string.paint_hsl_color, colorToHsl(paintModel.value.color)
             ),
             modifier = Modifier.constrainAs(hslColor) {
                 top.linkTo(hexColor.bottom)
@@ -98,7 +111,7 @@ fun ConstraintLayoutContent(viewModel: PaintViewModel, navController: NavControl
 
         TextString(
             text = stringResource(
-                id = R.string.paint_cmyk_color, colorToCmyk(paintModel.color)
+                id = R.string.paint_cmyk_color, colorToCmyk(paintModel.value.color)
             ),
             modifier = Modifier.constrainAs(cmykColor) {
                 top.linkTo(hslColor.bottom)
@@ -111,7 +124,7 @@ fun ConstraintLayoutContent(viewModel: PaintViewModel, navController: NavControl
 
         TextString(
             text = stringResource(
-                id = R.string.paint_quantity_in_stock, paintModel.quantityInStorage
+                id = R.string.paint_quantity_in_stock, paintModel.value.quantityInStorage
             ),
             modifier = Modifier.constrainAs(onStockText) {
                 top.linkTo(separationLine2.bottom)
@@ -129,19 +142,22 @@ fun ConstraintLayoutContent(viewModel: PaintViewModel, navController: NavControl
                 },
             showDialog = showDialogLikenessPaint,
             text_button = stringResource(id = R.string.paint_button_likeness_paint),
-            enabled = paintModel.similarColors.isNotEmpty(),
+            enabled = paintModel.value.similarColors.isNotEmpty(),
         )
 
-        ButtonShowDialog(
-            modifier = Modifier
-                .constrainAs(buttonChangeQuantity) {
-                    top.linkTo(buttonShowLikenessPaint.bottom)
-                },
-            showDialog = showDialogChangeQuantity,
-            text_button = stringResource(id = R.string.paint_button_change_quantity)
-        )
+        if (settingsViewModel.getUserStatus()!!.level <= UserRole.STOCK.level) {
+            ButtonShowDialog(
+                modifier = Modifier
+                    .constrainAs(buttonChangeQuantity) {
+                        top.linkTo(buttonShowLikenessPaint.bottom)
+                    },
+                showDialog = showDialogChangeQuantity,
+                text_button = stringResource(id = R.string.paint_button_change_quantity)
+            )
+        }
 
-        ColorSquare(color = Color(0xFF000000 + paintModel.color),
+
+        ColorSquare(color = Color(0xFF000000 + paintModel.value.color),
             Modifier.constrainAs(colorSquare) {
                 bottom.linkTo(parent.bottom)
             }
@@ -154,7 +170,13 @@ fun ColorSquare(
     color: Color,
     modifier: Modifier = Modifier
 ) {
-    val widthScreen = LocalConfiguration.current.screenWidthDp.dp
+    var widthScreen = LocalConfiguration.current.screenWidthDp.dp
+    val heightScreen = LocalConfiguration.current.screenHeightDp.dp
+
+    if (widthScreen * 2 >= heightScreen){
+        widthScreen /= 2
+    }
+
     Box(
         modifier = modifier
             .size(
@@ -163,76 +185,6 @@ fun ColorSquare(
             )
             .background(color = color)
     )
-}
-
-@Composable
-fun SeparationLine(modifier: Modifier = Modifier) {
-    Box(
-        modifier = modifier
-            .padding(start = dimensionResource(id = R.dimen.paint_padding_start))
-            .size(
-                width = 255.dp,
-                height = 1.dp
-            )
-            .background(color = MaterialTheme.colors.primary)
-    )
-}
-
-@Composable
-fun TextString(
-    modifier: Modifier = Modifier,
-    text: String = stringResource(id = R.string.default_text)
-) {
-    Text(
-        text,
-        style = MaterialTheme.typography.body1,
-        modifier = modifier
-            .padding(start = dimensionResource(id = R.dimen.paint_padding_start))
-    )
-}
-
-@Composable
-fun HandlerTextString(
-    modifier: Modifier = Modifier,
-    text: String = stringResource(id = R.string.default_text)
-) {
-    Text(
-        text,
-        style = MaterialTheme.typography.h1,
-        modifier = modifier
-            .padding(start = dimensionResource(id = R.dimen.paint_padding_start))
-    )
-}
-
-@Composable
-fun ButtonShowDialog(
-    modifier: Modifier = Modifier,
-    showDialog: MutableState<Boolean>,
-    text_button: String,
-    enabled: Boolean = true
-) {
-    Button(
-        onClick = { showDialog.value = true },
-        shape = RectangleShape,
-        colors = ButtonDefaults.buttonColors(
-            backgroundColor = MaterialTheme.colors.primary,
-            contentColor = MaterialTheme.colors.secondary
-        ),
-        modifier = modifier
-            .padding(
-                start = dimensionResource(id = R.dimen.paint_padding_start)
-            ),
-        enabled = enabled
-    ) {
-        Text(
-            text = text_button,
-            modifier = Modifier
-                .padding(
-                    top = dimensionResource(id = R.dimen.paint_button_text_padding),
-                    bottom = dimensionResource(id = R.dimen.paint_button_text_padding)
-                )
-        )
-    }
 }
 
 private fun colorToHsl(color: Int): String {

@@ -9,27 +9,26 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Remove
+import androidx.compose.runtime.*
 import androidx.compose.ui.res.dimensionResource
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.window.Dialog
 import stenograffia.app.R
+import stenograffia.app.domain.model.PaintModel
 
 
 @Composable
 fun DialogChangeQuantity(
     showDialogChangeQuantity: MutableState<Boolean>,
+    paintModel: State<PaintModel>,
     viewModel: PaintViewModel
 ) {
 
     val differenceQuantity = remember { mutableStateOf(0) }
-    val quantityOnStock = remember { mutableStateOf(viewModel.paintModel.quantityInStorage) }
+    val quantityOnStock = remember { mutableStateOf(paintModel.value.quantityInStorage) }
     val nothingInStock =
         remember { mutableStateOf((quantityOnStock.value + differenceQuantity.value) > 0) }
 
@@ -41,7 +40,7 @@ fun DialogChangeQuantity(
             InformationText(differenceQuantity, quantityOnStock)
             ChangeButtons(nothingInStock, differenceQuantity, quantityOnStock)
             SeparationBox()
-            DialogButton(showDialogChangeQuantity, viewModel, differenceQuantity)
+            DialogButton(showDialogChangeQuantity, viewModel, differenceQuantity, paintModel.value.id)
         }
     }
 }
@@ -147,7 +146,8 @@ fun SeparationBox() {
 fun DialogButton(
     showDialogChangeQuantity: MutableState<Boolean>,
     viewModel: PaintViewModel,
-    differenceQuantity: MutableState<Int>
+    differenceQuantity: MutableState<Int>,
+    paintId: Int
 ) {
     val modifierButton = Modifier
         .defaultMinSize(
@@ -169,7 +169,7 @@ fun DialogButton(
         }
         Button(
             onClick = {
-                viewModel.changeQuantityPaintInStock(differenceQuantity.value)
+                viewModel.changeQuantityPaintInStock(paintId, differenceQuantity.value)
                 showDialogChangeQuantity.value = false
             },
             modifier = modifierButton,

@@ -19,40 +19,26 @@ class DataStoreSettings(private val context: Context) {
         val THEME_KEY = booleanPreferencesKey("theme")
         val LOCALE_KEY = stringPreferencesKey("locale")
 
-        val LOGIN_CORRECT_KEY = booleanPreferencesKey("login_correct")
-
-        val ACCESS_TOKEN = stringPreferencesKey("access_token")
-        val REFRESH_TOKEN = stringPreferencesKey("refresh_token")
+//        val ACCESS_TOKEN = stringPreferencesKey("access_token")
+//        val REFRESH_TOKEN = stringPreferencesKey("refresh_token")
     }
-
-    suspend fun saveTokens(authTokens: AuthTokens){
-        context.dataStore.edit { preferences ->
-            preferences[ACCESS_TOKEN] = authTokens.accessToken
-            preferences[REFRESH_TOKEN] = authTokens.refreshToken
-        }
-    }
-
-    fun getTokens(): Flow<AuthTokens> {
-        val authToken: Flow<AuthTokens> = context.dataStore.data.map { preferences ->
-            val accessToken = preferences[ACCESS_TOKEN] ?: ""
-            val refreshToken = preferences[REFRESH_TOKEN] ?: ""
-            AuthTokens(accessToken, refreshToken)
-        }
-
-        return authToken
-    }
-
-    fun getLoginCorrect(): Flow<Boolean> = context.dataStore.data
-        .map { preferences ->
-            preferences[LOGIN_CORRECT_KEY] ?: false
-        }
-
-
-    suspend fun saveLoginCorrect(loginCorrect: Boolean) {
-        context.dataStore.edit { preferences ->
-            preferences[LOGIN_CORRECT_KEY] = loginCorrect
-        }
-    }
+//
+//    suspend fun saveTokens(authTokens: AuthTokens){
+//        context.dataStore.edit { preferences ->
+//            preferences[ACCESS_TOKEN] = authTokens.accessToken
+//            preferences[REFRESH_TOKEN] = authTokens.refreshToken
+//        }
+//    }
+//
+//    fun getTokens(): Flow<AuthTokens> {
+//        val authToken: Flow<AuthTokens> = context.dataStore.data.map { preferences ->
+//            val accessToken = preferences[ACCESS_TOKEN] ?: ""
+//            val refreshToken = preferences[REFRESH_TOKEN] ?: ""
+//            AuthTokens(accessToken, refreshToken)
+//        }
+//
+//        return authToken
+//    }
 
     fun getTheme(): Flow<Boolean> = context.dataStore.data
         .map { preferences ->

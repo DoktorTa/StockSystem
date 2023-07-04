@@ -2,11 +2,13 @@ package stenograffia.app.domain.useCases
 
 import stenograffia.app.domain.ApiResponse
 import stenograffia.app.domain.model.AuthTokens
-import stenograffia.app.domain.repository.IUserRepository
+import stenograffia.app.domain.model.UserModel
+import stenograffia.app.domain.model.UserRole
+import stenograffia.app.domain.repository.IUserNetworkRepository
 import javax.inject.Inject
 
 class UserUseCase @Inject constructor(
-     private val networkUserRepository: IUserRepository
+     private val networkUserRepository: IUserNetworkRepository
 ){
     suspend fun getAuthTokensByCredentials(login: String, password: String):
             ApiResponse<AuthTokens>? {
@@ -26,6 +28,16 @@ class UserUseCase @Inject constructor(
             null
         } else {
             response
+        }
+    }
+
+    suspend fun getUser() : UserModel {
+        val response = networkUserRepository.getUser()
+
+        return if (response is ApiResponse.Success) {
+            response.data
+        } else {
+            UserModel("Default", UserRole.GUIDE)
         }
     }
 }

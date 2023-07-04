@@ -1,35 +1,35 @@
+import os
+from dotenv import load_dotenv
+
+dotenv_path = os.path.join(os.path.dirname(__file__), 'local.env')
+if os.path.exists(dotenv_path):
+    load_dotenv(dotenv_path)
+
 import uvicorn
-from fastapi import FastAPI, Depends
+from fastapi import FastAPI
 
-from auth.models.group import Group
-from auth.api import router as router_auth, RoleChecker
-
+from auth.api import router as router_auth
 from stock.api import router
+from log_config import LOGGING_CONFIG
 
 app = FastAPI()
 
 
-@app.get("/")
-async def root():
-    return {"message": "Hello World"}
-
-
-@app.get("/hello/{name}")
-async def say_hello(name: str):
-    return {"message": f"Hello {name}"}
-
-
-@app.get("/helloADMIN")
-async def say_hello(authorize: bool = Depends(RoleChecker(allowed_roles=Group.ADMIN))):
-    if authorize:
-        return {'message': 'TRUE'}
-    else:
-        return {'message': 'FALSE'}
+@app.get('/')
+async def login():
+    return {"MES": "SEM"}
 
 app.include_router(router_auth)
 app.include_router(router)
 
 
 if __name__ == "__main__":
-    # uvicorn.run(app, host="192.168.1.112", port=8000)
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(
+        "main:app",
+        reload=True,
+        host="0.0.0.0",
+        port=8000,
+        log_config=LOGGING_CONFIG,
+        ssl_keyfile="./key.pem",
+        ssl_certfile="./cert.pem"
+    )

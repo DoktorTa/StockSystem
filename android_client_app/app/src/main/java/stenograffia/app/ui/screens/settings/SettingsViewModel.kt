@@ -1,26 +1,39 @@
 package stenograffia.app.ui.screens.settings
 
 import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import stenograffia.app.domain.model.AuthTokens
+import kotlinx.coroutines.launch
+import stenograffia.app.domain.model.UserModel
+import stenograffia.app.domain.useCases.UserUseCase
+import stenograffia.app.domain.model.UserRole
 import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
-class SettingsViewModel @Inject constructor(): ViewModel() {
-    var loginCorrect: MutableLiveData<Boolean> = MutableLiveData(false)
-        private set
+class SettingsViewModel @Inject constructor(
+    private val userUseCase: UserUseCase
+) : ViewModel() {
 
-    fun setLoginCorrect(loginCorrectValue: Boolean){
-        loginCorrect.value = loginCorrectValue
+    companion object {
+        var userName: String = ""
+        var userStatus: UserRole? = null
     }
 
-    var authTokens: AuthTokens? = null
+    fun getUserName() : String {
+        return userName
+    }
 
-    val userName: String = "User name"
-    val userStatus: String = "ARTIST"
+    fun getUserStatus() : UserRole? {
+        return userStatus
+    }
+
+    suspend fun loadUserByAccessToken(){
+        val user: UserModel = userUseCase.getUser()
+        userName = user.username
+        userStatus = user.userRole
+    }
 
     var localeActive = mutableStateOf(Locale("en"))
         private set

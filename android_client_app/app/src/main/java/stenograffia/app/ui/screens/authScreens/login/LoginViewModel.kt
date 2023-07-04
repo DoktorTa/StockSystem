@@ -9,11 +9,13 @@ import kotlinx.coroutines.launch
 import stenograffia.app.domain.ApiResponse
 import stenograffia.app.domain.model.AuthTokens
 import stenograffia.app.domain.useCases.UserUseCase
+import stenograffia.app.data.DataStoreToken
 import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val userUseCase: UserUseCase
+    private val userUseCase: UserUseCase,
+    val dataStoreToken: DataStoreToken
 ): ViewModel() {
 
     val infoText: MutableLiveData<String> = MutableLiveData("")

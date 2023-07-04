@@ -23,4 +23,10 @@
     <string name="setting_group_name">Группа: %1$s</string>
     <string name="setting_name_theme">Темный режим</string>
     <string name="setting_name_locale">Язык</string>
+    <string name="server_disconnect">СОЕДИНЕНИЕ С СЕРВЕРОМ ПОТЕРЕНО</string>
+    <string name="login_label">Логин</string>
+    <string name="password_label">Пароль</string>
+    <string name="sing_in_button_text">Вход</string>
+    <string name="correct_change">Готово</string>
+    <string name="not_correct_change">Неправильные данные</string>
 </resources>

@@ -8,6 +8,7 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.State
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.window.Dialog
@@ -20,7 +21,8 @@ import stenograffia.app.ui.screens.stockStock.listPaint.PaintItem
 fun DialogLikenessPaint(
     showDialog: MutableState<Boolean>,
     navController: NavController,
-    viewModel: PaintViewModel
+    viewModel: PaintViewModel,
+    paintModel: State<PaintModel>
 ){
     Dialog(onDismissRequest = { showDialog.value = false }) {
         Box(
@@ -29,7 +31,8 @@ fun DialogLikenessPaint(
         ) {
             LikenessListPaint(
                 viewModel = viewModel,
-                navController = navController
+                navController = navController,
+                paintModel = paintModel
             )
         }
     }
@@ -38,9 +41,10 @@ fun DialogLikenessPaint(
 @Composable
 fun LikenessListPaint(
     viewModel: PaintViewModel,
-    navController: NavController
+    navController: NavController,
+    paintModel: State<PaintModel>
 ) {
-    val (paintList, percentLikenessList) = viewModel.getLikenessPaintList()
+    val (paintList, percentLikenessList) = viewModel.getLikenessPaintList(paintModel.value)
 
     PaintLikenessList(
         navController = navController,

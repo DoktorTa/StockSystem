@@ -6,7 +6,7 @@ from sqlalchemy import update
 from sqlalchemy.exc import IntegrityError, SQLAlchemyError
 from sqlalchemy.orm import Session
 
-from database import session_factory
+from db.database import session_factory
 from stock.db.utils import load_paint, load_materials
 from stock.db.entitys.paint import Paint
 from stock.db.entitys.material import Material
@@ -17,8 +17,8 @@ class StockDao:
 
     def __init__(self):
         self.paints: Paint = Paint()
-        # load_paint()
-        # load_materials()
+        load_paint()
+        load_materials()
 
     @staticmethod
     def get_paint_by_time_label(time: int) -> Optional[list[Type[Paint]] | None]:

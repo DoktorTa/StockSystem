@@ -1,2 +1,8 @@
 /venv
 /preload_data
+/logs
+__pycache__/
+.idea/
+local.env
+./key.pem
+./cert.pem

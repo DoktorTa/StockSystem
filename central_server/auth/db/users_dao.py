@@ -9,8 +9,9 @@ class UsersDao:
     users: Users
 
     def __init__(self):
+
         self.users: Users = Users()
-        # load_users()
+        load_users()
 
     @staticmethod
     def get_password_by_login(session: Session, login: str) -> Users | None:

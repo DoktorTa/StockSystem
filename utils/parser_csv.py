@@ -38,5 +38,6 @@ class ParserCSV:
             color_code=code_color,
             name_color=name_color,
             color=color,
-            similar_colors=[]
+            similar_colors=[],
+            possible_to_buy=1
         )
