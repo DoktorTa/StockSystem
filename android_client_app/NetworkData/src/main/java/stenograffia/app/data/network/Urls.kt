@@ -2,8 +2,10 @@ package stenograffia.app.data.network
 
 object Urls {
 
-    const val BASE_URL: String = "http://192.168.1.102:8000/"
+    const val BASE_URL: String = "http://steno-stock.ru:8080/"
+//    const val BASE_URL: String = "http://192.168.1.102:8000/"
 //    const val BASE_URL: String = "http://192.168.88.67:8000/"
+
 
     const val GET_ACCESS_TOKEN: String = BASE_URL + "login"
     const val REFRESH_TOKEN: String = BASE_URL + "refresh_token"

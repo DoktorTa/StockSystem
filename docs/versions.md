@@ -35,38 +35,34 @@ After release: Data release [DD.MM.YYYY HH.MM]
 
 # Fiches: 
 1. Поиск по названиям краски, возможно по цветам
+2. Интеграция с Яндекс такси
+3. Инкрементальные счетчики для некоторых материалов
 
 # Bugs: 
 1. MINIMAL - не изменяется количество краски на экране после изменения количества на складе - требуется перезаходить в экран краски
 
+# Refactor
+1. ARCHITECTURE - Переустройство системы логирования на сервере.
+2. CODE - загрузка предварительных данных в базу данных
+
 # Versions:
+### Bugs:
 
-
-# [0.6.Z] Near Ultra Violet
-Description: pre release
+# [1.Y.Z] Middle Ultra Violet
+Description: release
+## Deploy
+1. docker - контейнеры 
+2. docker-compose 
+3. Последовательность развертки сервера и приложения.
 
 ## Server:
-### Refactor:
-1. auth.models.group (1, 17)
+### Refactor
+1. auth.db.utils (19, 37)
+2. auth.models.group (1, 17)
 
 ## Utils:
 ### Fiches:
 1. Add parsers molotow
 2. Add parsers mnt94
-
-### Bugs:
-
-# [1.Y.Z] Middle Ultra Violet
-Description: release
-## Android:
-### Redesign:
-1. Auth screen
-2. Splash screen
-### Testing: 
-1. Auth module
-
-## Server:
-### Refactor
-1. auth.db.utils (19, 37)
 
 ### Bugs:

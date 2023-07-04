@@ -16,8 +16,8 @@ COPY  main.py /server
 
 WORKDIR server/
 
-RUN sudo apt install snapd
-RUN sudo snap install --classic certbot
+#RUN sudo apt install snapd
+#RUN sudo snap install --classic certbot
 
 CMD python3 main.py
 #CMD python3 -m uvicorn main:app --reload --host=0.0.0.0 --log-config=/server/log.json
