@@ -11,7 +11,6 @@
 		type: String - тип обьекта
 		data_time: Int - время последнего изменения этого обьекта
 		description: String - описание обьекта
-		about: String - другие дополнение к обьекту
 		unique: Boolean - уникальный элемент (генератора) или не уникальный (кисточки)
 		location: Object.id - местонахождение обьекта
 	Пример: 
@@ -19,7 +18,6 @@
 		data_time = 01.01.2017 00:00:00
 		type = "Лесница"
 		description = "6 метровая, трех секционная лекция, каждая секция длинной 2 два метра"
-		about = "Не забудте о том что лесница тяжёлая"
 		location = "Склад"
 	Виды уникальных обьектов:
 		Лесница, Генератор, Швабра, Секаторы, Лапаты
@@ -50,8 +48,14 @@
 		quantityInStorage: Int = 12 
 		similarColors: List<Paint.id> = [2312, 2133]
 		possibleToBuy = True
+	
 	Типы краски: 
-		Банка, НитроЭмаль, Фасадная, ПФ 
+		1. Сans Default
+		2. Cans Transparent
+		3. Cans Fluorescent
+		4. Cans Chrome
+		5. Cans Metallic
+		6. Exterior Paint
 
 
 ## Database

@@ -9,6 +9,7 @@ class SimilarColor:
     lab_all_cans = {}
 
     def __init__(self, cans):
+        self.lab_all_cans = {}
         self.all_cans = cans
 
     def calculate_simular_cans(self):
