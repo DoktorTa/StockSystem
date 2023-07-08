@@ -5,14 +5,14 @@ COPY  requirements.txt server/
 RUN python3 -m pip install -r server/requirements.txt
 
 
-COPY  /auth /server/auth
-COPY  /db /server/db
+COPY  / /server/auth
+COPY  / /server/db
 COPY  /logs /server/logs
-COPY  /stock /server/stock
+COPY  / /server/stock
 COPY  /preload_data /server/preload_data
 COPY  local.env /server
-COPY  log_config.py /server
-COPY  main.py /server
+COPY  src/main/log_config.py /server
+COPY  src/main/main.py /server
 
 WORKDIR server/
 

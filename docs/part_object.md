@@ -8,6 +8,8 @@
 		nameObject: String - Название обьекта
 		cordObject: ??? - Координаты обьекта на карте
 		stateObject: String - Состояние обьекта
+		dataStart: String - Время старта обьекта
+		historyDataStart: List<String> - Предыдушие даты старта обьекта
 		artistOnObject: List<User.id> - Художники
 		responsibleForObject: List<User.id> - Люди которые ответственны за обьект
 		pepoleInObject: List<User.id> - Люди которые находятся на обьекте прямо сейчас

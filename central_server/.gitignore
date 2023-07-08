@@ -6,3 +6,4 @@ __pycache__/
 local.env
 ./key.pem
 ./cert.pem
+.pytest_cache/
