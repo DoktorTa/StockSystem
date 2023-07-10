@@ -13,8 +13,8 @@ os.environ.update({"SERVER_NAME": "server"})
 sys.modules['db.entitys.users'] = MagicMock()
 sys.modules['db.users_dao'] = MagicMock()
 
-from use_case.auth_config import AuthConfig
-from use_case.jwt_token import JwtToken
+from src.main.auth.use_case.auth_config import AuthConfig
+from src.main.auth.use_case.jwt_token import JwtToken
 
 
 class TestAuthConfig:

@@ -1,7 +1,7 @@
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from fastapi import HTTPException, Request
 
-from use_case.auth_config import AuthConfig
+from src.main.auth.use_case.auth_config import AuthConfig
 
 
 class RoleChecker(HTTPBearer):

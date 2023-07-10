@@ -4,18 +4,17 @@ import os
 import bcrypt
 from sqlalchemy.orm import Session
 
-from db.entitys.users import Users
-
-from database import session_factory, engine
+from src.main.auth.db.entitys.users import Users
+from src.main.db.database import Database
 from models.role_user import RoleUser
 
 
 def load_users():
     path = os.getenv('PATH_PRELOAD_USERS')
-    session: Session = session_factory()
+    session: Session = Database().session_factory()
 
-    Users.__table__.drop(engine)  # TODO: CODE переделать на инсерт?
-    Users.__table__.create(engine)
+    Users.__table__.drop(Database().engine)  # TODO: CODE переделать на инсерт?
+    Users.__table__.create(Database().engine)
 
     cur_id = 0
 

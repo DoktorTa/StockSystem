@@ -1,6 +1,6 @@
 from sqlalchemy.exc import IntegrityError, SQLAlchemyError
 
-from db.entitys.users import Users
+from src.main.auth.db.entitys.users import Users
 from src.main.db.database import Database
 
 

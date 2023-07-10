@@ -3,8 +3,8 @@ import logging
 from fastapi import APIRouter, Depends, Request
 
 from src.main.auth.role_chacker import RoleChecker
-from models.role_user import RoleUser
-from repository.repository_stock import RepositoryStock
+from src.main.auth.models.role_user import RoleUser
+from src.main.stock.repository.repository_stock import RepositoryStock
 from src.main.stock.schemas import *
 
 repository_stock = RepositoryStock()
@@ -69,3 +69,21 @@ async def change_location_material(
             time=change_request.time_label
         )
     )
+
+
+@router.post("/change_quantity_material")
+async def change_quantity_material(
+        request: Request,
+        update_request: UpdateMaterialRequest,
+        user=Depends(RoleChecker(allowed_roles=RoleUser.STOCK))
+):
+    logging.info(f'{request.client.host}:{request.client.port} - {user.username} - {update_request}')
+
+    return ElementsResponse(
+        elements=repository_stock.change_quantity_material(
+            material_id=update_request.material_id,
+            diff_quantity=update_request.diff_quantity,
+            time=update_request.time_label
+        )
+    )
+

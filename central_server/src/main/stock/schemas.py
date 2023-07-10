@@ -26,6 +26,12 @@ class ChangeLocationMaterialsRequest(BaseModel):
     time_label: int
 
 
+class UpdateMaterialRequest(BaseModel):
+    time_label: int
+    material_id: int
+    diff_quantity: int
+
+
 class Paint(BaseModel):
     paint_id: int
     paint_type: str

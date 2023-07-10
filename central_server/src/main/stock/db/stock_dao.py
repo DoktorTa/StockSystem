@@ -5,10 +5,10 @@ from sqlalchemy import update
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session
 
-from database import session_factory
-from db.utils import load_paint, load_materials
-from db.entitys.paint import Paint
-from db.entitys.material import Material
+from src.main.db.database import Database
+from src.main.stock.db.utils import load_paint, load_materials
+from src.main.stock.db.entitys.paint import Paint
+from src.main.stock.db.entitys.material import Material
 
 
 class StockDao:
@@ -21,7 +21,7 @@ class StockDao:
 
     @staticmethod
     def get_paint_by_time_label(time: int) -> Optional[list[Type[Paint]] | None]:
-        session: Session = session_factory()
+        session: Session = Database().session_factory()
 
         try:
             names = session.query(Paint).where(Paint.data_time > time).all()
@@ -33,7 +33,7 @@ class StockDao:
 
     @staticmethod
     def change_quantity_paint(paint_id: int, quantity: int, time: int) -> Optional[list[Type[Paint]] | None]:
-        session: Session = session_factory()
+        session: Session = Database().session_factory()
 
         try:
             new_time = int(datetime.utcnow().timestamp())
@@ -53,7 +53,7 @@ class StockDao:
 
     @staticmethod
     def get_material_by_time_label(time: int) -> Optional[list[Type[Material]] | None]:
-        session: Session = session_factory()
+        session: Session = Database().session_factory()
 
         try:
             names = session.query(Material).where(Material.time_label > time).all()
@@ -65,7 +65,7 @@ class StockDao:
 
     @staticmethod
     def update_location_material(material_id: int, location: str, time: int) -> Optional[list[Type[Material]] | None]:
-        session: Session = session_factory()
+        session: Session = Database().session_factory()
 
         try:
             new_time = int(datetime.utcnow().timestamp())
@@ -77,6 +77,26 @@ class StockDao:
             session.execute(stmt)
             session.commit()
             return StockDao.get_material_by_time_label(time)
+        except SQLAlchemyError as e:
+            session.rollback()
+            raise e
+        finally:
+            session.close()
+
+    @staticmethod
+    def change_quantity_material(material_id: int, quantity: int, time: int) -> Optional[list[Type[Material]] | None]:
+        session: Session = Database().session_factory()
+
+        try:
+            new_time = int(datetime.utcnow().timestamp())
+            stmt = (
+                update(Material)
+                .where(Material.material_id == material_id)
+                .values(quantity_in_storage=Material.quantity_in_storage + quantity, data_time=new_time)
+            )
+            session.execute(stmt)
+            session.commit()
+            return StockDao.get_paint_by_time_label(time)
         except SQLAlchemyError as e:
             session.rollback()
             raise e

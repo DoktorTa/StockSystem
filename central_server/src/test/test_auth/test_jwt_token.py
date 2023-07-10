@@ -6,7 +6,7 @@ from fastapi import HTTPException
 os.environ.update({"JWT_TOKEN_SECRET": "secret"})
 os.environ.update({"SERVER_NAME": "server"})
 
-from use_case.jwt_token import JwtToken
+from src.main.auth.use_case.jwt_token import JwtToken
 
 
 class TestJwtToken:

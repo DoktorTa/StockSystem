@@ -8,8 +8,9 @@ if os.path.exists(dotenv_path):
 import uvicorn
 from fastapi import FastAPI
 
-from router import router as router_auth
-from router import router
+from src.main.auth.router import router as router_auth
+from src.main.stock.router import router as router_stock
+from src.main.object.router import router as router_object
 from log_config import LOGGING_CONFIG
 
 app = FastAPI()
@@ -20,7 +21,8 @@ async def login():
     return {"MES": "SEM"}
 
 app.include_router(router_auth)
-app.include_router(router)
+app.include_router(router_stock)
+app.include_router(router_object)
 
 
 if __name__ == "__main__":

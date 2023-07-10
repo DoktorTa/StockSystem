@@ -1,10 +1,10 @@
 from sqlalchemy import Column, Integer, String, Boolean, CheckConstraint
 from sqlalchemy.dialects.postgresql import ARRAY
 
-from database import DeclarativeBase
+from src.main.db.database import Database
 
 
-class Paint(DeclarativeBase):
+class Paint(Database.DeclarativeBase):
     __tablename__ = 'paints'
 
     paint_id = Column(Integer, primary_key=True)

@@ -1,4 +1,3 @@
-import logging
 import os
 
 from sqlalchemy.orm import sessionmaker
@@ -7,11 +6,18 @@ from sqlalchemy.ext.declarative import declarative_base
 
 
 class Database:
+    instance = None
+
     url = os.getenv('DATABASE_URL')
 
     engine = create_engine(url, isolation_level="SERIALIZABLE")
     _SessionFactory = sessionmaker(bind=engine)
     DeclarativeBase = declarative_base()
+
+    def __new__(cls):
+        if not hasattr(cls, 'instance'):
+            cls.instance = super(Database, cls).__new__(cls)
+        return cls.instance
 
     def session_factory(self):
         self.DeclarativeBase.metadata.create_all(self.engine)

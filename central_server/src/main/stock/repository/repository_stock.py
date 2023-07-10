@@ -1,7 +1,7 @@
 from fastapi import HTTPException
 from starlette import status
 
-from db.stock_dao import StockDao
+from src.main.stock.db.stock_dao import StockDao
 
 
 class RepositoryStock:
@@ -27,3 +27,9 @@ class RepositoryStock:
             return self.stock_dao.update_location_material(material_id, location, time)
         except Exception as e:
             raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST)
+
+    def change_quantity_material(self, material_id: int, diff_quantity: int, time: int):
+        try:
+            return self.stock_dao.change_quantity_material(material_id, diff_quantity, time)
+        except Exception as e:
+            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail='Less zero')
