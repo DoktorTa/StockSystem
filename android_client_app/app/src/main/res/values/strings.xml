@@ -52,4 +52,6 @@
     <string name="sing_in_button_text">SING IN</string>
     <string name="correct_change">Complete</string>
     <string name="not_correct_change">Invalid data</string>
+    <string name="connecting_to_the_server">CONNECTING TO THE SERVER</string>
+    <string name="default_serial_number" translatable="false">00 00 000000</string>
 </resources>

@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+<!--  AuthScreens  -->
+    <dimen name="padding_bottom_auth_screen">15dp</dimen>
+    <dimen name="width_input_auth_screen">250dp</dimen>
+    <dimen name="height_input_auth_screen">50dp</dimen>
+    <dimen name="padding_in_auth_screens">15dp</dimen>
+    <dimen name="padding_bottom_text_button_sing_in_auth_screens">65dp</dimen>
+    <dimen name="wight_image_button_sing_in_auth_screens">100dp</dimen>
+    <dimen name="height_image_button_sing_in_auth_screens">170dp</dimen>
+
 <!--  DialogQuantityChange  -->
     <dimen name="width_dialog">250dp</dimen>
     <dimen name="height_separation_box_dialog">20dp</dimen>

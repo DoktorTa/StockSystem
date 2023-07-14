@@ -29,4 +29,5 @@
     <string name="sing_in_button_text">Вход</string>
     <string name="correct_change">Готово</string>
     <string name="not_correct_change">Неправильные данные</string>
+    <string name="connecting_to_the_server">СОЕДИНЕНИЕ С СЕРВЕРОМ</string>
 </resources>
