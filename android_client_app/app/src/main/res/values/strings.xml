@@ -54,4 +54,5 @@
     <string name="not_correct_change">Invalid data</string>
     <string name="connecting_to_the_server">CONNECTING TO THE SERVER</string>
     <string name="default_serial_number" translatable="false">00 00 000000</string>
+    <string name="paint_type">TYPE: %1$S</string>
 </resources>

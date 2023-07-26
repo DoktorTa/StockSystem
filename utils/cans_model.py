@@ -30,7 +30,6 @@ class TransferPaintModel:
         return [self.paint_name, self.color_code, hex_color_str, self.paint_type]
 
 
-
 class CansModel:
     def __init__(self,
                  paint_id: str,

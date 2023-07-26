@@ -56,8 +56,8 @@ class AuthConfig:
         if user is not None:
             return User(
                 user_id=user.user_id,
-                username=user.user_name,
-                login=user.user_login,
-                password=user.user_password,
-                group=user.user_group
+                user_name=user.user_name,
+                user_login=user.user_login,
+                user_password=user.user_password,
+                user_group=user.user_group
             )

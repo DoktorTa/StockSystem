@@ -12,5 +12,6 @@ interface IStockNetworkRepository {
 
     suspend fun getMaterialsByTime(timeLabel: Int) : ApiResponse<List<MaterialModel>>
 
-    suspend fun changeLocationMaterial(materialId: Int, location: String, timeLabel: Int) : ApiResponse<List<MaterialModel>?>
+    suspend fun changeMaterial(materialId: Int, location: String, diffQuantity: Int, timeLabel: Int) : ApiResponse<List<MaterialModel>?>
+
 }

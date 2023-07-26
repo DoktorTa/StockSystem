@@ -5,7 +5,7 @@ import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
 import stenograffia.app.localdata.database.typeconverters.PaintTypeConverter
 import stenograffia.app.domain.model.PaintModel
-import stenograffia.app.domain.model.TypePaint
+import stenograffia.app.domain.model.PaintType
 
 @Entity
 @TypeConverters(PaintTypeConverter::class)
@@ -28,7 +28,7 @@ fun PaintEntity?.toPaintModel(): PaintModel?{
     if (this == null) return null
     return PaintModel(
         id = this.id,
-        type = TypePaint.createByString(this.type),
+        type = PaintType.getPaintTypeByName(this.type),
         timeLabel = this.timeLabel,
         nameCreator = this.nameCreator,
         nameLine = this.nameLine,

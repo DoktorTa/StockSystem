@@ -37,21 +37,21 @@ fun ListPaintItem(
                 text = paintItem.nameColor,
                 color = paintItem.colorText,
                 modifier = modifierPaddingTextStart,
-                style = MaterialTheme.typography.body1,
+                style = MaterialTheme.typography.h4,
                 maxLines = 1
             )
             Text(
                 text = paintItem.codePaint,
                 color = paintItem.colorText,
                 modifier = modifierPaddingTextStart,
-                style = MaterialTheme.typography.body1,
+                style = MaterialTheme.typography.h4,
                 maxLines = 1
             )
         }
         Text(
             text = stringResource(paintItem.statusPaintTextId),
             color = paintItem.colorTextStatus,
-            style = MaterialTheme.typography.body1,
+            style = MaterialTheme.typography.h4,
             modifier = modifierPaddingTextStart
         )
     }

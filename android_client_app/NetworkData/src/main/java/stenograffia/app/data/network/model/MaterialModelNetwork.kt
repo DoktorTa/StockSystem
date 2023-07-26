@@ -8,7 +8,8 @@ class MaterialModelNetwork(
     val time_label: Int,
     val description: String,
     val unique: Boolean,
-    val location: String
+    val location: String,
+    val quantity_in_storage: Int
 ) {}
 
 fun MaterialModelNetwork.toMaterialModel(): MaterialModel {
@@ -18,6 +19,7 @@ fun MaterialModelNetwork.toMaterialModel(): MaterialModel {
         timeLabel = time_label,
         description = description,
         unique = unique,
-        location = location
+        location = location,
+        quantityInStorage = quantity_in_storage
     )
 }

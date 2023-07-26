@@ -1,7 +1,8 @@
-package stenograffia.app.data.network
+package stenograffia.app.data.network.api
 
 import retrofit2.Response
 import retrofit2.http.POST
+import stenograffia.app.data.network.Urls
 import stenograffia.app.data.network.data.GetUserResponse
 
 interface UserApi {

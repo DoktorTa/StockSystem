@@ -17,8 +17,7 @@ async def get(
         time_request: TimeRequest,
         user=Depends(RoleChecker(allowed_roles=RoleUser.GUIDE))
 ):
-    logging.info(f'{request.client.host}:{request.client.port} - {user.username} - {time_request}')
-
+    logging.info(f'{request.client.host}:{request.client.port} - {user.user_name} - {time_request}')
     return ElementsResponse(
         elements=repository_object.get_object_by_time(time_request.timeLabel)
     )

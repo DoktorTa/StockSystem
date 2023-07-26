@@ -1,7 +1,7 @@
 package stenograffia.app.data.repository
 
-import stenograffia.app.data.network.AuthApi
-import stenograffia.app.data.network.UserApi
+import stenograffia.app.data.network.api.AuthApi
+import stenograffia.app.data.network.api.UserApi
 import stenograffia.app.data.network.data.LoginRequest
 import stenograffia.app.data.network.data.RefreshRequest
 import stenograffia.app.data.network.data.toUserModel

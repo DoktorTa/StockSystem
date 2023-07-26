@@ -1,4 +1,4 @@
-package stenograffia.app.localdata.database
+package stenograffia.app.localdata.database.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
@@ -38,7 +38,4 @@ interface StockDao {
 
     @Query("SELECT MAX(timeLabel) FROM MaterialEntity")
     fun getMaxMaterialTimeLabel(): Int?
-
-    @Query("SELECT DISTINCT(location) FROM MaterialEntity")
-    fun getLocations(): List<String>
 }

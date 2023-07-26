@@ -17,11 +17,11 @@ val Typography = Typography(
         fontSize = 32.sp
     ),
 
-//    body1 = TextStyle(
-//        fontFamily = FontFamily.Monospace,
-//        fontWeight = FontWeight.ExtraBold,
-//        fontSize = 14.sp
-//    ),
+    h4 = TextStyle(
+        fontFamily = FontFamily.Monospace,
+        fontWeight = FontWeight.ExtraBold,
+        fontSize = 14.sp
+    ),
 
 
 

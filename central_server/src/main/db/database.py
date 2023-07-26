@@ -6,7 +6,6 @@ from sqlalchemy.ext.declarative import declarative_base
 
 
 class Database:
-    instance = None
 
     url = os.getenv('DATABASE_URL')
 

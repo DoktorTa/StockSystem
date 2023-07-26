@@ -8,7 +8,7 @@ class Objects(Database.DeclarativeBase):
 
     object_id = Column('id', Integer, primary_key=True)
     object_name = Column('object_name', String)
-    state_object = Column('object_name', String)
+    state_object = Column('object_state', String)
 
     time_label = Column('time_label', Integer)
 

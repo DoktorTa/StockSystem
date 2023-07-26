@@ -1,7 +1,7 @@
 package stenograffia.app.data.network.model
 
 import stenograffia.app.domain.model.PaintModel
-import stenograffia.app.domain.model.TypePaint
+import stenograffia.app.domain.model.PaintType
 
 data class PaintModelNetwork(
     var name_creator: String,
@@ -22,7 +22,7 @@ data class PaintModelNetwork(
 fun PaintModelNetwork.toPaintModel(): PaintModel{
     return PaintModel(
         id = paint_id,
-        type = TypePaint.createByString(paint_type),
+        type = PaintType.getPaintTypeByName(paint_type),
         timeLabel = data_time,
         nameCreator = name_creator,
         nameLine = name_line,

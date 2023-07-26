@@ -8,12 +8,13 @@ import stenograffia.app.R
 import stenograffia.app.domain.model.MaterialModel
 import stenograffia.app.domain.useCases.StockUseCase
 import stenograffia.app.domain.utils.ChangeMsg
+import stenograffia.app.utils.IDiffQuantity
 import javax.inject.Inject
 
 @HiltViewModel
 class MaterialViewModel @Inject constructor(
     private val stockUseCase: StockUseCase,
-) : ViewModel() {
+) : ViewModel(), IDiffQuantity {
 
     var infoText: Int = 0
 
@@ -28,6 +29,20 @@ class MaterialViewModel @Inject constructor(
     fun changeLocationMaterial(materialId: Int, newLocation: String) {
         viewModelScope.launch {
             val answer = stockUseCase.changeLocationMaterial(materialId, newLocation)
+            infoText = when (answer) {
+                ChangeMsg.CorrectChange() -> R.string.correct_change
+                ChangeMsg.ErrorChange() -> R.string.not_correct_change
+                ChangeMsg.ErrorConnect() -> R.string.server_disconnect
+                else -> {
+                    R.string.server_disconnect
+                }
+            }
+        }
+    }
+
+    override fun changeQuantity(id: Int, difference: Int) {
+        viewModelScope.launch {
+            val answer = stockUseCase.changeQuantityMaterial(id, difference)
             infoText = when (answer) {
                 ChangeMsg.CorrectChange() -> R.string.correct_change
                 ChangeMsg.ErrorChange() -> R.string.not_correct_change

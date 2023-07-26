@@ -28,6 +28,6 @@ async def get_user_by_access_token(
         request: Request,
         user=Depends(RoleChecker(allowed_roles=RoleUser.GUIDE))
 ) -> GetUserResponse:
-    user_name, user_role = user.username, user.group
+    user_name, user_role = user.user_name, user.user_group
     logging.info(f'{request.client.host}:{request.client.port} - {user_name}')
     return GetUserResponse(user_name=user_name, user_role=user_role)

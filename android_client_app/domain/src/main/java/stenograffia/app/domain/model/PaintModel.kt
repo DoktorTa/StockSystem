@@ -2,7 +2,7 @@ package stenograffia.app.domain.model
 
 data class PaintModel(
     val id: Int,
-    val type: TypePaint,
+    val type: PaintType,
     val timeLabel: Int,
     val nameCreator: String,
     val nameLine: String,
@@ -15,17 +15,4 @@ data class PaintModel(
     val possibleToBuy: Boolean
 )
 
-enum class TypePaint {
-    CANS,
-    BUCKET;
-
-    companion object {
-        fun createByString(name: String): TypePaint {
-            return when (name) {
-                "CANS" -> CANS
-                else -> BUCKET
-            }
-        }
-    }
-}
 

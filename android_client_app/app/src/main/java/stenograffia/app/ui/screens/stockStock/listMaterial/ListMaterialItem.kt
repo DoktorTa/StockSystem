@@ -37,14 +37,14 @@ fun ListMaterialItem(
                 text = materialItem.type,
                 color = Color.White,
                 modifier = modifierPaddingTextStart,
-                style = MaterialTheme.typography.body1,
+                style = MaterialTheme.typography.h4,
                 maxLines = 1
             )
         }
         Text(
             text = materialItem.location,
             color = materialItem.colorTextLocation,
-            style = MaterialTheme.typography.body1,
+            style = MaterialTheme.typography.h4,
             modifier = modifierPaddingTextStart
         )
     }

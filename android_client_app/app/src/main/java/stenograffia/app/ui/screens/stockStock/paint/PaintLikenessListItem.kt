@@ -33,12 +33,14 @@ fun PaintLikenessListItem(
                 text = paintItem.nameColor,
                 color = paintItem.colorText,
                 modifier = modifierPaddingTextStart,
+                style = MaterialTheme.typography.h4,
                 maxLines = 1
             )
             Text(
                 text = paintItem.codePaint,
                 color = paintItem.colorText,
                 modifier = modifierPaddingTextStart,
+                style = MaterialTheme.typography.h4,
                 maxLines = 1
             )
             Text(
@@ -47,13 +49,14 @@ fun PaintLikenessListItem(
                     paintItem.additionalInformation),
                 color = paintItem.colorText,
                 modifier = modifierPaddingTextStart,
-                maxLines = 1
-            )
+                maxLines = 1,
+                style = MaterialTheme.typography.h4,
+                )
         }
         Text(
             text = stringResource(paintItem.statusPaintTextId),
             color = paintItem.colorTextStatus,
-            style = MaterialTheme.typography.body1,
+            style = MaterialTheme.typography.h4,
             modifier = modifierPaddingTextStart)
     }
 }

@@ -9,31 +9,18 @@ import stenograffia.app.R
 import stenograffia.app.domain.model.PaintModel
 import stenograffia.app.domain.useCases.StockUseCase
 import stenograffia.app.domain.utils.ChangeMsg
+import stenograffia.app.utils.IDiffQuantity
 import javax.inject.Inject
 
 @HiltViewModel
 class PaintViewModel @Inject constructor(
     private val stockUseCase: StockUseCase
-) : ViewModel() {
+) : ViewModel(), IDiffQuantity {
 
     var infoText: Int = 0
 
     fun loadPaintModelById(paintId: Int) : PaintModel {
         return stockUseCase.getPaintModelById(paintId)!!
-    }
-
-    fun changeQuantityPaintInStock(paintId: Int, difference: Int) {
-        viewModelScope.launch {
-            val answer = stockUseCase.updateQuantityById(paintId, difference)
-            infoText = when (answer) {
-                ChangeMsg.CorrectChange() -> R.string.correct_change
-                ChangeMsg.ErrorChange() -> R.string.not_correct_change
-                ChangeMsg.ErrorConnect() -> R.string.server_disconnect
-                else -> {
-                    R.string.server_disconnect
-                }
-            }
-        }
     }
 
     fun getLikenessPaintList(paintModel: PaintModel): Pair<List<PaintModel>, Map<Int, String>>{
@@ -52,4 +39,17 @@ class PaintViewModel @Inject constructor(
 
     }
 
+    override fun changeQuantity(id: Int, difference: Int) {
+        viewModelScope.launch {
+            val answer = stockUseCase.updateQuantityById(id, difference)
+            infoText = when (answer) {
+                ChangeMsg.CorrectChange() -> R.string.correct_change
+                ChangeMsg.ErrorChange() -> R.string.not_correct_change
+                ChangeMsg.ErrorConnect() -> R.string.server_disconnect
+                else -> {
+                    R.string.server_disconnect
+                }
+            }
+        }
+    }
 }

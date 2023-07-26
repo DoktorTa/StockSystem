@@ -8,7 +8,6 @@ class UsersDao:
     users: Users
 
     def __init__(self):
-
         self.users: Users = Users()
 
     @staticmethod

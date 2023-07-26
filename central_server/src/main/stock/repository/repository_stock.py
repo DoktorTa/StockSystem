@@ -1,3 +1,5 @@
+import logging
+
 from fastapi import HTTPException
 from starlette import status
 
@@ -22,14 +24,23 @@ class RepositoryStock:
     def get_material_by_time_label(self, time: int):
         return self.stock_dao.get_material_by_time_label(time)
 
-    def update_location_material(self, material_id: int, location: str, time: int):
+    def change_material(self, material_id: int, location: str, diff_quantity: int, time_label: int):
         try:
-            return self.stock_dao.update_location_material(material_id, location, time)
-        except Exception as e:
-            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST)
-
-    def change_quantity_material(self, material_id: int, diff_quantity: int, time: int):
-        try:
-            return self.stock_dao.change_quantity_material(material_id, diff_quantity, time)
+            if material := self.stock_dao.get_material_by_id(material_id) is not None:
+                if material.unique is True:
+                    material = self.stock_dao.change_material(
+                        material_id=material_id,
+                        location=location,
+                        quantity=0,
+                        time_label=time_label
+                    )
+                else:
+                    material = self.stock_dao.change_material(
+                        material_id=material_id,
+                        location="",
+                        quantity=diff_quantity,
+                        time_label=time_label
+                    )
+            return material
         except Exception as e:
             raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail='Less zero')

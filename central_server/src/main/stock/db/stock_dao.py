@@ -6,7 +6,6 @@ from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session
 
 from src.main.db.database import Database
-from src.main.stock.db.utils import load_paint, load_materials
 from src.main.stock.db.entitys.paint import Paint
 from src.main.stock.db.entitys.material import Material
 
@@ -16,8 +15,6 @@ class StockDao:
 
     def __init__(self):
         self.paints: Paint = Paint()
-        load_paint()
-        load_materials()
 
     @staticmethod
     def get_paint_by_time_label(time: int) -> Optional[list[Type[Paint]] | None]:
@@ -64,27 +61,19 @@ class StockDao:
             session.close()
 
     @staticmethod
-    def update_location_material(material_id: int, location: str, time: int) -> Optional[list[Type[Material]] | None]:
+    def get_material_by_id(material_id: int) -> Optional[Type[Material] | None]:
         session: Session = Database().session_factory()
 
         try:
-            new_time = int(datetime.utcnow().timestamp())
-            stmt = (
-                update(Material)
-                .where(Material.material_id == material_id)
-                .values(location=location, time_label=new_time)
-            )
-            session.execute(stmt)
-            session.commit()
-            return StockDao.get_material_by_time_label(time)
+            material = session.query(Material).where(Material.material_id == material_id).all()[0]
+            return material
         except SQLAlchemyError as e:
-            session.rollback()
             raise e
         finally:
             session.close()
 
     @staticmethod
-    def change_quantity_material(material_id: int, quantity: int, time: int) -> Optional[list[Type[Material]] | None]:
+    def change_material(material_id: int, location: str, quantity: int, time_label: int) -> Optional[list[Type[Material]] | None]:
         session: Session = Database().session_factory()
 
         try:
@@ -92,11 +81,14 @@ class StockDao:
             stmt = (
                 update(Material)
                 .where(Material.material_id == material_id)
-                .values(quantity_in_storage=Material.quantity_in_storage + quantity, data_time=new_time)
+                .values(
+                    quantity_in_storage=Material.quantity_in_storage + quantity,
+                    location=location,
+                    data_time=new_time)
             )
             session.execute(stmt)
             session.commit()
-            return StockDao.get_paint_by_time_label(time)
+            return StockDao.get_paint_by_time_label(time_label)
         except SQLAlchemyError as e:
             session.rollback()
             raise e

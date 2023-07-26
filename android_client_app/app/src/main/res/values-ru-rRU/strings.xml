@@ -30,4 +30,5 @@
     <string name="correct_change">Готово</string>
     <string name="not_correct_change">Неправильные данные</string>
     <string name="connecting_to_the_server">СОЕДИНЕНИЕ С СЕРВЕРОМ</string>
+    <string name="paint_type">ТИП: %1$S</string>
 </resources>

@@ -1,5 +1,7 @@
 package stenograffia.app.ui.screens.stockStock.paint
 
+import android.annotation.SuppressLint
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -36,6 +38,7 @@ fun Paint(
     ConstraintLayoutContent(viewModel, navController, paintId)
 }
 
+@SuppressLint("UnrememberedMutableState")
 @Composable
 fun ConstraintLayoutContent(
     viewModel: PaintViewModel,
@@ -52,7 +55,7 @@ fun ConstraintLayoutContent(
             nameColor, namePaint, separationLine1,
             hexColor, hslColor, cmykColor, separationLine2,
             onStockText, separationLine4, buttonChangeQuantity,
-            colorSquare, buttonShowLikenessPaint,
+            colorSquare, buttonShowLikenessPaint, type_text, separationLine5
         ) = createRefs()
 
         val showDialogLikenessPaint = remember { mutableStateOf(false) }
@@ -67,7 +70,11 @@ fun ConstraintLayoutContent(
                 paintModel = paintModel
             )
         } else if (showDialogChangeQuantity.value) {
-            DialogChangeQuantity(showDialogChangeQuantity, paintModel, viewModel)
+            DialogChangeQuantity(
+                showDialogChangeQuantity,
+                mutableStateOf(paintModel.value.id),
+                mutableStateOf(paintModel.value.quantityInStorage),
+                viewModel)
         }
 
         val infoText = remember { mutableStateOf(viewModel.infoText) }
@@ -135,10 +142,18 @@ fun ConstraintLayoutContent(
                 top.linkTo(onStockText.bottom)
             })
 
+        TextString(
+            text = stringResource(
+                id = R.string.paint_type, paintModel.value.type.name
+            ),
+            modifier = Modifier.constrainAs(type_text) {
+                top.linkTo(separationLine4.bottom)
+            })
+
         ButtonShowDialog(
             modifier = Modifier
                 .constrainAs(buttonShowLikenessPaint) {
-                    top.linkTo(separationLine4.bottom)
+                    top.linkTo(type_text.bottom)
                 },
             showDialog = showDialogLikenessPaint,
             text_button = stringResource(id = R.string.paint_button_likeness_paint),
@@ -154,8 +169,7 @@ fun ConstraintLayoutContent(
                 showDialog = showDialogChangeQuantity,
                 text_button = stringResource(id = R.string.paint_button_change_quantity)
             )
-        }
-
+        } 
 
         ColorSquare(color = Color(0xFF000000 + paintModel.value.color),
             Modifier.constrainAs(colorSquare) {
@@ -170,18 +184,18 @@ fun ColorSquare(
     color: Color,
     modifier: Modifier = Modifier
 ) {
-    var widthScreen = LocalConfiguration.current.screenWidthDp.dp
-    val heightScreen = LocalConfiguration.current.screenHeightDp.dp
+    val widthScreen = LocalConfiguration.current.screenWidthDp.dp
+    var heightScreen = widthScreen
 
     if (widthScreen * 2 >= heightScreen){
-        widthScreen /= 2
+        heightScreen = widthScreen / 2
     }
 
     Box(
         modifier = modifier
             .size(
                 width = widthScreen,
-                height = widthScreen
+                height = heightScreen
             )
             .background(color = color)
     )

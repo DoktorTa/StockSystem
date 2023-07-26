@@ -20,16 +20,11 @@ class Material(BaseModel):
     location: int
 
 
-class ChangeLocationMaterialsRequest(BaseModel):
+class ChangeMaterialsRequest(BaseModel):
     material_id: int
-    location: str
     time_label: int
-
-
-class UpdateMaterialRequest(BaseModel):
-    time_label: int
-    material_id: int
     diff_quantity: int
+    location: str
 
 
 class Paint(BaseModel):
