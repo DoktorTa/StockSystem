@@ -5,9 +5,9 @@ from sqlalchemy import update
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session
 
-from src.main.db.database import Database
-from src.main.stock.db.entitys.paint import Paint
-from src.main.stock.db.entitys.material import Material
+from db.database import Database
+from stock.db.entitys.paint import Paint
+from stock.db.entitys.material import Material
 
 
 class StockDao:

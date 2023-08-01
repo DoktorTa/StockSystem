@@ -3,8 +3,8 @@ from typing import Optional, Type
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session
 
-from src.main.object.db.entitys.objects import Objects
-from src.main.db.database import Database
+from object.db.entitys.objects import Objects
+from db.database import Database
 
 
 class ObjectDao:

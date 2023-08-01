@@ -1,5 +1,5 @@
-from src.main.auth.db.entitys.users import Users
-from src.main.auth.db.users_dao import UsersDao
+from auth.db.entitys.users import Users
+from auth.db.users_dao import UsersDao
 
 
 class UserRepository:

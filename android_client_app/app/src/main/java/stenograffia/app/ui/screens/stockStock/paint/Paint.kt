@@ -169,7 +169,7 @@ fun ConstraintLayoutContent(
                 showDialog = showDialogChangeQuantity,
                 text_button = stringResource(id = R.string.paint_button_change_quantity)
             )
-        } 
+        }
 
         ColorSquare(color = Color(0xFF000000 + paintModel.value.color),
             Modifier.constrainAs(colorSquare) {

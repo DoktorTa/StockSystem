@@ -3,7 +3,7 @@ import logging
 from fastapi import HTTPException
 from starlette import status
 
-from src.main.stock.db.stock_dao import StockDao
+from stock.db.stock_dao import StockDao
 
 
 class RepositoryStock:

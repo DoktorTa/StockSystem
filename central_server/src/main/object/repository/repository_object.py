@@ -1,4 +1,4 @@
-from src.main.object.db.object_dao import ObjectDao
+from object.db.object_dao import ObjectDao
 
 
 class RepositoryObject:

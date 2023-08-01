@@ -2,10 +2,10 @@ import logging
 
 from fastapi import APIRouter, Depends, Request
 
-from src.main.auth.role_chacker import RoleChecker
-from src.main.auth.use_case.auth_config import AuthConfig
-from src.main.auth.schemas import *
-from src.main.auth.models.role_user import RoleUser
+from auth.role_chacker import RoleChecker
+from auth.use_case.auth_config import AuthConfig
+from auth.schemas import *
+from auth.models.role_user import RoleUser
 
 router = APIRouter()
 auth = AuthConfig()

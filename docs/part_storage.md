@@ -55,7 +55,8 @@
 		3. Cans Fluorescent
 		4. Cans Chrome
 		5. Cans Metallic
-		6. Exterior Paint
+		6. Cans Special
+		7. Exterior Paint
 
 
 ## Database

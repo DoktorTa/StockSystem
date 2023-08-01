@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Integer, String, Boolean, CheckConstraint
 from sqlalchemy.dialects.postgresql import ARRAY
 
-from src.main.db.database import Database
+from db.database import Database
 
 
 class Paint(Database.DeclarativeBase):

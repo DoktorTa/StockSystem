@@ -1,9 +1,9 @@
 from fastapi import HTTPException
 from starlette import status
 
-from src.main.auth.use_case.jwt_token import JwtToken
-from src.main.auth.repository.user_repository import UserRepository
-from src.main.auth.schemas import User
+from auth.use_case.jwt_token import JwtToken
+from auth.repository.user_repository import UserRepository
+from auth.schemas import User
 
 
 class AuthConfig:

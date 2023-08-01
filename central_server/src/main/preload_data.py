@@ -11,19 +11,20 @@ import csv
 import bcrypt
 from sqlalchemy.orm import Session
 
-from src.main.auth.db.entitys.users import Users
-from src.main.object.db.entitys.objects import Objects
-from src.main.stock.db.entitys.material import Material
-from src.main.stock.db.entitys.paint import Paint
-from src.main.db.database import Database
-from models.role_user import RoleUser
+from auth.db.entitys.users import Users
+from object.db.entitys.objects import Objects
+from stock.db.entitys.material import Material
+from stock.db.entitys.paint import Paint
+from db.database import Database
+from auth.models.role_user import RoleUser
 
 from sqlalchemy.dialects.postgresql import array, ARRAY
 from sqlalchemy import Integer, cast
 
 
 def get_all_preload_files() -> list:
-    return os.listdir(r'../../preload_data')
+    dotenv_path = os.path.join(os.path.dirname(__file__), r'../../preload_data')
+    return os.listdir(dotenv_path)
 
 
 def print_preload_data_files(files):
@@ -36,6 +37,7 @@ def print_preload_data_files(files):
 
 def load_users():
     path = os.getenv('PATH_PRELOAD_USERS')
+    path = os.path.join(os.path.dirname(__file__), path)
     session: Session = Database().session_factory()
 
     Users.__table__.drop(Database().engine)  # TODO: CODE переделать на инсерт?
@@ -66,6 +68,7 @@ def load_users():
 
 def load_objects():
     path = os.getenv('PATH_PRELOAD_OBJECTS')
+    path = os.path.join(os.path.dirname(__file__), path)
     session: Session = Database().session_factory()
 
     Objects.__table__.drop(Database().engine)  # TODO: CODE переделать на инсерт?
@@ -105,6 +108,7 @@ def load_objects():
 
 def load_materials():
     path = os.getenv('PATH_PRELOAD_MATERIALS')
+    path = os.path.join(os.path.dirname(__file__), path)
     session = Database().session_factory()
 
     Material.__table__.drop(Database().engine)  # TODO: CODE переделать на инсерт?
@@ -132,6 +136,7 @@ def load_materials():
 
 def load_paint():
     path = os.getenv('PATH_PRELOAD_PAINTS')
+    path = os.path.join(os.path.dirname(__file__), path)
     session = Database().session_factory()
 
     Paint.__table__.drop(Database().engine)  # TODO: CODE переделать на инсерт?
@@ -182,7 +187,7 @@ def load_paint():
 def main():
     files = get_all_preload_files()
     print_preload_data_files(files)
-    file_preload = int(input('Input num: '))
+    file_preload = 4
 
     if file_preload == len(files):
         load_objects()
