@@ -1,5 +1,6 @@
 package stenograffia.app.domain.model
 
+
 data class PaintModel(
     val id: Int,
     val type: PaintType,

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-<!--  AuthScreens  -->
+    <!--  AuthScreens  -->
     <dimen name="padding_bottom_auth_screen">15dp</dimen>
     <dimen name="width_input_auth_screen">250dp</dimen>
     <dimen name="height_input_auth_screen">50dp</dimen>
@@ -10,40 +10,39 @@
     <dimen name="wight_image_button_sing_in_auth_screens">100dp</dimen>
     <dimen name="height_image_button_sing_in_auth_screens">170dp</dimen>
 
-<!--  DialogQuantityChange  -->
+    <!--  DialogQuantityChange  -->
     <dimen name="width_dialog">250dp</dimen>
     <dimen name="height_separation_box_dialog">20dp</dimen>
     <dimen name="width_button_nav">125dp</dimen>
     <dimen name="side_length_element">50dp</dimen>
     <dimen name="padding_central_button">50dp</dimen>
 
-<!--  StockCategories  -->
+    <!--  StockCategories  -->
     <dimen name="stock_categories_padding_text">15dp</dimen>
 
-<!--  ListPaintLine  -->
+    <!--  ListPaintLine  -->
     <dimen name="paint_line_list_padding_top">5dp</dimen>
     <dimen name="paint_line_list_padding">15dp</dimen>
     <dimen name="paint_line_list_vertical_arrangement">3dp</dimen>
     <dimen name="paint_line_item_padding">10dp</dimen>
 
-<!--  ListPaintItem  -->
+    <!--  ListPaintItem  -->
     <dimen name="paint_list_item_height">60dp</dimen>
     <dimen name="paint_list_item_text_start_padding">2dp</dimen>
     <dimen name="paint_list_item_arrangement">3dp</dimen>
     <dimen name="paint_list_likeness_paint">3dp</dimen>
     <dimen name="paint_list_padding">15dp</dimen>
 
-<!--  Paint  -->
-    <dimen name="paint_padding_start">15.dp</dimen>
-    <dimen name="paint_padding_end">15.dp</dimen>
-    <dimen name="paint_padding_top">15.dp</dimen>
-    <dimen name="paint_padding_bottom">15.dp</dimen>
-    <dimen name="paint_button_text_padding">5.dp</dimen>
+    <!--  PaintScreen  -->
+    <dimen name="paint_screen_padding_from_screen_borders">15.dp</dimen>
+    <dimen name="paint_screen_icon_size">36.dp</dimen>
+    <dimen name="paint_screen_start_padding_values">30.dp</dimen>
+    <dimen name="paint_screen_width_label">100.dp</dimen>
 
-<!--  TopBar  -->
+    <!--  TopBar  -->
     <dimen name="top_bar_padding_text_start">5dp</dimen>
 
-<!--  Settings  -->
+    <!--  Settings  -->
     <dimen name="settings_text_padding_start">15dp</dimen>
     <dimen name="settings_text_in_block_padding_start">10dp</dimen>
     <dimen name="settings_block_padding_start_end">15dp</dimen>

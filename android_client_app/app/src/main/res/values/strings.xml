@@ -26,12 +26,12 @@
     <string name="paint_list_item_on_stock">ON STOCK</string>
 
 <!--  Paint  -->
-    <string name="paint_hex_color" translatable="false">HEX: #%1$s</string>
-    <string name="paint_cmyk_color" translatable="false">CMYK: cmyk(#%1$s)</string>
-    <string name="paint_hsl_color" translatable="false">HSL: hsl(#%1$s)</string>
-    <string name="paint_button_likeness_paint">LIKENESS PAINT</string>
-    <string name="paint_button_change_quantity">CHANGE QUANTITY</string>
-    <string name="paint_quantity_in_stock">ON STOCK: %1$d PIECES</string>
+    <string name="paint_screen_color_hex_label" translatable="false">HEX: #%1$s</string>
+    <string name="paint_screen_color_cmyk_label" translatable="false">CMYK: cmyk(%1$s)</string>
+    <string name="paint_screen_color_hsl_label" translatable="false">HSL: hsl(%1$s)</string>
+    <string name="paint_screen_button_likeness">LIKENESS</string>
+    <string name="paint_screen_button_change_quantity">CHANGE</string>
+    <string name="paint_screen_quantity_in_stock_label">ON STOCK:</string>
 
 <!--  PaintListLikeness  -->
     <string name="paint_list_likeness_description_text">LIKENESS: %1$s</string>
@@ -54,5 +54,12 @@
     <string name="not_correct_change">Invalid data</string>
     <string name="connecting_to_the_server">CONNECTING TO THE SERVER</string>
     <string name="default_serial_number" translatable="false">00 00 000000</string>
-    <string name="paint_type">TYPE: %1$S</string>
+    <string name="paint_screen_type_label">TYPE: %1$S</string>
+    <string name="paint_screen_color_label">COLOR:</string>
+    <string name="paint_screen_color_uv_resistance">UV RESISTANCE %1$S / 5</string>
+    <string name="paint_screen_quantity_in_stock_value">%1$d ITEMS</string>
+    <string name="paint_screen_button_colors">COLORS</string>
+    <string name="paint_screen_button_gradient">GRADIENT</string>
+    <string name="paint_screen_button_add_to_order">ADD TO ORDER</string>
+    <string name="paint_screen_button_buy">BUY</string>
 </resources>

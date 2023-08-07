@@ -1,31 +1,35 @@
 package stenograffia.app.ui.screens.stockStock.paint
 
 import android.annotation.SuppressLint
-import android.util.Log
-import android.widget.Toast
+import androidx.compose.animation.Crossfade
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ContentCopy
+import androidx.compose.material.icons.filled.KeyboardArrowUp
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.core.graphics.ColorUtils
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import stenograffia.app.R
-import stenograffia.app.domain.model.UserRole
-import stenograffia.app.ui.composables.ButtonShowDialog
-import stenograffia.app.ui.composables.HandlerTextString
-import stenograffia.app.ui.composables.SeparationLine
-import stenograffia.app.ui.composables.TextString
-import stenograffia.app.ui.screens.settings.SettingsViewModel
+import stenograffia.app.domain.model.PaintType
+import stenograffia.app.models.PaintModelUi
+import stenograffia.app.models.toPaintModelUi
 import kotlin.math.roundToInt
 
 
@@ -35,175 +39,436 @@ fun Paint(
     paintId: Int,
     viewModel: PaintViewModel = hiltViewModel()
 ) {
-    ConstraintLayoutContent(viewModel, navController, paintId)
-}
 
-@SuppressLint("UnrememberedMutableState")
-@Composable
-fun ConstraintLayoutContent(
-    viewModel: PaintViewModel,
-    navController: NavController,
-    paintId: Int,
-    settingsViewModel: SettingsViewModel = hiltViewModel()
-) {
-    ConstraintLayout(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colors.secondary)
-    ) {
-        val (
-            nameColor, namePaint, separationLine1,
-            hexColor, hslColor, cmykColor, separationLine2,
-            onStockText, separationLine4, buttonChangeQuantity,
-            colorSquare, buttonShowLikenessPaint, type_text, separationLine5
-        ) = createRefs()
+    val paintModel = viewModel.getPaintModelById(paintId)
 
-        val showDialogLikenessPaint = remember { mutableStateOf(false) }
-        val showDialogChangeQuantity = remember { mutableStateOf(false) }
-        val paintModel = remember { mutableStateOf(viewModel.loadPaintModelById(paintId = paintId)) }
-
-        if (showDialogLikenessPaint.value) {
-            DialogLikenessPaint(
-                showDialog = showDialogLikenessPaint,
-                navController = navController,
-                viewModel = viewModel,
-                paintModel = paintModel
-            )
-        } else if (showDialogChangeQuantity.value) {
-            DialogChangeQuantity(
-                showDialogChangeQuantity,
-                mutableStateOf(paintModel.value.id),
-                mutableStateOf(paintModel.value.quantityInStorage),
-                viewModel)
-        }
-
-        val infoText = remember { mutableStateOf(viewModel.infoText) }
-        if (infoText.value != 0){
-            Toast.makeText(LocalContext.current, infoText.value, Toast.LENGTH_SHORT).show()
-            infoText.value = 0
-        }
-
-        HandlerTextString(
-            text = paintModel.value.nameColor,
-            modifier = Modifier.constrainAs(nameColor) {
-                top.linkTo(parent.top)
-            })
-
-        TextString(
-            text = paintModel.value.codePaint,
-            modifier = Modifier.constrainAs(namePaint) {
-                top.linkTo(nameColor.bottom)
-            })
-
-        SeparationLine(
-            Modifier.constrainAs(separationLine1) {
-                top.linkTo(namePaint.bottom)
-            })
-
-        TextString(
-            text = stringResource(
-                id = R.string.paint_hex_color, colorToHex(paintModel.value.color)
-            ),
-            modifier = Modifier.constrainAs(hexColor) {
-                top.linkTo(separationLine1.bottom)
-            })
-
-        TextString(
-            text = stringResource(
-                id = R.string.paint_hsl_color, colorToHsl(paintModel.value.color)
-            ),
-            modifier = Modifier.constrainAs(hslColor) {
-                top.linkTo(hexColor.bottom)
-            })
-
-        TextString(
-            text = stringResource(
-                id = R.string.paint_cmyk_color, colorToCmyk(paintModel.value.color)
-            ),
-            modifier = Modifier.constrainAs(cmykColor) {
-                top.linkTo(hslColor.bottom)
-            })
-
-        SeparationLine(
-            Modifier.constrainAs(separationLine2) {
-                top.linkTo(cmykColor.bottom)
-            })
-
-        TextString(
-            text = stringResource(
-                id = R.string.paint_quantity_in_stock, paintModel.value.quantityInStorage
-            ),
-            modifier = Modifier.constrainAs(onStockText) {
-                top.linkTo(separationLine2.bottom)
-            })
-
-        SeparationLine(
-            Modifier.constrainAs(separationLine4) {
-                top.linkTo(onStockText.bottom)
-            })
-
-        TextString(
-            text = stringResource(
-                id = R.string.paint_type, paintModel.value.type.name
-            ),
-            modifier = Modifier.constrainAs(type_text) {
-                top.linkTo(separationLine4.bottom)
-            })
-
-        ButtonShowDialog(
-            modifier = Modifier
-                .constrainAs(buttonShowLikenessPaint) {
-                    top.linkTo(type_text.bottom)
-                },
-            showDialog = showDialogLikenessPaint,
-            text_button = stringResource(id = R.string.paint_button_likeness_paint),
-            enabled = paintModel.value.similarColors.isNotEmpty(),
-        )
-
-        if (settingsViewModel.getUserStatus()!!.level <= UserRole.STOCK.level) {
-            ButtonShowDialog(
-                modifier = Modifier
-                    .constrainAs(buttonChangeQuantity) {
-                        top.linkTo(buttonShowLikenessPaint.bottom)
-                    },
-                showDialog = showDialogChangeQuantity,
-                text_button = stringResource(id = R.string.paint_button_change_quantity)
-            )
-        }
-
-        ColorSquare(color = Color(0xFF000000 + paintModel.value.color),
-            Modifier.constrainAs(colorSquare) {
-                bottom.linkTo(parent.bottom)
-            }
-        )
-    }
-}
-
-@Composable
-fun ColorSquare(
-    color: Color,
-    modifier: Modifier = Modifier
-) {
-    val widthScreen = LocalConfiguration.current.screenWidthDp.dp
-    var heightScreen = widthScreen
-
-    if (widthScreen * 2 >= heightScreen){
-        heightScreen = widthScreen / 2
-    }
-
-    Box(
-        modifier = modifier
-            .size(
-                width = widthScreen,
-                height = heightScreen
-            )
-            .background(color = color)
+    PaintScreen(
+        navController = navController,
+        copyPaintInfo = {viewModel.copyPaintInfo()},
+        paintModelUi = paintModel.toPaintModelUi()
     )
 }
 
-private fun colorToHsl(color: Int): String {
+
+@SuppressLint("UnrememberedMutableState")
+@Composable
+fun PaintScreen(
+    navController: NavController,
+    copyPaintInfo: (PaintModelUi) -> Unit = {},
+    paintModelUi: PaintModelUi
+) {
+
+    val menuVision = remember { mutableStateOf(false) }
+    val dialogChangeQuantity = remember { mutableStateOf(false) }
+
+    // TODO: ЧИНИ
+//    if (dialogChangeQuantity.value) {
+//        DialogChangeQuantity(
+//            showDialogChangeQuantity = dialogChangeQuantity,
+//            elementId = mutableStateOf(paintModelUi.id),
+//            quantityOnStock = mutableStateOf(paintModelUi.quantityInStorage),
+//            viewModel = paintViewModel
+//        )
+//    }
+
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(color = Color(0xFF000000 + paintModelUi.color))
+    ) {
+
+        Column {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                PaintInfo(
+                    paintModelUi = paintModelUi
+                )
+                CopyButtons(
+                    copyPaintInfo = copyPaintInfo,
+                    paintModelUi = paintModelUi
+                )
+            }
+
+            ColorText(
+                paintModelUi = paintModelUi
+            )
+            StockLine(
+                paintModelUi = paintModelUi,
+                dialogChangeQuantity = dialogChangeQuantity
+            )
+
+            Text(
+                text = paintModelUi.nameColor,
+                modifier = Modifier
+                    .padding(start = dimensionResource(
+                        id = R.dimen.paint_screen_padding_from_screen_borders
+                    )),
+                color = paintModelUi.contrastTextOnColor,
+                style = MaterialTheme.typography.h1
+            )
+
+            PaintButton(
+                paintModelUi = paintModelUi,
+                menuVision = menuVision)
+        }
+    }
+}
+
+@Composable
+fun PaintInfo(
+    paintModelUi: PaintModelUi
+) {
+    Column {
+        Text(
+            text = paintModelUi.codePaint,
+            modifier = Modifier
+                .padding(
+                    start = dimensionResource(id = R.dimen.paint_screen_padding_from_screen_borders),
+                    top = dimensionResource(id = R.dimen.paint_screen_padding_from_screen_borders)
+                ),
+            color = paintModelUi.contrastTextOnColor,
+            style = MaterialTheme.typography.body1,
+        )
+        Text(
+            text = paintModelUi.nameCreator,
+            modifier = Modifier
+                .padding(
+                    start = dimensionResource(id = R.dimen.paint_screen_padding_from_screen_borders)
+                ),
+            color = paintModelUi.contrastTextOnColor,
+            style = MaterialTheme.typography.body1
+        )
+        Text(
+            text = paintModelUi.nameLine,
+            modifier = Modifier
+                .padding(
+                    start = dimensionResource(id = R.dimen.paint_screen_padding_from_screen_borders)
+                ),
+            color = paintModelUi.contrastTextOnColor,
+            style = MaterialTheme.typography.body1
+        )
+        Text(
+            text = stringResource(id = R.string.paint_screen_type_label, paintModelUi.type),
+            modifier = Modifier
+                .padding(
+                    start = dimensionResource(id = R.dimen.paint_screen_padding_from_screen_borders)
+                ),
+            color = paintModelUi.contrastTextOnColor,
+            style = MaterialTheme.typography.body1
+        )
+    }
+}
+
+@Composable
+fun CopyButtons(
+    copyPaintInfo: (PaintModelUi) -> Unit = {},
+    paintModelUi: PaintModelUi
+) {
+    Column(
+        modifier = Modifier
+            .padding(
+                top = dimensionResource(id = R.dimen.paint_screen_padding_from_screen_borders),
+                end = dimensionResource(id = R.dimen.paint_screen_padding_from_screen_borders)
+            )
+    ) {
+        IconButton(onClick = { copyPaintInfo(paintModelUi) }) {
+            Icon(
+                imageVector = Icons.Default.ContentCopy,
+                contentDescription = null,
+                tint = paintModelUi.contrastTextOnColor,
+                modifier = Modifier
+                    .size(
+                        width = dimensionResource(id = R.dimen.paint_screen_icon_size),
+                        height = dimensionResource(id = R.dimen.paint_screen_icon_size)
+                    )
+            )
+        }
+    }
+}
+
+@Composable
+fun ColorText(
+    paintModelUi: PaintModelUi
+) {
+
+    Row(
+        modifier = Modifier
+            .padding(
+                top = dimensionResource(id = R.dimen.paint_screen_padding_from_screen_borders)
+            )
+    ) {
+        Text(
+            text = stringResource(id = R.string.paint_screen_color_label),
+            modifier = Modifier
+                .padding(
+                    start = dimensionResource(id = R.dimen.paint_screen_padding_from_screen_borders)
+                )
+                .width(width = dimensionResource(id = R.dimen.paint_screen_width_label)),
+            color = paintModelUi.contrastTextOnColor,
+            style = MaterialTheme.typography.body1
+        )
+
+        Column {
+            Text(
+                text = stringResource(
+                    id = R.string.paint_screen_color_hex_label,
+                    paintModelUi.color.colorToHex()
+                ),
+                modifier = Modifier
+                    .padding(start = dimensionResource(
+                        id = R.dimen.paint_screen_start_padding_values)
+                    ),
+                color = paintModelUi.contrastTextOnColor,
+                style = MaterialTheme.typography.body1
+            )
+            Text(
+                text = stringResource(
+                    id = R.string.paint_screen_color_hsl_label,
+                    paintModelUi.color.colorToHsl()
+                ),
+                modifier = Modifier
+                    .padding(start = dimensionResource(
+                        id = R.dimen.paint_screen_start_padding_values)
+                    ),
+                color = paintModelUi.contrastTextOnColor,
+                style = MaterialTheme.typography.body1
+            )
+            Text(
+                text = stringResource(
+                    id = R.string.paint_screen_color_cmyk_label,
+                    Color(paintModelUi.color).colorToCmyk()
+                ),
+                modifier = Modifier
+                    .padding(start = dimensionResource(
+                        id = R.dimen.paint_screen_start_padding_values)
+                    ),
+                color = paintModelUi.contrastTextOnColor,
+                style = MaterialTheme.typography.body1
+            )
+            Text(
+                text = stringResource(
+                    id = R.string.paint_screen_color_uv_resistance,
+                    paintModelUi.uv_resistance
+                ),
+                modifier = Modifier
+                    .padding(start = dimensionResource(
+                        id = R.dimen.paint_screen_start_padding_values)
+                    ),
+                color = paintModelUi.contrastTextOnColor,
+                style = MaterialTheme.typography.body1
+            )
+        }
+    }
+}
+
+@Composable
+fun StockLine(
+    paintModelUi: PaintModelUi,
+    dialogChangeQuantity: MutableState<Boolean>
+) {
+    Row(
+        modifier = Modifier
+            .padding(
+                top = dimensionResource(id = R.dimen.paint_screen_padding_from_screen_borders)
+            )
+            .fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Row {
+            Text(
+                text = stringResource(id = R.string.paint_screen_quantity_in_stock_label),
+                modifier = Modifier
+                    .padding(
+                        start = dimensionResource(
+                            id = R.dimen.paint_screen_padding_from_screen_borders
+                        )
+                    )
+                    .width(width = dimensionResource(id = R.dimen.paint_screen_width_label)),
+                color = paintModelUi.contrastTextOnColor,
+                style = MaterialTheme.typography.body1
+            )
+            Text(
+                text = stringResource(
+                    id = R.string.paint_screen_quantity_in_stock_value,
+                    paintModelUi.quantityInStorage
+                ),
+                modifier = Modifier
+                    .padding(start = dimensionResource(
+                        id = R.dimen.paint_screen_start_padding_values)
+                    ),
+                color = paintModelUi.contrastTextOnColor,
+                style = MaterialTheme.typography.body1
+            )
+        }
+
+        CustomTextButton(
+            text = stringResource(id = R.string.paint_screen_button_change_quantity),
+            colorButton = paintModelUi.contrastTextOnColor,
+            onClick = { dialogChangeQuantity.value = !dialogChangeQuantity.value },
+            modifier = Modifier
+                .padding(
+                    end = dimensionResource(id = R.dimen.paint_screen_padding_from_screen_borders)
+                ),
+        )
+    }
+}
+
+@Composable
+fun CustomTextButton(
+    text: String,
+    colorButton: Color,
+    modifier: Modifier,
+    onClick: () -> Unit
+){
+    TextButton(
+        shape = CutCornerShape(5.dp),
+        border = BorderStroke(2.dp, colorButton),
+        modifier = modifier.width(125.dp),
+        onClick = onClick
+    ) {
+        Text(
+            text = text,
+            color = colorButton,
+            style = MaterialTheme.typography.body1
+        )
+    }
+}
+
+@Composable
+fun PaintButton(
+    paintModelUi: PaintModelUi,
+    menuVision: MutableState<Boolean>,
+) {
+    Column(
+        verticalArrangement = Arrangement.Bottom,
+        modifier = Modifier
+            .padding(
+                start = dimensionResource(id = R.dimen.paint_screen_padding_from_screen_borders),
+                bottom = dimensionResource(id = R.dimen.paint_screen_padding_from_screen_borders)
+            )
+            .fillMaxHeight()
+    ) {
+
+        Crossfade(
+            targetState = menuVision.value,
+        ) { isChecked ->
+            if (isChecked) {
+                MenuButton(paintModelUi)
+            }
+        }
+
+        Row (
+            horizontalArrangement = Arrangement.Center,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+
+            IconButton(onClick = { menuVision.value = !menuVision.value }) {
+
+                val rotation by animateFloatAsState(
+                    targetValue = if (menuVision.value) 180f else 0f,
+                    animationSpec = tween(
+                        durationMillis = 200,
+                        easing = LinearEasing),
+                )
+
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .graphicsLayer { rotationX = rotation },
+                    contentAlignment = Alignment.Center,
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.KeyboardArrowUp,
+                        contentDescription = null,
+                        tint = paintModelUi.contrastTextOnColor,
+                        modifier = Modifier
+                            .size(
+                                width = dimensionResource(id = R.dimen.paint_screen_icon_size),
+                                height = dimensionResource(id = R.dimen.paint_screen_icon_size)
+                            )
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun MenuButton(paintModelUi: PaintModelUi){
+    Column(modifier = Modifier.fillMaxWidth()) {
+
+        Row (
+            horizontalArrangement = Arrangement.SpaceBetween,
+            modifier = Modifier
+                .fillMaxWidth()
+        ) {
+
+            CustomTextButton(
+                text = stringResource(id = R.string.paint_screen_button_colors),
+                colorButton = paintModelUi.contrastTextOnColor,
+                onClick = { /*TODO*/ },
+                modifier = Modifier
+                    .padding(
+                        end = dimensionResource(id = R.dimen.paint_screen_padding_from_screen_borders)
+                    )
+                    .weight(1f),
+            )
+            CustomTextButton(
+                text = stringResource(id = R.string.paint_screen_button_likeness),
+                colorButton = paintModelUi.contrastTextOnColor,
+                onClick = { /*TODO*/ },
+                modifier = Modifier
+                    .padding(
+                        end = dimensionResource(id = R.dimen.paint_screen_padding_from_screen_borders)
+                    )
+                    .weight(1f),
+            )
+            CustomTextButton(
+                text = stringResource(id = R.string.paint_screen_button_gradient),
+                colorButton = paintModelUi.contrastTextOnColor,
+                onClick = { /*TODO*/ },
+                modifier = Modifier
+                    .padding(
+                        end = dimensionResource(id = R.dimen.paint_screen_padding_from_screen_borders)
+                    )
+                    .weight(1f),
+            )
+        }
+
+        Row (
+            horizontalArrangement = Arrangement.SpaceBetween,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            CustomTextButton(
+                text = stringResource(id = R.string.paint_screen_button_add_to_order),
+                colorButton = paintModelUi.contrastTextOnColor,
+                onClick = { /*TODO*/ },
+                modifier = Modifier
+                    .padding(
+                        end = dimensionResource(id = R.dimen.paint_screen_padding_from_screen_borders)
+                    )
+                    .weight(2f),
+            )
+            CustomTextButton(
+                text = stringResource(id = R.string.paint_screen_button_buy),
+                colorButton = paintModelUi.contrastTextOnColor,
+                onClick = { /*TODO*/ },
+                modifier = Modifier
+                    .padding(
+                        end = dimensionResource(id = R.dimen.paint_screen_padding_from_screen_borders)
+                    )
+                    .weight(1f),
+            )
+        }
+    }
+}
+
+private fun Int.colorToHsl(): String {
     val hsl = FloatArray(3)
-    ColorUtils.colorToHSL(color, hsl)
+    ColorUtils.colorToHSL(this, hsl)
 
     val hue = hsl[0].roundToInt()
     val saturation = (hsl[1] * 100).roundToInt()
@@ -212,17 +477,12 @@ private fun colorToHsl(color: Int): String {
     return "$hue, $saturation, $lightness"
 }
 
-private fun colorToCmyk(colorInt: Int): String {
-    val color = Color(colorInt)
-    val r = color.red
-    val g = color.green
-    val b = color.blue
+private fun Color.colorToCmyk(): String {
+    val r1 = this.red / 255f
+    val g1 = this.green / 255f
+    val b1 = this.blue / 255f
 
-    val r1 = r / 255f
-    val g1 = g / 255f
-    val b1 = b / 255f
-
-    val m = listOf(r, g, b).maxOrNull()!!
+    val m = listOf(this.red, this.green, this.blue).maxOrNull()!!
 
     val k = 1.0f - java.lang.Float.max(r1, java.lang.Float.max(g1, b1))
 
@@ -238,7 +498,31 @@ private fun colorToCmyk(colorInt: Int): String {
     return "$cyanInt, $magentaInt, $yellowInt, $kInt"
 }
 
-private fun colorToHex(colorInt: Int): String {
-    val hex = Integer.toHexString(colorInt)
+private fun Int.colorToHex(): String {
+    val hex = Integer.toHexString(this)
     return hex.padStart(6, '0')
 }
+
+@Preview
+@Composable
+fun SimpleComposablePreview() {
+    PaintScreen(
+        navController = rememberNavController(),
+        copyPaintInfo = {},
+        paintModelUi = PaintModelUi(
+            id = 1,
+            type = PaintType.CANS_DEFAULT,
+            timeLabel = 10,
+            nameCreator = "MONTANA CANS",
+            nameLine = "BLK - 400ml",
+            codePaint = "BLK - 1242",
+            nameColor = "POTATO",
+            descriptionColor = "",
+            color = 0xff11f3,
+            quantityInStorage = 1,
+            similarColors = listOf(listOf()),
+            possibleToBuy = true,
+        )
+    )
+}
+

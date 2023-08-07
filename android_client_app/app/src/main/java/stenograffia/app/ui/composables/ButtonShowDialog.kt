@@ -28,7 +28,7 @@ fun ButtonShowDialog(
         ),
         modifier = modifier
             .padding(
-                start = dimensionResource(id = R.dimen.paint_padding_start)
+                start = dimensionResource(id = R.dimen.paint_screen_padding_from_screen_borders)
             ),
         enabled = enabled
     ) {
@@ -36,8 +36,8 @@ fun ButtonShowDialog(
             text = text_button,
             modifier = Modifier
                 .padding(
-                    top = dimensionResource(id = R.dimen.paint_button_text_padding),
-                    bottom = dimensionResource(id = R.dimen.paint_button_text_padding)
+                    top = dimensionResource(id = R.dimen.paint_screen_padding_from_screen_borders),
+                    bottom = dimensionResource(id = R.dimen.paint_screen_padding_from_screen_borders)
                 )
         )
     }

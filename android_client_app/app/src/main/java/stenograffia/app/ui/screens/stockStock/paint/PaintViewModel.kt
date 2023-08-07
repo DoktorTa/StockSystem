@@ -1,5 +1,7 @@
 package stenograffia.app.ui.screens.stockStock.paint
 
+import android.content.ClipData
+import android.content.ClipData.Item
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -19,7 +21,7 @@ class PaintViewModel @Inject constructor(
 
     var infoText: Int = 0
 
-    fun loadPaintModelById(paintId: Int) : PaintModel {
+    fun getPaintModelById(paintId: Int) : PaintModel {
         return stockUseCase.getPaintModelById(paintId)!!
     }
 
@@ -37,6 +39,10 @@ class PaintViewModel @Inject constructor(
 
         return Pair(paintList, percentLikenessList)
 
+    }
+
+    fun copyPaintInfo() {
+        ClipData.newPlainText("CYBER ANNA", "TEXT")
     }
 
     override fun changeQuantity(id: Int, difference: Int) {

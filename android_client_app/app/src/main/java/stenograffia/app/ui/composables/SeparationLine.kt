@@ -15,7 +15,7 @@ import stenograffia.app.R
 fun SeparationLine(modifier: Modifier = Modifier) {
     Box(
         modifier = modifier
-            .padding(start = dimensionResource(id = R.dimen.paint_padding_start))
+            .padding(start = dimensionResource(id = R.dimen.paint_screen_padding_from_screen_borders))
             .size(
                 width = 255.dp,
                 height = 1.dp

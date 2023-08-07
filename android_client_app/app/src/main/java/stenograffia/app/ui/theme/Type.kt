@@ -12,34 +12,40 @@ import stenograffia.app.R
 // Set of Material typography styles to start with
 val Typography = Typography(
     h1 = TextStyle(
-        fontFamily = FontFamily.Monospace,
-        fontWeight = FontWeight.ExtraBold,
-        fontSize = 32.sp
+        fontFamily = FontFamily(
+            Font(
+                resId = R.font.ibmplexmono_bold,
+                weight = FontWeight.Bold,
+                style = FontStyle.Normal)
+        ),
+        fontWeight = FontWeight.Bold,
+        lineHeight = 48.sp,
+        fontSize = 48.sp
     ),
+    body1 = TextStyle(
+        fontFamily = FontFamily(
+            Font(
+                resId = R.font.ibmplexmono_bold,
+                weight = FontWeight.Bold,
+                style = FontStyle.Normal)
+        ),
+        fontWeight = FontWeight.Bold,
+        fontSize = 16.sp
+    ),
+
+
+
+
 
     h4 = TextStyle(
         fontFamily = FontFamily.Monospace,
         fontWeight = FontWeight.ExtraBold,
         fontSize = 14.sp
     ),
-
-
-
     body2 = TextStyle(
         fontFamily = FontFamily.Monospace,
         fontWeight = FontWeight.ExtraBold,
         fontSize = 16.sp
-    ),
-
-    body1 = TextStyle(
-        fontFamily = FontFamily(
-            Font(
-                resId = R.font.ibmplexmono_regular,
-                weight = FontWeight.Normal,
-                style = FontStyle.Normal)
-        ),
-    fontWeight = FontWeight.Normal,
-    fontSize = 16.sp
     ),
 
     h2 = TextStyle(

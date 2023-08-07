@@ -94,7 +94,7 @@ fun MaterialScreen(
                 Box(
                     modifier = Modifier
                         .constrainAs(locationMaterial) { top.linkTo(descriptionMaterial.bottom) }
-                        .padding(start = dimensionResource(id = R.dimen.paint_padding_start))
+                        .padding(start = dimensionResource(id = R.dimen.paint_screen_padding_from_screen_borders))
                 ) {
                     ExposedDropdownMenuBox(
                         expanded = expanded,
@@ -131,9 +131,9 @@ fun MaterialScreen(
                 ButtonShowDialog(
                     modifier = Modifier
                         .constrainAs(locationMaterial) { top.linkTo(descriptionMaterial.bottom) }
-                        .padding(start = dimensionResource(id = R.dimen.paint_padding_start)),
+                        .padding(start = dimensionResource(id = R.dimen.paint_screen_padding_from_screen_borders)),
                     showDialog = showDialogChangeQuantity,
-                    text_button = stringResource(id = R.string.paint_button_change_quantity)
+                    text_button = stringResource(id = R.string.paint_screen_button_change_quantity)
                 )
             }
 
