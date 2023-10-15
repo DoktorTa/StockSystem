@@ -75,6 +75,7 @@ fun DialogChangeQuantityBox(
                     onClickOk()
                     showDialogChangeQuantity.value = false
                 },
+                okEnabled = (quantityOnStock.value + differenceQuantity.value) >= 0,
                 onClickCancel = { showDialogChangeQuantity.value = false },
                 minWidthScreen = dimensionResource(id = R.dimen.dialog_width_button_nav)
             )

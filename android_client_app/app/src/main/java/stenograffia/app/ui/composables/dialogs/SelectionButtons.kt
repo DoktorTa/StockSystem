@@ -6,10 +6,12 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.dimensionResource
@@ -20,6 +22,7 @@ import stenograffia.app.R
 @Composable
 fun SelectionButtons(
     onClickOk: () -> Unit,
+    okEnabled: Boolean,
     onClickCancel: () -> Unit,
     minWidthScreen: Dp,
 ) {
@@ -60,6 +63,13 @@ fun SelectionButtons(
                 modifier = modifierButton
                     .testTag("OkClick"),
                 shape = RectangleShape,
+                enabled = okEnabled,
+                colors = ButtonDefaults.buttonColors(
+                    backgroundColor = MaterialTheme.colors.primary,
+                    contentColor = MaterialTheme.colors.primary,
+                    disabledBackgroundColor = Color.LightGray,
+                    disabledContentColor = Color.DarkGray
+                ),
             ) {
                 Text(
                     text = stringResource(id = R.string.ok),
