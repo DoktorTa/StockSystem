@@ -10,12 +10,22 @@
     <dimen name="wight_image_button_sing_in_auth_screens">100dp</dimen>
     <dimen name="height_image_button_sing_in_auth_screens">170dp</dimen>
 
+    <!--  DialogCustomBlocks  -->
+    <dimen name="dialog_height_information_block">38dp</dimen>
+    <dimen name="dialog_height_selection_buttons_block">38dp</dimen>
+    <dimen name="dialog_height_separation_box">14dp</dimen>
+
     <!--  DialogQuantityChange  -->
-    <dimen name="width_dialog">250dp</dimen>
-    <dimen name="height_separation_box_dialog">20dp</dimen>
-    <dimen name="width_button_nav">125dp</dimen>
-    <dimen name="side_length_element">50dp</dimen>
-    <dimen name="padding_central_button">50dp</dimen>
+    <dimen name="dialog_width">282dp</dimen>
+    <dimen name="dialog_width_button_nav">141dp</dimen>
+    <dimen name="dialog_quantity_change_height_central_elements">50dp</dimen>
+    <dimen name="dialog_quantity_change_padding_button_content">5dp</dimen>
+    <dimen name="dialog_quantity_change_border_button">2dp</dimen>
+    <dimen name="dialog_quantity_change_cut_corner_button">5dp</dimen>
+    <dimen name="dialog_quantity_change_padding_elements">8dp</dimen>
+
+
+<!--    <dimen name="padding_central_button">50dp</dimen>-->
 
     <!--  StockCategories  -->
     <dimen name="stock_categories_padding_text">15dp</dimen>

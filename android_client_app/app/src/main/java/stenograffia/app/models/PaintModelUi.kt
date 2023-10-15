@@ -6,6 +6,7 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.core.graphics.ColorUtils
 import stenograffia.app.domain.model.PaintModel
 import stenograffia.app.domain.model.PaintType
+import stenograffia.app.utils.IDiffQuantity
 
 @Stable
 data class PaintModelUi(
@@ -24,7 +25,12 @@ data class PaintModelUi(
 
     val uv_resistance: String = "?",
     val contrastTextOnColor: Color = Color(0xFF000000 + color).getColorText()
-) {}
+) : IDiffQuantity {
+    override fun changeQuantity(id: Int, difference: Int) {
+        quantityInStorage += difference
+    }
+
+}
 
 fun PaintModel.toPaintModelUi() : PaintModelUi {
     return PaintModelUi(

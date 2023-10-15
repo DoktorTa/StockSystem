@@ -41,6 +41,7 @@ class CansModel:
                  color: int,
                  similar_colors: List[int],
                  possible_to_buy=0,
+                 lab="",
                  ):
         self.paint_id: str = paint_id
         self.paint_type: str = paint_type
@@ -51,6 +52,9 @@ class CansModel:
         self.name_color: str = name_color
         self.description_color: str = " "
         self.color: int = color
+
+        self.lab = lab
+
         self.quantity_in_storage: int = 0
         self.places_of_possible_availability: List[str] = []
         self.similar_colors: List[int] = similar_colors
@@ -75,6 +79,9 @@ class CansModel:
         return [self.paint_id, self.paint_type, self.data_time, self.name_creator, self.name_line, self.color_code,
                 self.name_color, self.description_color, self.color, self.quantity_in_storage,
                 self.places_of_possible_availability, str(self.similar_colors).replace("'", ""), self.possible_to_buy]
+
+    def get_txt(self):
+        return [self.paint_id, self.name_creator, self.name_line, self.lab]
 
 
 class CansModelEncoder(json.JSONEncoder):

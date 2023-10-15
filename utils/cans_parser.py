@@ -86,17 +86,28 @@ def write_to_kotlin(all_cans):
         file.write(l.replace("'", ""))
 
 
+def write_to_txt(all_cans):
+
+    with open('Cans/all_txt.csv', 'a', newline='', encoding="utf-8") as file:
+        writer = csv.writer(file)
+
+        for cans in all_cans:
+            writer.writerow(cans.get_txt())
+
+
 def main():
     # output_type = pars_arg()
-    output_type = 'csv'
+    output_type = 'txt'
     all_cans = collect_all_cvs()
 
     for key, value in all_cans.items():
-        similar_color = SimilarColor(value)
-        similar_color.calculate_simular_cans()
+        # similar_color = SimilarColor(value)
+        # similar_color.calculate_simular_cans()
 
         if output_type == 'csv':
             write_to_csv(value)
+        elif output_type == 'txt':
+            write_to_txt(value)
         else:
             write_to_kotlin(value)
 
