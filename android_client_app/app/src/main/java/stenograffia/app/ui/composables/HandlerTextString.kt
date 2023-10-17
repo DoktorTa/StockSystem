@@ -19,6 +19,6 @@ fun HandlerTextString(
         style = MaterialTheme.typography.h1,
         color = MaterialTheme.colors.primary,
         modifier = modifier
-            .padding(start = dimensionResource(id = R.dimen.paint_padding_start))
+            .padding(start = dimensionResource(id = R.dimen.paint_screen_padding_from_screen_borders))
     )
 }

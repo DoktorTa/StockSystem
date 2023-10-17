@@ -6,5 +6,6 @@ data class MaterialModel(
     val timeLabel: Int,
     val description: String,
     val unique: Boolean,
-    val location: String
+    val location: String,
+    val quantityInStorage: Int
 ) {}

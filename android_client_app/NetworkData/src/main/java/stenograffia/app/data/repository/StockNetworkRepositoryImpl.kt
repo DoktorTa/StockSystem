@@ -1,8 +1,7 @@
 package stenograffia.app.data.repository
 
-import stenograffia.app.data.network.StockApi
-import stenograffia.app.data.network.UserApi
-import stenograffia.app.data.network.data.ChangeLocationRequest
+import stenograffia.app.data.network.api.StockApi
+import stenograffia.app.data.network.data.ChangeMaterialRequest
 import stenograffia.app.data.network.data.ChangeQuantityPaint
 import stenograffia.app.data.network.data.TimeRequest
 import stenograffia.app.data.network.model.toMaterialModel
@@ -18,7 +17,11 @@ class StockNetworkRepositoryImpl @Inject constructor(
     private val stockApi: StockApi
 ) : IStockNetworkRepository {
 
-    override suspend fun changeQuantityById(idPaint: Int, quantity: Int, timeLabel: Int) : ApiResponse<List<PaintModel>?> {
+    override suspend fun changeQuantityById(
+        idPaint: Int,
+        quantity: Int,
+        timeLabel: Int
+    ) : ApiResponse<List<PaintModel>?> {
         try {
             val updateQuantityRequest = ChangeQuantityPaint(idPaint, quantity, timeLabel)
             val response = stockApi.changeQuantityPaint(updateQuantityRequest)
@@ -54,7 +57,7 @@ class StockNetworkRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getMaterialsByTime(timeLabel: Int): ApiResponse<List<MaterialModel>> {
+    override suspend fun getMaterialsByTime(timeLabel: Int) : ApiResponse<List<MaterialModel>> {
         try {
             val request = TimeRequest(timeLabel)
             val response = stockApi.getMaterial(request)
@@ -71,18 +74,20 @@ class StockNetworkRepositoryImpl @Inject constructor(
             return ApiResponse.ServerDisconnect()
         }    }
 
-    override suspend fun changeLocationMaterial(
+    override suspend fun changeMaterial(
         materialId: Int,
         location: String,
+        diffQuantity: Int,
         timeLabel: Int
-    ): ApiResponse<List<MaterialModel>?> {
+    ) : ApiResponse<List<MaterialModel>?> {
         try {
-            val updateQuantityRequest = ChangeLocationRequest(
+            val updateQuantityRequest = ChangeMaterialRequest(
                 materialId = materialId,
                 location = location,
+                diffQuantity = diffQuantity,
                 timeLabel = timeLabel
             )
-            val response = stockApi.changeLocationMaterial(updateQuantityRequest)
+            val response = stockApi.changeMaterial(updateQuantityRequest)
 
             if (response.code() == 200) {
                 return ApiResponse.Success(response.body()!!.material.map {it.toMaterialModel()})
@@ -94,6 +99,6 @@ class StockNetworkRepositoryImpl @Inject constructor(
             return ApiResponse.Error(e)
         } catch (e: SocketTimeoutException) {
             return ApiResponse.ServerDisconnect()
-        }    }
-
+        }
+    }
 }

@@ -6,15 +6,14 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import okhttp3.CertificatePinner
 import retrofit2.Retrofit
-import stenograffia.app.data.network.AuthApi
+import stenograffia.app.data.network.api.AuthApi
 import stenograffia.app.data.network.NetworkClient
-import stenograffia.app.data.network.StockApi
+import stenograffia.app.data.network.api.StockApi
 import stenograffia.app.data.repository.UserNetworkRepositoryImpl
 import stenograffia.app.domain.repository.IUserNetworkRepository
 import stenograffia.app.data.DataStoreToken
-import stenograffia.app.data.network.UserApi
+import stenograffia.app.data.network.api.UserApi
 import javax.inject.Singleton
 
 @Module

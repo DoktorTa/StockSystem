@@ -16,9 +16,9 @@ fun TextString(
 ) {
     Text(
         text,
-        style = MaterialTheme.typography.body1,
+        style = MaterialTheme.typography.h4,
         color = MaterialTheme.colors.primary,
         modifier = modifier
-            .padding(start = dimensionResource(id = R.dimen.paint_padding_start))
+            .padding(start = dimensionResource(id = R.dimen.paint_screen_padding_from_screen_borders))
     )
 }

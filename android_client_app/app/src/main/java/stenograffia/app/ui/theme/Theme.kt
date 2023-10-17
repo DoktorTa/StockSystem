@@ -14,7 +14,8 @@ private val DarkColorPalette = darkColors(
     primaryVariant = white,
     secondary = black,
     onSecondary = white,
-    background = black
+    background = darkBlue,
+    onBackground = paleRed
 )
 
 @SuppressLint("ConflictingOnColor")
@@ -24,7 +25,8 @@ private val LightColorPalette = lightColors(
     primaryVariant = black,
     secondary = white,
     onSecondary = black,
-    background = white
+    background = white,
+    onBackground = paleRed
 
 
     /* Other default colors to override

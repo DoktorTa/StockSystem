@@ -11,7 +11,8 @@ data class MaterialEntity(
     val timeLabel: Int,
     val description: String,
     val unique: Boolean,
-    val location: String
+    val location: String,
+    val quantityInStorage: Int
 ){}
 
 fun MaterialModel.fromMaterialEntity(): MaterialEntity {
@@ -21,7 +22,8 @@ fun MaterialModel.fromMaterialEntity(): MaterialEntity {
         timeLabel = timeLabel,
         description = description,
         unique = unique,
-        location = location
+        location = location,
+        quantityInStorage = quantityInStorage
     )
 }
 
@@ -32,6 +34,7 @@ fun MaterialEntity.toMaterialModel(): MaterialModel {
         timeLabel = timeLabel,
         description = description,
         unique = unique,
-        location = location
+        location = location,
+        quantityInStorage = quantityInStorage
     )
 }

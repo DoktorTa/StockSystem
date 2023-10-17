@@ -1,10 +1,12 @@
 package stenograffia.app.domain.useCases
 
+import android.util.Log
 import kotlinx.coroutines.flow.Flow
 import stenograffia.app.domain.ApiResponse
 import stenograffia.app.domain.model.MaterialModel
 import stenograffia.app.domain.model.PaintModel
 import stenograffia.app.domain.model.PaintNamesTupleModel
+import stenograffia.app.domain.repository.IObjectDataBaseRepository
 import stenograffia.app.domain.repository.IStockDataBaseRepository
 import stenograffia.app.domain.repository.IStockNetworkRepository
 import stenograffia.app.domain.utils.ChangeMsg
@@ -12,7 +14,8 @@ import javax.inject.Inject
 
 class StockUseCase @Inject constructor(
     private val stockNetworkRepository: IStockNetworkRepository,
-    private val stockDataBaseRepository: IStockDataBaseRepository
+    private val stockDataBaseRepository: IStockDataBaseRepository,
+    private val objectDataBaseRepository: IObjectDataBaseRepository
 ) {
 
     suspend fun updateQuantityById(idPaint: Int, quantity: Int): ChangeMsg {
@@ -73,16 +76,31 @@ class StockUseCase @Inject constructor(
         return stockDataBaseRepository.getMaterialById(materialId)
     }
 
-    fun getLocations() : Set<String> {
-        val allLocation: MutableSet<String> = stockDataBaseRepository.getLocations()
-        allLocation.addAll(setOf("ON STOCK", "NOT ON STOCK"))
-        return allLocation
+    fun getLocations(): Set<String> {
+        return objectDataBaseRepository.getLocations()
+    }
+
+    suspend fun changeQuantityMaterial(materialId: Int, diffQuantity: Int) : ChangeMsg {
+        val timeLabel = stockDataBaseRepository.getMaxMaterialTimeLabel()
+        val answer: ApiResponse<List<MaterialModel>?> =
+            stockNetworkRepository.changeMaterial(materialId, "", diffQuantity, timeLabel)
+        updateMaterialsByTime()
+
+        return if (answer is ApiResponse.Success) {
+            if (answer.data != null) {
+                ChangeMsg.CorrectChange()
+            } else {
+                ChangeMsg.ErrorChange()
+            }
+        } else {
+            ChangeMsg.ErrorConnect()
+        }
     }
 
     suspend fun changeLocationMaterial(materialId: Int, newLocation: String) : ChangeMsg {
         val timeLabel = stockDataBaseRepository.getMaxMaterialTimeLabel()
         val location: ApiResponse<List<MaterialModel>?> = stockNetworkRepository
-            .changeLocationMaterial(materialId, newLocation, timeLabel)
+            .changeMaterial(materialId, newLocation, 0, timeLabel)
         updateMaterialsByTime()
 
         return if (location is ApiResponse.Success) {

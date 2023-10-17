@@ -1,11 +1,13 @@
 package stenograffia.app.data.network
 
-import okhttp3.CertificatePinner
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import stenograffia.app.data.DataStoreToken
+import stenograffia.app.data.network.api.AuthApi
+import stenograffia.app.data.network.api.StockApi
+import stenograffia.app.data.network.api.UserApi
 
 
 class NetworkClient {

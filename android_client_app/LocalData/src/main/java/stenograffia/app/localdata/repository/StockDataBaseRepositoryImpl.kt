@@ -6,7 +6,7 @@ import stenograffia.app.domain.model.MaterialModel
 import stenograffia.app.domain.model.PaintModel
 import stenograffia.app.domain.model.PaintNamesTupleModel
 import stenograffia.app.domain.repository.IStockDataBaseRepository
-import stenograffia.app.localdata.database.StockDao
+import stenograffia.app.localdata.database.dao.StockDao
 import stenograffia.app.localdata.database.model.fromMaterialEntity
 import stenograffia.app.localdata.database.model.fromPaintEntity
 import stenograffia.app.localdata.database.model.toMaterialModel
@@ -60,9 +60,5 @@ class StockDataBaseRepositoryImpl @Inject constructor(
 
     override fun getMaxMaterialTimeLabel(): Int {
         return stockDao.getMaxMaterialTimeLabel() ?: 0
-    }
-
-    override fun getLocations(): MutableSet<String> {
-        return stockDao.getLocations().toMutableSet()
     }
 }

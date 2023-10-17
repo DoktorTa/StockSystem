@@ -46,6 +46,7 @@ fun Settings(
         )
         ThemeSelector(dataStoreSettings, settingsViewModel)
         LangSelector(dataStoreSettings, settingsViewModel)
+
         
     }
 }

@@ -14,9 +14,9 @@
     <string name="paint_list_item_not_available">НЕ ДОСТУПНО</string>
     <string name="paint_list_item_mabye">МОЖЕТ БЫТЬ</string>
     <string name="paint_list_item_on_stock">НА СКЛАДЕ</string>
-    <string name="paint_button_likeness_paint">ПОХОЖАЯ КРАСКА</string>
-    <string name="paint_button_change_quantity">ИЗМЕНИТЬ КОЛЛИЧЕСТВО</string>
-    <string name="paint_quantity_in_stock">СКЛАДЕ: %1$d ШТУК</string>
+    <string name="paint_screen_button_likeness">ПОХОЖАЯ КРАСКА</string>
+    <string name="paint_screen_button_change_quantity">ИЗМЕНИТЬ КОЛЛИЧЕСТВО</string>
+    <string name="paint_screen_quantity_in_stock_label">СКЛАДЕ:</string>
     <string name="paint_list_likeness_description_text">СХОЖЕСТЬ: %1$s</string>
     <string name="default_text">Обычный текст</string>
     <string name="change_quantity_description">В НАЛИЧИИ БУДЕТ %1$d</string>
@@ -29,4 +29,6 @@
     <string name="sing_in_button_text">Вход</string>
     <string name="correct_change">Готово</string>
     <string name="not_correct_change">Неправильные данные</string>
+    <string name="connecting_to_the_server">СОЕДИНЕНИЕ С СЕРВЕРОМ</string>
+    <string name="paint_screen_type_label">ТИП: %1$S</string>
 </resources>
